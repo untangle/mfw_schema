@@ -178,7 +178,16 @@
                              "DESTINATION_PORT"
                             ]
                 }
-            }
+            },
+            "allOf": [
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["LIMIT_RATE"] } } } }, { "required": ["group_selector","rate_unit"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["IP_PROTOCOL"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CLIENT_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SERVER_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SOURCE_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["DESTINATION_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                {}
+            ]
         },
         "rule_action": {
             "type": "object",
