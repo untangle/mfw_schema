@@ -9,9 +9,12 @@
                     "type": "object",
                     "description": "A map from the table name as the key, to the table json object",
                     "patternProperties": {
+                        "access": { "$ref": "file:access_table_schema.json#/definitions/access_table" },
                         "filter": { "$ref": "file:filter_table_schema.json#/definitions/filter_table" },
                         "nat": { "$ref": "file:nat_table_schema.json#/definitions/nat_table" },
-                        ".{1,}": { "$ref": "file:firewall_schema.json#/definitions/table" }
+                        "shaping": { "$ref": "file:shaping_table_schema.json#/definitions/shaping_table" },
+                        "vote": { "$ref": "file:vote_table_schema.json#/definitions/vote_table" },
+                        ".{1,}": { "$ref": "#/definitions/table" }
                     }
                 }
             }
