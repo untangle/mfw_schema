@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": ["version","system","network"],
+    "properties": {
+        "version": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "network": { "$ref": "file:network_schema.json#/definitions/network_settings" },
+        "system": { "$ref": "file:system_schema.json#/definitions/system_settings" },
+        "reports": { "$ref": "file:reports_schema.json#/definitions/reports_settings" },
+        "firewall": { "$ref": "file:firewall_schema.json#/definitions/firewall_settings" },
+        "dhcp": { "$ref": "file:dhcp_schema.json#/definitions/dhcp_settings" },
+        "dns": { "$ref": "file:dns_schema.json#/definitions/dns_settings" },
+        "admin": { "$ref": "file:admin_schema.json#/definitions/admin_settings" }
+    },
+    "definitions": {
+    }
+}

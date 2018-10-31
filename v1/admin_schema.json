@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "admin_settings": {
+            "type": "object",
+            "description": "administration settings",
+            "properties": {
+                "credentials": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/admin_credentials" }
+                }
+            }
+        },
+        "admin_credentials": {
+            "type": "object",
+            "description": "A specific admin user settings",
+            "properties": {
+                "username": {
+                    "description": "The username",
+                    "type": "string"
+                },
+                "passwordCleartext": {
+                    "description": "The cleartext password - this should not be saved in the settings file",
+                    "type": "string"
+                },
+                "passwordHashMD5": {
+                    "description": "The hash of the password as it would appear in /etc/shadow (MD5 salted)",
+                    "type": "string"
+                },
+                "passwordHashSHA256": {
+                    "description": "The hash of the password as it would appear in /etc/shadow (SHA256 salted)",
+                    "type": "string"
+                },
+                "passwordHashSHA512": {
+                    "description": "The hash of the password as it would appear in /etc/shadow (SHA512 salted)",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

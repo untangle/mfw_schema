@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "system_settings": {
+            "type": "object",
+            "description": "system settings",
+            "required": ["hostName","domainName"],
+            "additionalProperties": false,
+            "properties": {
+                "hostName": {"type": "string"},
+                "domainName": {"type": "string"}
+            }
+        }
+    }
+}

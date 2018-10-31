@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "dhcp_settings": {
+            "type": "object",
+            "description": "DHCP settings",
+            "additionalProperties": false,
+            "properties": {
+                "dhcpAuthoritative": {
+                    "type": "boolean",
+                    "description": "True if this is the only dhcp server on the network"
+                },
+                "staticDhcpEntries": {
+                    "type": "array",
+                    "description": "List of static DHCP assignements",
+                    "items": { "$ref": "#/definitions/static_dhcp_entry" }
+                }
+            }
+        },
+        "static_dhcp_entry": {
+            "type": "object",
+            "description": "An IP address to be statically assinged to a specific device",
+            "required": ["address", "macAddress"],
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "description": "IP Address to assign to the device"
+                },
+                "macAddress": {
+                    "type": "string",
+                    "description": "The MAC address of the device"
+                }
+            }
+        }
+    }
+}

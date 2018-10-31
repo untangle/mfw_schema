@@ -1,0 +1,158 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "reports_settings": {
+            "type": "object",
+            "description": "reports settings",
+            "properties": {
+                "entries": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/report_entry" }
+                }
+            }
+        },
+        "report_entry": {
+            "type": "object",
+            "description": "A single report",
+            "properties": {
+                "uniqueId": {
+                    "type": "string",
+                    "description": "The unique string identifier"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the report"
+                },
+                "category": {
+                    "Type": "string",
+                    "description": "The category of the report"
+                },
+                "description": {
+                    "Type": "string",
+                    "description": "The description of the report"
+                },
+                "displayOrder": {
+                    "type": "integer",
+                    "description": "The sort order for this report"
+                },
+                "readOnly": {
+                    "type": "boolean",
+                    "description": "True if read only, False otherwise"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["TEXT","EVENTS","CATEGORIES","SERIES"]
+                },
+                "rendering": {
+                    "$ref": "#/definitions/report_rendering"
+                }
+            }
+        },
+        "report_rendering": {
+            "type": "object",
+            "description": "The report render (display) options",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "The chart type",
+                    "enum": ["spline","line","areaspline","area","pie","column"]
+                },
+                "units": {
+                    "type": "string",
+                    "description": "The units of the report"
+                },
+                "colors": {
+                    "type": "array",
+                    "description": "The color pallette",
+                    "items": {"type": "string"}
+                },
+                "stacking": {
+                    "type": "string",
+                    "description": "Stacking type. In case of Time Series data, multiple series can be stacked.",
+                    "enum": ["none","normal","percent"]
+                },
+                "lineWidth": {
+                    "type": "number",
+                    "description": "The line/area chart line width (px)",
+                    "minimum": 0,
+                    "maximum": 5,
+                    "multipleOf": 0.5
+                },
+                "borderWidth": {
+                    "type": "number",
+                    "description": "The border width separating pie slices (px)",
+                    "minimum": 0,
+                    "maximum": 5,
+                    "multipleOf": 0.5
+                },
+                "topAreaOpacity": {
+                    "type": "number",
+                    "description": "The opacity of top part for an area chart",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "multipleOf": 0.1
+                },
+                "bottomAreaOpacity": {
+                    "type": "number",
+                    "description": "The opacity of bottom part for an area chart",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "multipleOf": 0.1
+                },
+                "dashStyle": {
+                    "type": "string",
+                    "description": "The line/area charts line dashing style",
+                    "enum": ["Solid","ShortDash","ShortDashDot","ShortDashDotDot","Dot","Dash","LongDash","LongDashDot","LongDashDotDot"]
+                },
+                "dataGroupingEnabled": {
+                    "type": "boolean",
+                    "description": "True to enable data grouping for Time Series"
+                },
+                "dataGroupingApproximation": {
+                    "type": "string",
+                    "description": "The approximation method for data grouping",
+                    "enum": ["average","high","low","sum"]
+                },
+                "dataGroupingFactor": {
+                    "type": "number",
+                    "description": "The data grouping size. Higher value results in bigger number of points being grouped. (px)",
+                    "minimum": 10,
+                    "maximum": 50,
+                    "multipleOf": 10.0
+                },
+                "donutInnerSize": {
+                    "type": "number",
+                    "description": "Inner ring percent size of a donut (which is a pie based chart). 0 is equivalent to a normal pie",
+                    "minimum": 0,
+                    "maximum": 90,
+                    "multipleOf": 10.0
+                },
+                "3dEnabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the 3D options for the pie/donut charts"
+                },
+                "3dAlpha": {
+                    "type": "number",
+                    "description": "Adjusts the 3D aspect of the pie chart",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "multipleOf": 5.0
+                },
+                "3dDepth": {
+                    "type": "number",
+                    "description": "Adjusts the 3D depth of the pie chart",
+                    "minimum": 10,
+                    "maximum": 50,
+                    "multipleOf": 5.0
+                },
+                "slicesNumber": {
+                    "type": "number",
+                    "description": "The number of pie slices to show on pie charts by default",
+                    "minimum": 2,
+                    "maximum": 15,
+                    "multipleOf": 1.0
+                }
+            }
+        }
+    }
+}
