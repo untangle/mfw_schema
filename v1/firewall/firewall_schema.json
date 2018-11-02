@@ -12,6 +12,7 @@
                         "access": { "$ref": "file:access_table_schema.json#/definitions/access_table" },
                         "filter": { "$ref": "file:filter_table_schema.json#/definitions/filter_table" },
                         "nat": { "$ref": "file:nat_table_schema.json#/definitions/nat_table" },
+                        "port_forward": { "$ref": "file:filter_table_schema.json#/definitions/port_forward_table" },
                         "shaping": { "$ref": "file:shaping_table_schema.json#/definitions/shaping_table" },
                         "vote": { "$ref": "file:vote_table_schema.json#/definitions/vote_table" },
                         ".{1,}": { "$ref": "#/definitions/table" }
