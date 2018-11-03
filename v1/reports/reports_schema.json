@@ -14,6 +14,7 @@
         "report_entry": {
             "type": "object",
             "description": "A single report",
+            "required": ["uniqueId","name","category","description","displayOrder","type","rendering"],
             "properties": {
                 "uniqueId": {
                     "type": "string",
@@ -41,10 +42,86 @@
                 },
                 "type": {
                     "type": "string",
-                    "enum": ["TEXT","EVENTS","CATEGORIES","SERIES"]
+                    "enum": ["TEXT","EVENTS","CATEGORIES","SERIES","CATEGORIES_SERIES"],
+                    "description": "The type of report/chart"
+                },
+                "table": {
+                    "type": "string",
+                    "description": "The table the report queries"
+                },
+                "queryCategories": {
+                    "$ref": "#/definitions/report_query_categories"
+                },
+                "queryText": {
+                    "$ref": "#/definitions/report_query_text"
+                },
+                "querySeries": {
+                    "$ref": "#/definitions/report_query_series"
                 },
                 "rendering": {
                     "$ref": "#/definitions/report_rendering"
+                }
+            },
+            "allOf": [
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["TEXT"] } } } }, { "required": ["queryText"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SERIES"] } } } }, { "required": ["querySeries"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CATEGORIES"] } } } }, { "required": ["queryCategories"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CATEGORIES_SERIES"] } } } }, { "required": ["queryCategories","querySeries"] } ] }
+            ]
+        },
+        "report_query_text": {
+            "type": "object",
+            "description": "The report query (SQL configuration) options for a TEXT report",
+            "properties": {
+                "textColumns": {
+                    "type": "array",
+                    "description": "The columns to query for text-based reports",
+                    "items": {"type": "string"}
+                }
+            }
+        },
+        "report_query_series": {
+            "type": "object",
+            "description": "The report query (SQL configuration) options for a SERIES report",
+            "properties": {
+                "seriesColumns": {
+                    "type": "array",
+                    "description": "The columns to query for series reports. If null, the columns will be queried dynamically using categoriesGroupColumn, categoriesAggregation, and categoriesLimit. If unspecified the categories query will be used to determin columns",
+                    "items": {"type": "string"}
+                },
+                "seriesTimeIntervalSeconds": {
+                    "type": "integer",
+                    "description": "The time granularity of series report in seconds (1 = 1 datapoint/second, 60 = 1 datapoint/minute). Beware often 1 second is ideal and the UI can aggregate multiple datapoints using dataGroupingApproximation. 60 if unspecified.",
+                    "minimum": 1
+                }
+            }
+        },
+        "report_query_categories": {
+            "type": "object",
+            "description": "The report query (SQL configuration) options for a CATEGORIES report",
+            "required": ["categoriesGroupColumn","categoriesAggregation",""],
+            "properties": {
+                "categoriesGroupColumn": {
+                    "type": "string",
+                    "description": "This is the column to group by in categories reports. This is the X in Top X category reports."
+                },
+                "categoriesAggregation": {
+                    "type": "string",
+                    "description": "This is the aggregation function for the categoriesGroupColumn. This is usually count(*) or sum(*)."
+                },
+                "categoriesLimit": {
+                    "type": "integer",
+                    "description": "This is the limit of the number of results for categories. 10 for Top 10. Beware this is normally null (no limit) as the rendering will properly show the sum of the long tail of values as 'Others'."
+                },
+                "categoriesOrderByColumn": {
+                    "type": "integer",
+                    "description": "This defines the column to use to order the results. 1 means categoriesOrderByColumn, 2 means the aggregation by value. 2 if unspecified.",
+                    "minimum": 1,
+                    "maximum": 2
+                },
+                "categoriesOrderAsc": {
+                    "type": "boolean",
+                    "description": "If true the results will be order by ASC, if false or unspecified the results will be order by DESC."
                 }
             }
         },
@@ -151,6 +228,15 @@
                     "minimum": 2,
                     "maximum": 15,
                     "multipleOf": 1.0
+                },
+                "defaultColumns": {
+                    "type": "array",
+                    "description": "The the default column names to display for event list reports",
+                    "items": {"type": "string"}
+                },
+                "textString": {
+                    "type": "string",
+                    "description": "The user-defined string for a text report"
                 }
             }
         }
