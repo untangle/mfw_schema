@@ -72,9 +72,9 @@
         "report_query_text": {
             "type": "object",
             "description": "The report query (SQL configuration) options for a TEXT report",
-            "required": ["textColumns"],
+            "required": ["columns"],
             "properties": {
-                "textColumns": {
+                "columns": {
                     "type": "array",
                     "description": "The columns to query for text-based reports",
                     "items": {"type": "string"}
@@ -85,12 +85,12 @@
             "type": "object",
             "description": "The report query (SQL configuration) options for a SERIES report",
             "properties": {
-                "seriesColumns": {
+                "columns": {
                     "type": "array",
-                    "description": "The columns to query for series reports. If null, the columns will be queried dynamically using categoriesGroupColumn, categoriesAggregation, and categoriesLimit. If unspecified the categories query will be used to determin columns",
+                    "description": "The columns to query for series reports. If null, the columns will be queried dynamically using categoriesGroupColumn, categoriesAggregation, and categoriesLimit. If unspecified the categories query will be used to determine columns",
                     "items": {"type": "string"}
                 },
-                "seriesTimeIntervalSeconds": {
+                "timeIntervalSeconds": {
                     "type": "integer",
                     "description": "The time granularity of series report in seconds (1 = 1 datapoint/second, 60 = 1 datapoint/minute). Beware often 1 second is ideal and the UI can aggregate multiple datapoints using dataGroupingApproximation. 60 if unspecified.",
                     "minimum": 1
@@ -100,27 +100,31 @@
         "report_query_categories": {
             "type": "object",
             "description": "The report query (SQL configuration) options for a CATEGORIES report",
-            "required": ["categoriesGroupColumn","categoriesAggregation"],
+            "required": ["groupColumn","aggregationFunction","aggregationValue"],
             "properties": {
-                "categoriesGroupColumn": {
+                "groupColumn": {
                     "type": "string",
                     "description": "This is the column to group by in categories reports. This is the X in Top X category reports."
                 },
-                "categoriesAggregation": {
+                "aggregationFunction": {
                     "type": "string",
                     "description": "This is the aggregation function for the categoriesGroupColumn. This is usually count(*) or sum(*)."
                 },
-                "categoriesLimit": {
+                "aggregationValue": {
+                    "type": "string",
+                    "description": "This is the value to be aggregated. For count(*) this can be \"*\"."
+                },
+                "limit": {
                     "type": "integer",
                     "description": "This is the limit of the number of results for categories. 10 for Top 10. Beware this is normally null (no limit) as the rendering will properly show the sum of the long tail of values as 'Others'."
                 },
-                "categoriesOrderByColumn": {
+                "orderByColumn": {
                     "type": "integer",
                     "description": "This defines the column to use to order the results. 1 means categoriesOrderByColumn, 2 means the aggregation by value. 2 if unspecified.",
                     "minimum": 1,
                     "maximum": 2
                 },
-                "categoriesOrderAsc": {
+                "orderAsc": {
                     "type": "boolean",
                     "description": "If true the results will be order by ASC, if false or unspecified the results will be order by DESC."
                 }
