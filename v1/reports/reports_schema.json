@@ -85,7 +85,7 @@
                 "operator": {
                     "type": "string",
                     "description": "The sql operator",
-                    "enum": ["EQUALS","NOT_EQUALS","GREATER_THAN","LESS_THAN","GREATER_THAN_OR_EQUAL","LESS_THAN_OR_EQUAL","LIKE","NOT_LIKE","IS","IS_NOT","IN","NOT_IN"]
+                    "enum": ["EQ","NE","GT","LT","GE","LE","LIKE","NOT_LIKE","IS","IS_NOT","IN","NOT_IN"]
                 },
                 "value": {
                     "type": "string",
