@@ -49,6 +49,10 @@
                     "type": "string",
                     "description": "The table the report queries"
                 },
+                "conditions": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/report_condition" }
+                },
                 "queryCategories": {
                     "$ref": "#/definitions/report_query_categories"
                 },
@@ -68,6 +72,26 @@
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CATEGORIES"] } } } }, { "required": ["queryCategories"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CATEGORIES_SERIES"] } } } }, { "required": ["queryCategories","querySeries"] } ] }
             ]
+        },
+        "report_condition": {
+            "type": "object",
+            "description": "A reporting SQL condition",
+            "required": ["uniqueId","name","category","description","displayOrder","type","rendering"],
+            "properties": {
+                "column": {
+                    "type": "string",
+                    "description": "The column to check the value"
+                },
+                "operator": {
+                    "type": "string",
+                    "description": "The sql operator",
+                    "enum": ["EQUALS","NOT_EQUALS","GREATER_THAN","LESS_THAN","GREATER_THAN_OR_EQUAL","LESS_THAN_OR_EQUAL","LIKE","NOT_LIKE","IS","IS_NOT","IN","NOT_IN"]
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The value to check"
+                }
+            }
         },
         "report_query_text": {
             "type": "object",
