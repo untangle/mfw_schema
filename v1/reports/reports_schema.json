@@ -53,6 +53,10 @@
                     "type": "array",
                     "items": { "$ref": "#/definitions/report_condition" }
                 },
+                "userConditions": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/report_condition" }
+                },
                 "queryCategories": {
                     "$ref": "#/definitions/report_query_categories"
                 },
