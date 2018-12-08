@@ -30,6 +30,10 @@
                 "localServer": {
                     "type": "string",
                     "description": "The IP of a local DNS server"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The human description"
                 }
             }
         },
@@ -45,6 +49,10 @@
                 "name": {
                     "type": "string",
                     "description": "The name to map"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The human description"
                 }
             }
         }

@@ -29,6 +29,10 @@
                 "macAddress": {
                     "type": "string",
                     "description": "The MAC address of the device"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The human description"
                 }
             }
         }
