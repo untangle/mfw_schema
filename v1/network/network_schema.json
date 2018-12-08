@@ -279,6 +279,11 @@
                     "type": "boolean",
                     "description": "Send router advertisements"
                 },
+                "bridgedTo": {
+                    "type": "integer",
+                    "description": "The interface ID that this interface is bridgedTo if this is configType == BRIDGED",
+                    "minimum": 1
+                },
                 "downloadKbps": {
                     "type": "integer",
                     "description": "The maximum download kilobit per second of this WAN interface",
