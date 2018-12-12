@@ -122,7 +122,9 @@
                     "type": "string",
                     "enum": ["IP_PROTOCOL",
                              "SOURCE_ADDRESS",
+                             "SOURCE_ADDRESS_TYPE",
                              "DESTINATION_ADDRESS",
+                             "DESTINATION_ADDRESS_TYPE",
                              "CLIENT_ADDRESS",
                              "SERVER_ADDRESS",
                              "LOCAL_ADDRESS",
@@ -183,6 +185,8 @@
             "allOf": [
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["LIMIT_RATE"] } } } }, { "required": ["group_selector","rate_unit"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["IP_PROTOCOL"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SOURCE_ADDRESS_TYPE"] } } } }, { "properties": { "op": { "enum": ["==","!="] }, "value": { "enum": ["unspec", "unicast", "local", "broadcast", "anycast", "multicast", "blackhole", "unreachable", "prohibit"] } } } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["DESTINATION_ADDRESS_TYPE"] } } } }, { "properties": { "op": { "enum": ["==","!="] }, "value": { "enum": ["unspec", "unicast", "local", "broadcast", "anycast", "multicast", "blackhole", "unreachable", "prohibit"] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["CLIENT_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SERVER_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SOURCE_INTERFACE_ZONE"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
