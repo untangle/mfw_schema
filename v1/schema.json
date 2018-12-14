@@ -14,7 +14,7 @@
         "firewall": { "$ref": "file:firewall/firewall_schema.json#/definitions/firewall_settings" },
         "dhcp": { "$ref": "file:dhcp/dhcp_schema.json#/definitions/dhcp_settings" },
         "dns": { "$ref": "file:dns/dns_schema.json#/definitions/dns_settings" },
-        "admin": { "$ref": "file:admin/admin_schema.json#/definitions/admin_settings" }
+        "accounts": { "$ref": "file:accounts/accounts_schema.json#/definitions/accounts_settings" }
     },
     "definitions": {
     }

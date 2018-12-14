@@ -1,19 +1,19 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-        "admin_settings": {
+        "accounts_settings": {
             "type": "object",
-            "description": "administration settings",
+            "description": "Accounts settings",
             "properties": {
                 "credentials": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/admin_credentials" }
+                    "items": { "$ref": "#/definitions/account_credentials" }
                 }
             }
         },
-        "admin_credentials": {
+        "account_credentials": {
             "type": "object",
-            "description": "A specific admin user settings",
+            "description": "A specific account admin/user settings",
             "properties": {
                 "username": {
                     "description": "The username",
