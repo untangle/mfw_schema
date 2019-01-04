@@ -8,7 +8,22 @@
             "additionalProperties": false,
             "properties": {
                 "hostName": {"type": "string"},
-                "domainName": {"type": "string"}
+                "domainName": {"type": "string"},
+                "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" }
+            }
+        },
+        "setup_wizard_settings": {
+            "type": "object",
+            "description": "A specific widget settings",
+            "properties": {
+                "completed": {
+                    "description": "True if the setup wizard has been completed",
+                    "type": "boolean"
+                },
+                "lastStep": {
+                    "description": "The last completed step of the wizard (used by the wizard to store progress for restore)",
+                    "type": "string"
+                }
             }
         }
     }
