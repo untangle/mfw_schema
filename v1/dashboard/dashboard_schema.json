@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "dashboard_settings": {
+            "type": "object",
+            "description": "Dashboard settings",
+            "properties": {
+                "widgets": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/widget_settings" }
+                }
+            }
+        },
+        "widget_settings": {
+            "type": "object",
+            "description": "A specific widget settings",
+            "properties": {
+                "name": {
+                    "description": "The name of the report",
+                    "type": "string"
+                },
+                "interval": {
+                    "description": "The refresh interval (in seconds)",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
