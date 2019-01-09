@@ -260,6 +260,16 @@
                     "description": "The IPv6 DNS 2",
                     "format": "ipv6"
                 },
+                "v6DhcpDNS1Override": {
+                    "type": "string",
+                    "description": "The DHCP DNS 1 override",
+                    "format": "ipv6"
+                },
+                "v6DhcpDNS2Override": {
+                    "type": "string",
+                    "description": "The DHCP DNS 2 override",
+                    "format": "ipv6"
+                },
                 "v6AssignHint": {
                     "type": "string",
                     "description": "The IPv6 auto assign hint"
