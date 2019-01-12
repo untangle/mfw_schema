@@ -25,11 +25,11 @@
                     "description": "The name of the report"
                 },
                 "category": {
-                    "Type": "string",
+                    "type": "string",
                     "description": "The category of the report"
                 },
                 "description": {
-                    "Type": "string",
+                    "type": "string",
                     "description": "The description of the report"
                 },
                 "displayOrder": {
@@ -52,6 +52,20 @@
                 "conditions": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/report_condition" }
+                },
+                "columnDisambiguation": {
+                    "type": "array",
+                    "description": "This list of string->string map is a way to disambiguate column names for joined tables (ie time_stamp > a.time_stamp)",
+                    "items": {
+                        "columnName": {
+                            "type": "string",
+                            "description": "The original name of the condition column"
+                        },
+                        "newColumnName": {
+                            "type": "string",
+                            "description": "The new name of the condition column"
+                        }
+                    }
                 },
                 "userConditions": {
                     "type": "array",
