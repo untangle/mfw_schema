@@ -19,6 +19,10 @@
                     "description": "The username",
                     "type": "string"
                 },
+                "email": {
+                    "description": "This accounts email address",
+                    "type": "string"
+                },
                 "passwordCleartext": {
                     "description": "The cleartext password - this should not be saved in the settings file",
                     "type": "string"
