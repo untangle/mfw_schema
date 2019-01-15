@@ -14,7 +14,6 @@
                         "nat": { "$ref": "file:nat_table_schema.json#/definitions/nat_table" },
                         "port_forward": { "$ref": "file:filter_table_schema.json#/definitions/port_forward_table" },
                         "shaping": { "$ref": "file:shaping_table_schema.json#/definitions/shaping_table" },
-                        "vote": { "$ref": "file:vote_table_schema.json#/definitions/vote_table" },
                         ".{1,}": { "$ref": "#/definitions/table" }
                     }
                 }
@@ -201,7 +200,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_DESTINATION"]
+                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_DESTINATION","WAN_POLICY"]
                 },
                 "chain": {
                     "type": "string"
@@ -220,6 +219,10 @@
                 },
                 "destination": {
                     "type": "integer"
+                },
+                "policy": {
+                    "type": "string",
+                    "enum": ["LOW_JITTER", "LOW_LATENCY", "HIGH_BANDWIDTH", "BALANCE", "DEFAULT"]
                 }
             }
         }

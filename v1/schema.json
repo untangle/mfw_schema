@@ -15,7 +15,8 @@
         "dhcp": { "$ref": "file:dhcp/dhcp_schema.json#/definitions/dhcp_settings" },
         "dns": { "$ref": "file:dns/dns_schema.json#/definitions/dns_settings" },
         "accounts": { "$ref": "file:accounts/accounts_schema.json#/definitions/accounts_settings" },
-        "dashboard": { "$ref": "file:dashboard/dashboard_schema.json#/definitions/dashboard_settings" }
+        "dashboard": { "$ref": "file:dashboard/dashboard_schema.json#/definitions/dashboard_settings" },
+        "wan": { "$ref": "file:wan/wan_schema.json#/definitions/wan_settings" }
     },
     "definitions": {
     }
