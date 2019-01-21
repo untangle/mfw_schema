@@ -9,6 +9,7 @@
             "properties": {
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
+                "timeZone": {"type": "string"},
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" }
             }
         },
