@@ -414,6 +414,24 @@
                 "openvpnConfFile": {
                     "type": "string",
                     "description": "Path to openvpn configuration file"
+                },
+                "wireguardPrivateKey": {
+                    "type": "string",
+                    "description": "The wireguard private key"
+                },
+                "wireguardAddresses": {
+                    "type": "array",
+                    "description": "List of wireguard interface addresses",
+                    "items": { "type": "string" }
+                },
+                "wireguardPort": {
+                    "type": "integer",
+                    "description": "The port that wireguard listens on"
+                },
+                "wireguardPeers": {
+                    "type": "array",
+                    "description": "List of wireguard peers",
+                    "items": { "$ref": "#/definitions/wireguard_peer" }
                 }
             }
         },
@@ -449,6 +467,42 @@
                     "description": "The IPv6 static prefix",
                     "minimum": 1,
                     "maximum": 128
+                }
+         },
+        "wireguard_peer": {
+            "type": "object",
+            "description": "A wireguard peer",
+            "required": ["publicKey","allowedIps"],
+            "additionalProperties": false,
+            "properties": {
+                "publicKey": {
+                    "type": "string",
+                    "description": "The wireguard peer's public key"
+                },
+                "allowedIps": {
+                    "type": "array",
+                    "description": "List of peer's allowed IP addresses",
+                    "items": { "type": "string" }
+                },
+                "host": {
+                    "type": "string",
+                    "description": "The wireguard server's IP or hostname"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "The wireguard server's port"
+                },
+                "presharedKey": {
+                    "type": "string",
+                    "description": "The wireguard peer's pre-shared key"
+                },
+                "keepalive": {
+                    "type": "integer",
+                    "description": "The wireguard persistent keepalive interval (seconds) for this peer"
+                },
+                "routeAllowedIps": {
+                    "type": "boolean",
+                    "description": "True if packets from this wireguard peer should be routed"
                 }
             }
         }
