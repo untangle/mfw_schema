@@ -410,6 +410,10 @@
                     "type": "integer",
                     "description": "The wireless channel",
                     "minimum": 0
+                },
+                "openvpnConfFile": {
+                    "type": "string",
+                    "description": "Path to openvpn configuration file"
                 }
             }
         },
