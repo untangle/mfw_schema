@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "files_settings": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/file_settings" }
+        },
+        "file_settings": {
+            "type": "object",
+            "description": "A specific widget settings",
+            "properties": {
+                "path": {
+                    "description": "The path of the file",
+                    "type": "string"
+                },
+                "encoding": {
+                    "type": "string",
+                    "description": "The encoding of the file",
+                    "enum": ["base64"]
+                },
+                "contents": {
+                    "description": "The (encoded) contents of the file",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -468,7 +468,8 @@
                     "minimum": 1,
                     "maximum": 128
                 }
-         },
+            }
+        },
         "wireguard_peer": {
             "type": "object",
             "description": "A wireguard peer",
