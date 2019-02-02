@@ -8,6 +8,7 @@
         "file_settings": {
             "type": "object",
             "description": "A specific widget settings",
+            "required": ["path","encoding","contents"],
             "properties": {
                 "path": {
                     "description": "The path of the file",
@@ -20,6 +21,10 @@
                 },
                 "contents": {
                     "description": "The (encoded) contents of the file",
+                    "type": "string"
+                },
+                "operation": {
+                    "description": "The sync-settings operation that needs to take place if this file changes",
                     "type": "string"
                 }
             }
