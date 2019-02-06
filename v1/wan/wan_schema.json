@@ -85,7 +85,7 @@
             "type": {
                 "type": "string",
                 "description": "The policy type",
-                "enum": [ "ATTRIBUTE", "METRIC" ]
+                "enum": [ "ATTRIBUTE", "METRIC", "CONNECTIVITY" ]
             },
             "attribute": {
                 "type": "string",
@@ -109,10 +109,32 @@
                 "type": "string",
                 "enum": ["<",">","<=",">="]
             },
+            "connectivityTestType": {
+                "type": "string",
+                "description": "The type of connectivity test",
+                "enum": [ "PING", "ARP", "DNS", "HTTP" ]
+            },
+            "connectivityTestInterval": {
+                "type": "integer",
+                "description": "The connectivity test interval in seconds"
+            },
+            "connectivityTestTimeout": {
+                "type": "integer",
+                "description": "The connectivity test timeout in seconds"
+            },
+            "connectivityTestFailureThreshold": {
+                "type": "integer",
+                "description": "The number of test failures (out of 10) that represents an interface failure"
+            },
+            "connectivityTestTarget": {
+                "type": "string",
+                "description": "IP/host address to test"
+            },
             "allOf": [
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["ATTRIBUTE"] } } } }, { "required": ["attribute"] } ] },
                 { "anyOf": [ { "not": { "properties": { "attribute": { "enum": ["NAME"] } } } }, { "required": ["name_contains"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["METRIC"] } } } }, { "required": ["metric","metric_value","metric_op"] } ] },
+                { "anyOf": [ { "not": { "properties": { "connectivityTestType": { "enum": ["PING", "ARP", "DNS", "HTTP"] } } } }, { "required": ["connectivityTestTarget"] } ] },
                 {}
             ]
         }
