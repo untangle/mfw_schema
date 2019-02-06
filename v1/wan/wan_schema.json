@@ -6,8 +6,113 @@
             "description": "wan settings",
             "additionalProperties": false,
             "properties": {
-                "user_chain": { "$ref": "file:../firewall/firewall_schema.json#/definitions/chain" }
+                "policy_chains": {
+                    "type": "array",
+                    "items": { "$ref": "file:../firewall/firewall_schema.json#/definitions/chain" }
+                },
+                "policies": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/wan_policy" }
+                }
             }
+        },
+        "wan_policy": {
+            "type": "object",
+            "required": ["policyId","type","interfaces"],
+            "properties": {
+                "policyId": {
+                    "type": "integer",
+                    "description": "The policy ID",
+                    "minimum": 1
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if policy is enabled, False otherwise"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The human description"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The policy type",
+                    "enum": [ "SPECIFIC_WAN", "BEST_OF", "BALANCE" ]
+                },
+                "best_of_metric": {
+                    "type": "string",
+                    "description": "The metric used for best of policies",
+                    "enum": [ "LOWEST_LATENCY", "HIGHEST_AVAILABLE_BANDWIDTH", "LOWEST_JITTER", "LOWEST_PACKET_LOSS" ]
+                },
+                "interfaces": {
+                    "type": "array",
+                    "description": "The list of interfaces in the policy.  A single interface of id 0 means all wan interfaces",
+                    "items": { "$ref": "#/definitions/wan_interface" }
+                },
+                "balance_algorithm": {
+                    "type": "string",
+                    "description": "Algorithm used for balance type policies",
+                    "enum": [ "WEIGHTED", "LATENCY", "AVAILABLE_BANDWIDTH", "BANDWIDTH" ]
+                },
+                "criteria": {
+                    "type": "array",
+                    "description": "The list of policy interface criteria",
+                    "items": { "$ref": "#/definitions/wan_criterion" }
+                }
+            },
+            "allOf": [
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["BEST_OF"] } } } }, { "required": ["best_of_metric"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["BALANCE"] } } } }, { "required": ["balance_algorithm"] } ] },
+                {}
+            ]
+        },
+        "wan_interface": {
+            "type": "object",
+            "required": ["id"],
+            "id": {
+                "type": "integer",
+                "description": "The interfaceId of the interface"
+            },
+            "weight": {
+                "type": "integer",
+                "description": "The static balance weight for this interface"
+            }
+        },
+        "wan_criterion": {
+            "type": "object",
+            "required": ["type"],
+            "type": {
+                "type": "string",
+                "description": "The policy type",
+                "enum": [ "ATTRIBUTE", "METRIC" ]
+            },
+            "attribute": {
+                "type": "string",
+                "description": "An interface attribute",
+                "enum": [ "VPN", "NAME" ]
+            },
+            "name_contains": {
+                "type": "string",
+                "description": "The string to search for in interface names for the NAME attribute criterion"
+            },
+            "metric": {
+                "type": "string",
+                "description": "An interface metric",
+                "enum": [ "LATENCY", "AVAILABLE_BANDWIDTH", "JITTER", "PACKET_LOSS" ]
+            },
+            "metric_value": {
+                "type": "integer",
+                "description": "The value associated with the interface metric"
+            },
+            "metric_op": {
+                "type": "string",
+                "enum": ["<",">","<=",">="]
+            },
+            "allOf": [
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["ATTRIBUTE"] } } } }, { "required": ["attribute"] } ] },
+                { "anyOf": [ { "not": { "properties": { "attribute": { "enum": ["NAME"] } } } }, { "required": ["name_contains"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["METRIC"] } } } }, { "required": ["metric","metric_value","metric_op"] } ] },
+                {}
+            ]
         }
     }
 }
