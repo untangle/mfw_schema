@@ -128,7 +128,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "enum": ["NIC","VLAN","WIFI","OPENVPN"]
+                    "enum": ["NIC","VLAN","WIFI","OPENVPN","WIREGUARD"]
                 },
                 "configType": {
                     "type": "string",
