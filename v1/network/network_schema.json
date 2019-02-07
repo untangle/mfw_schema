@@ -412,7 +412,7 @@
                     "minimum": 0
                 },
                 "openvpnConfFile": {
-                    "$ref": "file:../files/file_schema.json#/definitions/file_settings"
+                    "$ref": "file:../files/files_schema.json#/definitions/file_settings"
                 },
                 "wireguardPrivateKey": {
                     "type": "string",
