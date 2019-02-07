@@ -412,8 +412,7 @@
                     "minimum": 0
                 },
                 "openvpnConfFile": {
-                    "type": "string",
-                    "description": "Path to openvpn configuration file"
+                    "$ref": "file:../files/file_schema.json#/definitions/file_settings"
                 },
                 "wireguardPrivateKey": {
                     "type": "string",
