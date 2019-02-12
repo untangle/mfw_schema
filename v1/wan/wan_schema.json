@@ -74,7 +74,9 @@
             },
             "weight": {
                 "type": "integer",
-                "description": "The static balance weight for this interface"
+                "description": "The static balance weight for this interface",
+                "minimum": 1,
+                "maximum": 10000
             }
         },
         "wan_criterion": {
