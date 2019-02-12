@@ -67,8 +67,8 @@
         },
         "wan_interface": {
             "type": "object",
-            "required": ["id"],
-            "id": {
+            "required": ["interfaceId"],
+            "interfaceId": {
                 "type": "integer",
                 "description": "The interfaceId of the interface"
             },
