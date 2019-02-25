@@ -9,7 +9,7 @@
             "properties": {
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
-                "timeZone": {"type": "string"},
+                "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" }
             }
         },
@@ -23,6 +23,20 @@
                 },
                 "lastStep": {
                     "description": "The last completed step of the wizard (used by the wizard to store progress for restore)",
+                    "type": "string"
+                }
+            }
+        },
+        "time_zone_settings": {
+            "type": "object",
+            "description": "The timezone settings",
+            "properties": {
+                "displayName": {
+                    "description": "The display name of the timezone (in the UI)",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The actual value of the timezone (used by OS)",
                     "type": "string"
                 }
             }
