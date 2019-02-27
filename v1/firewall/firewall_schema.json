@@ -32,6 +32,11 @@
                     "description": "The family of the table",
                     "enum": ["inet","ip","ip6","arp","bridge","netdev","ip,ip6","ip,ip6,inet"]
                 },
+                "chain_type": {
+                    "type": "string",
+                    "description": "The type of chains in this table",
+                    "enum": ["filter","route","nat"]
+                },
                 "chains": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/chain" }
@@ -53,11 +58,6 @@
                 "description": {
                     "type": "string",
                     "description": "The human description"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "The type of chain, only applies to base chains",
-                    "enum": ["filter","route","nat"]
                 },
                 "hook": {
                     "type": "string",
