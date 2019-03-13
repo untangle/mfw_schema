@@ -72,10 +72,6 @@
                     "type": "boolean",
                     "description": "True if base chain, False otherwise"
                 },
-                "default": {
-                    "type": "boolean",
-                    "description": "True if this chain should be the default displayed chain when editing a table"
-                },
                 "editable": {
                     "type": "boolean",
                     "description": "True if chain is editable, False otherwise"
