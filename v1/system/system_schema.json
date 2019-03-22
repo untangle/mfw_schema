@@ -9,6 +9,7 @@
             "properties": {
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
+                "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" }
             }
@@ -38,6 +39,27 @@
                 "value": {
                     "description": "The actual value of the timezone (used by OS)",
                     "type": "string"
+                }
+            }
+        },
+        "cloud_settings": {
+            "type": "object",
+            "description": "The timezone settings",
+            "properties": {
+                "enabled": {
+                    "description": "Enable cloud connection",
+                    "type": "boolean"
+                },
+                "supportAccessEnabled": {
+                    "description": "Enable remote support team access",
+                    "type": "boolean"
+                },
+                "cloudServers": {
+                    "description": "Remote cloud servers",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         }
