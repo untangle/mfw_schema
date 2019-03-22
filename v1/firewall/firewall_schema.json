@@ -217,8 +217,7 @@
                     "type": "integer"
                 },
                 "policy": {
-                    "type": "string",
-                    "enum": ["LOW_JITTER", "LOW_LATENCY", "HIGH_BANDWIDTH", "BALANCE", "DEFAULT"]
+                    "type": "integer"
                 }
             }
         }
