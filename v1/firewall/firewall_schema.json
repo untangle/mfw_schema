@@ -196,7 +196,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_DESTINATION","WAN_POLICY"]
+                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_POLICY"]
                 },
                 "chain": {
                     "type": "string"
