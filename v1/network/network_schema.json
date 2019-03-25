@@ -414,6 +414,18 @@
                 "openvpnConfFile": {
                     "$ref": "file:../files/files_schema.json#/definitions/file_settings"
                 },
+                "openvpnUsernamePasswordEnabled": {
+                    "type": "boolean",
+                    "description": "True if this openvpn interface requires username/password authentication"
+                },
+                "openvpnUsername": {
+                    "type": "string",
+                    "description": "The openvpn username if usename authentication enabled"
+                },
+                "openvpnPasswordBase64": {
+                    "type": "string",
+                    "description": "The openvpn password in cleartext/base64 if username authentication is enabled"
+                },
                 "wireguardPrivateKey": {
                     "type": "string",
                     "description": "The wireguard private key"
