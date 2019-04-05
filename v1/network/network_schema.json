@@ -294,6 +294,10 @@
                     "description": "The interface ID that this interface is bridgedTo if this is configType == BRIDGED",
                     "minimum": 1
                 },
+                "qosEnabled": {
+                    "type": "boolean",
+                    "description": "Enable QoS"
+                },
                 "downloadKbps": {
                     "type": "integer",
                     "description": "The maximum download kilobit per second of this WAN interface",
