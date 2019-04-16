@@ -426,9 +426,13 @@
                     "type": "string",
                     "description": "The openvpn username if usename authentication enabled"
                 },
+                "openvpnBoundInterfaceId": {
+                    "type": "string",
+                    "description": "The interfaceId of the interface that openvpn should use to connect (0 or undefined means Any WAN)"
+                },
                 "openvpnPasswordBase64": {
                     "type": "string",
-                    "description": "The openvpn password in cleartext/base64 if username authentication is enabled"
+                    "description": "The openvpn password in cleartext/base64 if username authentication if enabled"
                 },
                 "wireguardPrivateKey": {
                     "type": "string",
