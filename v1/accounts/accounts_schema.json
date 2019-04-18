@@ -23,6 +23,10 @@
                     "description": "This accounts email address",
                     "type": "string"
                 },
+                "authorizedKeys": {
+                    "description": "SSH authorized keys",
+                    "type": "string"
+                },
                 "passwordCleartext": {
                     "description": "The cleartext password - this should not be saved in the settings file",
                     "type": "string"
