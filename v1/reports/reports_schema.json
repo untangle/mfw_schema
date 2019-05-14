@@ -49,6 +49,11 @@
                     "type": "string",
                     "description": "The table the report queries"
                 },
+                "tables": {
+                    "type": "array",
+                    "description": "A list of tables joined if this is a join. This is used by the UI",
+                    "items": {"type": "string"}
+                },
                 "conditions": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/report_condition" }
