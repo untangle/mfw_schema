@@ -154,6 +154,11 @@
                              "SERVER_USERNAME",
                              "LOCAL_USERNAME",
                              "REMOTE_USERNAME",
+                             "APPLICATION_ID",
+                             "APPLICATION_NAME",
+                             "APPLICATION_PROTOCHAIN",
+                             "APPLICATION_DETAIL",
+                             "APPLICATION_CATEGORY",
                              "CT_STATE",
                              "LIMIT_RATE"
                             ]
