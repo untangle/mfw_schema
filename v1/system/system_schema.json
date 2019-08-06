@@ -11,7 +11,8 @@
                 "domainName": {"type": "string"},
                 "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
-                "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" }
+                "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
+                "autoUpgrade": { "$ref": "#/definitions/auto_upgrade_settings" }
             }
         },
         "setup_wizard_settings": {
@@ -60,6 +61,34 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "auto_upgrade_settings": {
+            "type": "object",
+            "description": "The timezone settings",
+            "properties": {
+                "enabled": {
+                    "description": "Enable auto upgrade",
+                    "type": "boolean"
+                },
+                "dayOfWeek": {
+                    "description": "The day of week to auto-upgrade (0-6) (0 is Sunday 6 is Saturday)",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6
+                },
+                "hourOfDay": {
+                    "description": "The hour of day to autoupgrade (0-23)",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 23
+                },
+                "minuteOfHour": {
+                    "description": "The minute of hour to autoupgrade (0-59)",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 59
                 }
             }
         }
