@@ -128,7 +128,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "enum": ["NIC","VLAN","WIFI","OPENVPN","WIREGUARD"]
+                    "enum": ["NIC","VLAN","WIFI","OPENVPN","WIREGUARD","WWAN"]
                 },
                 "configType": {
                     "type": "string",
@@ -451,6 +451,53 @@
                     "type": "array",
                     "description": "List of wireguard peers",
                     "items": { "$ref": "#/definitions/wireguard_peer" }
+                },
+                "simApn": {
+                    "type": "string",
+                    "description": "Modem access point name"
+                },
+                "simProfile": {
+                    "type": "integer",
+                    "description": "Modem profile number"
+                },
+                "simPin": {
+                    "type": "integer",
+                    "description": "Sim pin code"
+                },
+                "simDelay": {
+                    "type": "integer",
+                    "description": "Delay before configuring the modem on boot"
+                },
+                "simAuth": {
+                    "type": "string",
+                    "description": "Sim authentication method",
+                    "enum": ["NONE", "PAP", "CHAP", "BOTH"]
+                },
+                "simUsername": {
+                    "type": "string",
+                    "description": "Sim authentication username"
+                },
+                "simPassword": {
+                    "type": "string",
+                    "description": "Sim authentication password"
+                },
+                "simMode": {
+                    "type": "string",
+                    "description": "Sim mode",
+                    "enum": ["ALL", "LTE", "UMTS", "GSM", "CDMA", "TDSCDMA"]
+                },
+                "simPdptype": {
+                    "type": "string",
+                    "description": "Sim connection method",
+                    "enum": ["IPV4", "IPV6", "IPV4V6"]
+                },
+                "simPlmn": {
+                    "type": "integer",
+                    "description": "Sim PLMN (first three digits are mmc, last three digits are mnc)"
+                },
+                "simAutoconnect": {
+                    "type": "bool",
+                    "description": "Enable automatic connect/reconnect"
                 }
             }
         },
