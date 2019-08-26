@@ -472,6 +472,10 @@
                     "type": "integer",
                     "description": "Delay before configuring the modem on boot"
                 },
+                "simTimeout": {
+                    "type": "integer",
+                    "description": "Time to wait while attempting to configure the connection"
+                },
                 "simAuth": {
                     "type": "string",
                     "description": "Sim authentication method",
