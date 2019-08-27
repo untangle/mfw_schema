@@ -114,6 +114,10 @@
                     "maxLength": 8,
                     "minLength": 1
                 },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if this interface is enabled, False otherwise"
+                },
                 "device": {
                     "type": "string",
                     "description": "The physical dev represented by this interface (eth0)"
@@ -133,7 +137,7 @@
                 "configType": {
                     "type": "string",
                     "description": "The configuration type",
-                    "enum": ["ADDRESSED","BRIDGED","DISABLED"]
+                    "enum": ["ADDRESSED","BRIDGED"]
                 },
                 "natEgress": {
                     "type": "boolean",
