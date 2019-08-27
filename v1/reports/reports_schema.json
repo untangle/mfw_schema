@@ -286,6 +286,14 @@
                     "description": "The the default column names to display for event list reports",
                     "items": {"type": "string"}
                 },
+                "columnRenames": {
+                    "type": "array",
+                    "description": "Rename columns visually when rendering",
+                    "items": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                    }
+                },
                 "textString": {
                     "type": "string",
                     "description": "The user-defined string for a text report"
