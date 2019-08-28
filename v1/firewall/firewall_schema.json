@@ -164,7 +164,7 @@
                              "APPLICATION_CONFIDENCE_INFERRED",
                              "APPLICATION_PROTOCHAIN_INFERRED",
                              "APPLICATION_PRODUCTIVITY_INFERRED",
-                             "APPLICATION_THREAT_INFERRED",
+                             "APPLICATION_RISK_INFERRED",
                              "APPLICATION_CATEGORY_INFERRED",
                              "CERT_SUBJECT_CN",
                              "CERT_SUBJECT_SN",
