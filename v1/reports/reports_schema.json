@@ -287,12 +287,8 @@
                     "items": {"type": "string"}
                 },
                 "columnRenames": {
-                    "type": "array",
-                    "description": "Rename columns visually when rendering",
-                    "items": {
-                        "type": "array",
-                        "items": {"type": "string"}
-                    }
+                    "type": "object",
+                    "description": "A string->string map for database name to display name"
                 },
                 "textString": {
                     "type": "string",
