@@ -419,6 +419,10 @@
                     "description": "The wireless channel",
                     "minimum": 0
                 },
+                "wirelessMode": {
+                    "type": "string",
+                    "description": "The wireless throughput mode",
+                },
                 "openvpnConfFile": {
                     "$ref": "file:../files/files_schema.json#/definitions/file_settings"
                 },
