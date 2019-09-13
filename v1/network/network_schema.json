@@ -419,7 +419,7 @@
                     "description": "The wireless channel",
                     "minimum": 0
                 },
-                "wirelessMode": {
+                "wirelessThroughput": {
                     "type": "string",
                     "description": "The wireless throughput mode",
                 },
