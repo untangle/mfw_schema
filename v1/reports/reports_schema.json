@@ -85,6 +85,9 @@
                 "querySeries": {
                     "$ref": "#/definitions/report_query_series"
                 },
+                "queryEvents": {
+                    "$ref": "#/definitions/report_query_events"
+                },
                 "rendering": {
                     "$ref": "#/definitions/report_rendering"
                 }
@@ -170,6 +173,20 @@
                     "description": "This defines the column to use to order the results. 1 means categoriesOrderByColumn, 2 means the aggregation by value. 2 if unspecified.",
                     "minimum": 1,
                     "maximum": 2
+                },
+                "orderAsc": {
+                    "type": "boolean",
+                    "description": "If true the results will be order by ASC, if false or unspecified the results will be order by DESC."
+                }
+            }
+        },
+        "report_query_events": {
+            "type": "object",
+            "description": "The report query (SQL configuration) options for an EVENTS report",
+            "properties": {
+                "orderByColumn": {
+                    "type": "string",
+                    "description": "The column name to order by. If unspecified the results will be ordered by 'time_stamp'"
                 },
                 "orderAsc": {
                     "type": "boolean",
