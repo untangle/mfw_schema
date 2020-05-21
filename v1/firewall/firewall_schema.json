@@ -88,9 +88,9 @@
             "additionalProperties": false,
             "properties": {
                 "ruleId": {
-                    "type": "integer",
-                    "description": "The rule ID",
-                    "minimum": 1
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The rule ID"
                 },
                 "enabled": {
                     "type": "boolean",
@@ -259,7 +259,8 @@
                     "type": "integer"
                 },
                 "policy": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         }

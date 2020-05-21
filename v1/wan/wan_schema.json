@@ -21,9 +21,9 @@
             "required": ["policyId","type","interfaces"],
             "properties": {
                 "policyId": {
-                    "type": "integer",
-                    "description": "The policy ID",
-                    "minimum": 1
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The policy ID"
                 },
                 "enabled": {
                     "type": "boolean",
