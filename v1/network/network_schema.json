@@ -442,6 +442,10 @@
                     "type": "string",
                     "description": "The openvpn password in cleartext/base64 if username authentication if enabled"
                 },
+                "openvpnPeerDns": {
+                    "type": "boolean",
+                    "description": "Enables or Disables using the Peer DNS option from the OpenVPN tunnel"
+                },
                 "wireguardPrivateKey": {
                     "type": "string",
                     "description": "The wireguard private key"
