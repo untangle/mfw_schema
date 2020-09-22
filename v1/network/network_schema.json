@@ -434,9 +434,9 @@
                     "type": "string",
                     "description": "The openvpn username if usename authentication enabled"
                 },
-                "openvpnBoundInterfaceId": {
+                "boundInterfaceId": {
                     "type": "string",
-                    "description": "The interfaceId of the interface that openvpn should use to connect (0 or undefined means Any WAN)"
+                    "description": "The interfaceId of the interface that binding technologies i.e. openvpn, VLANs, Wireguard should use to connect (0 or undefined means Any WAN)"
                 },
                 "openvpnPasswordBase64": {
                     "type": "string",
