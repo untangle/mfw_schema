@@ -400,6 +400,12 @@
                     "type": "string",
                     "description": "The wireless SSID"
                 },
+                "vlanid": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4094,
+                    "description": "The VLAN Tag ID to be applied to an interface.  Valid integer from 1 to 4094"
+                },
                 "wirelessEncryption": {
                     "type": "string",
                     "description": "The wireless encryption method",
