@@ -450,10 +450,19 @@
                     "type": "string",
                     "description": "The wireguard private key"
                 },
+                "wireguardPublicKey": {
+                    "type": "string",
+                    "description": "The wireguard public key"
+                },
                 "wireguardAddresses": {
                     "type": "array",
-                    "description": "List of wireguard interface addresses",
-                    "items": { "type": "string" }
+                    "description": "List of WireGuard's interface IP addresses",
+                    "items": { "$ref": "#/definitions/wireguard_address" }
+                },
+                "wireguardType": {
+                    "type": "string",
+                    "description": "Type of of VPN",
+                    "enum": ["ROAMING", "TUNNEL"]
                 },
                 "wireguardPort": {
                     "type": "integer",
@@ -556,6 +565,38 @@
                 }
             }
         },
+        "wireguard_address": {
+            "type": "object",
+            "description": "WireGuard address",
+            "required": ["address","prefix"],
+            "address": {
+                "type": "string",
+                "description": "The IPv4 or IPv6 address",
+                "format": "ipany"
+            },
+            "prefix": {
+                "type": "integer",
+                "description": "The IPv4 or IPv6 prefix (netmask)",
+                "minimum": 1,
+                "maximum": 128
+            }
+        },
+        "wireguard_allowed_ip": {
+            "type": "object",
+            "description": "WireGuard allowed IP networks",
+            "required": ["","v4Prefix"],
+            "address": {
+                "type": "string",
+                "description": "The address or network",
+                "format": "ipany"
+            },
+            "prefix": {
+                "type": "integer",
+                "description": "The prefix (netmask)",
+                "minimum": 1,
+                "maximum": 32
+            }
+        },
         "wireguard_peer": {
             "type": "object",
             "description": "A wireguard peer",
@@ -569,7 +610,7 @@
                 "allowedIps": {
                     "type": "array",
                     "description": "List of peer's allowed IP addresses",
-                    "items": { "type": "string" }
+                    "items": { "$ref": "#/definitions/wireguard_allowed_ip" }
                 },
                 "host": {
                     "type": "string",
