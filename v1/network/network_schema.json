@@ -516,8 +516,21 @@
                     "description": "Sim PLMN (first three digits are mmc, last three digits are mnc)"
                 },
                 "simAutoconnect": {
-                    "type": "bool",
+                    "type": "boolean",
                     "description": "Enable automatic connect/reconnect"
+                },
+                "ethAutoneg" : {
+                    "type": "boolean",
+                    "decription": "Auto negotiation on/off"
+                },
+                "ethDuplex": {
+                    "type": "string",
+                    "description": "Duplex mode",
+                    "enum": ["half", "full"]
+                },
+                "ethSpeed" : {
+                    "type": "integer",
+                    "description": "Interface sppeed"
                 }
             }
         },
