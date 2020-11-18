@@ -505,7 +505,7 @@
                 },
                 "ethSpeed" : {
                     "type": "integer",
-                    "description": "Interface sppeed"
+                    "description": "Interface speed"
                 }
             }
         },
