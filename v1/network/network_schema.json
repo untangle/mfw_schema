@@ -434,6 +434,11 @@
                     "description": "List of WireGuard's interface IP addresses",
                     "items": { "$ref": "#/definitions/wireguard_address" }
                 },
+                "wireguardEditMode": {
+                    "type": "string",
+                    "description": "How this VPN is to be editied",
+                    "enum": ["PASTE", "MANUAL"]
+                },
                 "wireguardType": {
                     "type": "string",
                     "description": "Type of of VPN",
