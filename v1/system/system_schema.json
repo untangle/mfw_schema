@@ -9,6 +9,10 @@
             "properties": {
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
+                "theme": {
+                    "description": "Controls of the theme of the UI",
+                    "type": "string"
+                },
                 "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
