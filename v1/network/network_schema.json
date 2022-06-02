@@ -396,7 +396,7 @@
                 },
                 "wirelessThroughput": {
                     "type": "string",
-                    "description": "The wireless throughput mode",
+                    "description": "The wireless throughput mode"
                 },
                 "openvpnConfFile": {
                     "$ref": "file:../files/files_schema.json#/definitions/file_settings"
@@ -520,6 +520,14 @@
                 "ethSpeed" : {
                     "type": "integer",
                     "description": "Interface speed"
+                },
+                "mtu": {
+                    "type": "integer",
+                    "description": "Interface MTU setting"
+                },
+                "routeMtu": {
+                    "type": "boolean",
+                    "description": "Use Route MTU Discovery to determine MTU"
                 }
             }
         },
