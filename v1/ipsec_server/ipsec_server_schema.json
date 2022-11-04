@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "ipsec_server_settings": {
+            "type": "object",
+            "description": "IPSec server settings - TBD",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the geoip fencing service"
+                },
+                "debug": {
+                    "type": "number",
+                    "description": "Enable/Disable ipsec server debug logs"
+                },
+                "authentication": {
+                    "type": "object",
+                    "description": "authentication definition",
+                    "additionalProperties": false,
+                    "properties": {
+                        "shared_secret": {
+                            "type": "string",
+                            "description": "The shared secret value for auth"
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "the type of authentication configured"
+                        }
+                    }
+                },
+                "phase1": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/ipsec_encryption" }
+                },
+                "phase2": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/ipsec_encryption" }
+                },
+                "local": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/gateway_definition"}
+                },
+                "remote": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/gateway_definition"}
+                }
+            }
+        },
+        "ipsec_encryption": {
+            "type": "object",
+            "description": "available ipsec encryption methods",
+            "additionalProperties": false,
+            "properties": {
+                "encryption": {
+                    "type": "string",
+                    "description": "The encryption type"
+                },
+                "group": {
+                    "type": "string",
+                    "description": "The encryption group information"
+                },
+                "hash": {
+                    "type": "string",
+                    "description": "The hash type information"
+                }
+            }
+        },
+        "gateway_definition": {
+            "type": "object",
+            "description": "Ipsec gateway configuration information",
+            "additionalProperties": false,
+            "properties":{
+                "gateway": {
+                    "type": "string",
+                    "description": "gateway address information for local/remote gateway"
+                },
+                "networks": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/network_definition"}
+                }
+            }
+        },
+        "network_definition": {
+            "type": "object",
+            "description": "Gateway Network information",
+            "additionalProperties": false,
+            "properties": {
+                "network": {
+                    "type": "string",
+                    "description": "the network address"
+                },
+                "prefix": {
+                    "type":"number",
+                    "description": "The network CIDR prefix range"
+                }
+            }
+        }
+    }
+}
