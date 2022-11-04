@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "geoip_settings": {
+            "type": "object",
+            "description": "geoip fencing service settings",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the geoip fencing service"
+                },
+                "enabledLog": {
+                    "type": "boolean",
+                    "description": "Enable/Disable logging of the the geoip fencing results"
+                },
+                "blockedCountries": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/country_settings" }
+                },
+                "passedNetworks": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/geoip_network_settings"}
+                }
+            }
+        },
+        "country_settings": {
+            "type": "string",
+            "description": "Countries to filter on"
+        },
+        "geoip_network_settings": {
+            "type": "object",
+            "description": "geoip bypassed network object",
+            "additionalProperties": false,
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "description": "CIDR network to bypass from fencing"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the network"
+                }
+            }
+        }
+    }
+}
