@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "uris": {
+            "type": "object",
+            "description": "URI settings",
+            "additionalProperties": false,
+            "properties": {
+                "uriTranslations": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/uriTranslations" }
+                }
+            }
+        },
+        "uriTranslations": {
+            "type": "object",
+            "description": "URI translation objects",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "The URI to match for"
+                },
+                "host": {
+                    "type": "string",
+                    "description": "The host to replace the URI with during URI translation"
+                }
+            }
+        }
+    }
+}
