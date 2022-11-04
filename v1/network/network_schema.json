@@ -528,6 +528,14 @@
                 "routeMtu": {
                     "type": "boolean",
                     "description": "Use Route MTU Discovery to determine MTU"
+                },
+                "virtual": {
+                    "type": "boolean",
+                    "description": "Virtual interface indicator (vlan/vpn/etc.)"
+                },
+                "wanWeight": {
+                    "type": "number",
+                    "description": "Weight of WAN interace to use in weighted balance algorithms"
                 }
             }
         },
