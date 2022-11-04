@@ -17,7 +17,14 @@
         "accounts": { "$ref": "file:accounts/accounts_schema.json#/definitions/accounts_settings" },
         "dashboard": { "$ref": "file:dashboard/dashboard_schema.json#/definitions/dashboard_settings" },
         "files": { "$ref": "file:files/files_schema.json#/definitions/files_settings" },
-        "wan": { "$ref": "file:wan/wan_schema.json#/definitions/wan_settings" }
+        "wan": { "$ref": "file:wan/wan_schema.json#/definitions/wan_settings" },
+        "discovery": { "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings" },
+        "geoip": { "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings" },
+        "ipsec": { "$ref": "file:ipsec_server/ipsec_server_schema.json#/definitions/ipsec_server_settings" },
+        "routes": { "$ref": "file:routes/routes_schema.json#/definitions/routes_settings" },
+        "threatprevention": { "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" },
+        "uris": { "$ref": "file:uris/uris_schema.json#/definitions/uris_settings" },
+        "webfilter": { "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings" }
     },
     "definitions": {
     }
