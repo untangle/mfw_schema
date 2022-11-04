@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "webfilter_settings": {
+            "type": "object",
+            "description": "webfilter settings",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if webfilter is enabled, false otherwise"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/webfilter_categories" }
+                },
+                "blockList": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/webfilter_list_item" }
+                },
+                "passList": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/webfilter_list_item" }
+                }
+            }
+        },
+        "webfilter_categories": {
+            "type": "object",
+            "description": "webfilter categories",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if webfilter category is being filtered/blocked, false otherwise"
+                },
+                "flagged": {
+                    "type": "boolean",
+                    "description": "True if webfilter category is being flagged, false otherwise"
+                },
+                "id": {
+                    "type": "number",
+                    "description": "Unique identifier of the webfilter category"
+                }
+            }
+        },
+        "webfilter_list_item": {
+            "type": "object",
+            "description": "webfilter list items for block/pass list entries",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if list item filtered/blocked, false otherwise"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the list item"
+                },
+                "exact": {
+                    "type": "boolean",
+                    "description": "True if list item name is being exact matched, otherwise wildcard match the name"
+                },
+                "flagged": {
+                    "type": "boolean",
+                    "description": "True if list item is being flagged, false otherwise"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The list item value to match on"
+                }
+            }
+        }
+    }
+}
