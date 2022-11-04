@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "route_settings": {
+            "description": "Static route entries",
+            "type": "array",
+            "items": { "$ref": "#/definitions/static_route_item" }
+        },
+        "static_route_item": {
+            "type": "object",
+            "description": "Static route definition bject",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True if static route is enabled, false otherwise"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the static route"
+                },
+                "interfaceId": {
+                    "type": "number",
+                    "description": "The interface ID to link the static route with"
+                },
+                "network": {
+                    "type": "string",
+                    "description": "Static route network destination information"
+                },
+                "nextHop": {
+                    "type": "string",
+                    "description": "The nexthop/gateway of the static route definition"
+                }
+            }
+        }
+    }
+}
