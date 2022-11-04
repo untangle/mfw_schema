@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "discovery_settings": {
+            "type": "object",
+            "description": "host device discovery settings",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the host device discovery tool"
+                },
+                "plugins": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/discovery_plugin_settings" }
+                }
+            }
+        },
+        "discovery_plugin_settings": {
+            "type": "object",
+            "description": "Individual Discovery component settings",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "The discovery collector type"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the individual collector"
+                },
+                "autoInterval": {
+                    "type": "number",
+                    "description": "The autoscan interval to run this collector on"
+                }
+            }
+        }
+    }
+}
