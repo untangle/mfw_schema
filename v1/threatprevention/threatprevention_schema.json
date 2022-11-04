@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "threatprevention_settings": {
+            "type": "object",
+            "description": "Threat prevention service settings",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the threat prevention service"
+                },
+                "redirect": {
+                    "type": "boolean",
+                    "description": "Enable/Disable redirection to block page"
+                },
+                "sensitivity": {
+                    "type": "number",
+                    "description": "Threat Prevention sensitivity level, block everything above this threat level"
+                },
+                "passList": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/threatprevention_bypass_item"}
+                }
+            }
+        },
+        "threatprevention_bypass_item": {
+            "type": "object",
+            "description": "threatprevention bypassed network object",
+            "additionalProperties": false,
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "CIDR network to bypass from threat prevention"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the network"
+                }
+            }
+        }
+    }
+}
