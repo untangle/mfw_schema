@@ -12,7 +12,8 @@
                 "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
-                "autoUpgrade": { "$ref": "#/definitions/auto_upgrade_settings" }
+                "autoUpgrade": { "$ref": "#/definitions/auto_settings" },
+                "autoBackup": { "$ref": "#/definitions/auto_settings" }
             }
         },
         "setup_wizard_settings": {
@@ -64,28 +65,28 @@
                 }
             }
         },
-        "auto_upgrade_settings": {
+        "auto_settings": {
             "type": "object",
             "description": "The timezone settings",
             "properties": {
                 "enabled": {
-                    "description": "Enable auto upgrade",
+                    "description": "Enable auto schedule",
                     "type": "boolean"
                 },
                 "dayOfWeek": {
-                    "description": "The day of week to auto-upgrade (0-6) (0 is Sunday 6 is Saturday)",
+                    "description": "The day of week to auto run process (0-6) (0 is Sunday 6 is Saturday)",
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 6
                 },
                 "hourOfDay": {
-                    "description": "The hour of day to autoupgrade (0-23)",
+                    "description": "The hour of day to auto run process (0-23)",
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 23
                 },
                 "minuteOfHour": {
-                    "description": "The minute of hour to autoupgrade (0-59)",
+                    "description": "The minute of hour to auto run process (0-59)",
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 59
