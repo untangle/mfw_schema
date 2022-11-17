@@ -37,7 +37,7 @@
                 },
                 "vlans": {
                     "type": "array",
-                    "description": "The vlans of the switch",
+                    "description": "Hardware based vlans of the switch",
                     "items": { "$ref": "#/definitions/switch_vlan" }
                 }
             }
@@ -528,6 +528,10 @@
                 "routeMtu": {
                     "type": "boolean",
                     "description": "Use Route MTU Discovery to determine MTU"
+                },
+                "vlanid": {
+                    "type": "integer",
+                    "description": "Software device level 8021q VLAN ID to assign to an interface - requires a parent 'boundInterfaceId'"
                 },
                 "virtual": {
                     "type": "boolean",
