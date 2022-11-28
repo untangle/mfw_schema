@@ -1,0 +1,82 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "applicationcontrol_settings": {
+            "type": "object",
+            "description": "Application control settings",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "This toggles on/off both classify and predict traffic service plugins/services"
+                },
+                "actions": {
+                    "type": "array",
+                    "description": "TBD",
+                    "items": {
+                        "$ref": "#/definitions/application_control_actions"
+                    }
+                },
+                "cloud_classification": {
+                    "type": "boolean",
+                    "description": "This will toggle off Predict Traffic service"
+                },
+                "bypass_filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "file:firewall_schema.json#/definitions/rule"
+                    }
+                },
+                "manual_application": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitiona/application_control_manual_applications"
+                    }
+                }
+            }
+        },
+        "application_control_actions": {
+            "type": "object",
+            "description": "Application control actions",
+            "properties": {
+                "id_match": {
+                    "type": "string"
+                },
+                "drop": {
+                    "type": "boolean"
+                },
+                "flag": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "application_control_manual_applications": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "confidence": {
+                    "type": "integer"
+                },
+                "protochain": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "productivity": {
+                    "type": "integer"
+                },
+                "risk": {
+                    "type": "integer"
+                },
+                "category": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

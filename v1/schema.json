@@ -24,7 +24,8 @@
         "routes": { "$ref": "file:routes/routes_schema.json#/definitions/routes_settings" },
         "threatprevention": { "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" },
         "uris": { "$ref": "file:uris/uris_schema.json#/definitions/uris_settings" },
-        "webfilter": { "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings" }
+        "webfilter": { "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings" },
+        "applicationcontrol": { "$ref": "file:applicationcontrol/applicationcontrol_schema.json#/definitions/applicationcontrol_settings" }
     },
     "definitions": {
     }
