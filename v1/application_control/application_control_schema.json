@@ -41,8 +41,9 @@
                 "id_match": {
                     "type": "string"
                 },
-                "drop": {
-                    "type": "boolean"
+                "tarpitting": {
+                    "type": "string",
+                    "enum": ["DROP", "REJECT"]
                 },
                 "flag": {
                     "type": "boolean"
