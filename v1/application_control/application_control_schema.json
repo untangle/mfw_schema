@@ -75,6 +75,12 @@
                 },
                 "category": {
                     "type": "string"
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "file:firewall_schema.json#/definitions/rule"
+                    }
                 }
             }
         }
