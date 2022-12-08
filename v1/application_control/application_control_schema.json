@@ -6,12 +6,10 @@
             "description": "Application control settings",
             "properties": {
                 "enabled": {
-                    "type": "boolean",
-                    "description": "This toggles on/off both classify and predict traffic service plugins/services"
+                    "type": "boolean"
                 },
                 "actions": {
                     "type": "array",
-                    "description": "TBD",
                     "items": {
                         "$ref": "#/definitions/application_control_actions"
                     }
@@ -23,13 +21,13 @@
                 "bypass_filters": {
                     "type": "array",
                     "items": {
-                        "$ref": "file:firewall_schema.json#/definitions/rule"
+                        "$ref": "#/definitions/application_control_conditions"
                     }
                 },
                 "manual_application": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitiona/application_control_manual_applications"
+                        "$ref": "#/definitions/application_control_manual_applications"
                     }
                 }
             }
@@ -47,6 +45,25 @@
                 },
                 "flag": {
                     "type": "boolean"
+                }
+            }
+        },
+        "application_control_conditions": {
+            "type": "array",
+            "items": { 
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["CLIENT_ADDRESS", "CLIENT_PORT", "SERVER_ADDRESS", "SERVER_PORT", "PROTOCOL_TYPE"]
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "op": {
+                        "type": "string",
+                        "enum": ["==","!=","<",">","<=",">="]
+                    }
                 }
             }
         },
@@ -80,7 +97,7 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "file:firewall_schema.json#/definitions/rule"
+                        "$ref": "#/definitions/application_control_conditions"
                     }
                 }
             }
