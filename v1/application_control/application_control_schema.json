@@ -8,15 +8,8 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "actions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/application_control_actions"
-                    }
-                },
                 "cloud_classification": {
-                    "type": "boolean",
-                    "description": "This will toggle off Predict Traffic service"
+                    "type": "boolean"
                 },
                 "bypass_filters": {
                     "type": "array",
@@ -24,10 +17,16 @@
                         "$ref": "#/definitions/application_control_conditions"
                     }
                 },
-                "manual_application": {
+                "manual_applications": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/application_control_manual_applications"
+                    }
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_actions"
                     }
                 }
             }
@@ -39,12 +38,9 @@
                 "id_match": {
                     "type": "string"
                 },
-                "tarpitting": {
+                "action": {
                     "type": "string",
-                    "enum": ["DROP", "REJECT"]
-                },
-                "flag": {
-                    "type": "boolean"
+                    "enum": ["DROP", "REJECT", "TARPIT", "FLAG"]
                 }
             }
         },
@@ -76,13 +72,13 @@
                 "name": {
                     "type": "string"
                 },
-                "confidence": {
-                    "type": "integer"
-                },
                 "protochain": {
                     "type": "string"
                 },
                 "detail": {
+                    "type": "string"
+                },
+                "category": {
                     "type": "string"
                 },
                 "productivity": {
@@ -91,8 +87,8 @@
                 "risk": {
                     "type": "integer"
                 },
-                "category": {
-                    "type": "string"
+                "confidence": {
+                    "type": "integer"
                 },
                 "conditions": {
                     "type": "array",
