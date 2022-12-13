@@ -40,7 +40,10 @@
                 },
                 "action": {
                     "type": "string",
-                    "enum": ["DROP", "REJECT", "TARPIT", "FLAG"]
+                    "enum": ["ALLOW", "BLOCK", "TARPIT"]
+                },
+                "flag": {
+                    "type": "boolean"
                 }
             }
         },
