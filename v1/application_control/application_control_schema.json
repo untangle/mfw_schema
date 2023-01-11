@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "application_control_settings": {
+            "type": "object",
+            "description": "Application control settings",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "cloud_classification": {
+                    "type": "boolean"
+                },
+                "bypass_filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_conditions"
+                    }
+                },
+                "manual_applications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_manual_applications"
+                    }
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_actions"
+                    }
+                }
+            }
+        },
+        "application_control_actions": {
+            "type": "object",
+            "description": "Application control actions",
+            "properties": {
+                "id_match": {
+                    "type": "string"
+                },
+                "action": {
+                    "type": "string",
+                    "enum": ["ALLOW", "BLOCK", "DROP"]
+                },
+                "flag": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "application_control_conditions": {
+            "type": "array",
+            "items": { 
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["CLIENT_ADDRESS", "CLIENT_PORT", "SERVER_ADDRESS", "SERVER_PORT", "PROTOCOL_TYPE"]
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "op": {
+                        "type": "string",
+                        "enum": ["==","!=","<",">","<=",">="]
+                    }
+                }
+            }
+        },
+        "application_control_manual_applications": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "protochain": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "productivity": {
+                    "type": "integer"
+                },
+                "risk": {
+                    "type": "integer"
+                },
+                "confidence": {
+                    "type": "integer"
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_conditions"
+                    }
+                }
+            }
+        }
+    }
+}
