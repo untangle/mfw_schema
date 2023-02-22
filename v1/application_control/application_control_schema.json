@@ -14,13 +14,13 @@
                 "bypass_filters": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_conditions"
+                        "$ref": "#/definitions/application_control_bypass_filters"
                     }
                 },
-                "manual_applications": {
+                "custom_applications": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_manual_applications"
+                        "$ref": "#/definitions/application_control_custom_applications"
                     }
                 },
                 "actions": {
@@ -33,21 +33,77 @@
         },
         "application_control_actions": {
             "type": "object",
-            "description": "Application control actions",
             "properties": {
-                "id_match": {
-                    "type": "string"
+                "block": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "action": {
-                    "type": "string",
-                    "enum": ["ALLOW", "BLOCK", "DROP"]
+                "drop": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "flag": {
-                    "type": "boolean"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
-        "application_control_conditions": {
+        "application_control_bypass_filters": {
+            "type": "array",
+            "items": { 
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["CLIENT_ADDRESS", "CLIENT_PORT", "SERVER_ADDRESS", "SERVER_PORT", "PROTOCOL_TYPE"]
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "flag": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "application_control_custom_applications": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/application_control_custom_applications_conditions"
+                    }
+                },
+                "actions": {
+                    "block": {
+                        "type": "boolean"
+                    },
+                    "drop": {
+                        "type": "boolean"
+                    },
+                    "flag": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "application_control_custom_applications_conditions": {
             "type": "array",
             "items": { 
                 "type": "object",
@@ -62,41 +118,6 @@
                     "op": {
                         "type": "string",
                         "enum": ["==","!=","<",">","<=",">="]
-                    }
-                }
-            }
-        },
-        "application_control_manual_applications": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "protochain": {
-                    "type": "string"
-                },
-                "detail": {
-                    "type": "string"
-                },
-                "category": {
-                    "type": "string"
-                },
-                "productivity": {
-                    "type": "integer"
-                },
-                "risk": {
-                    "type": "integer"
-                },
-                "confidence": {
-                    "type": "integer"
-                },
-                "conditions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/application_control_conditions"
                     }
                 }
             }
