@@ -64,7 +64,7 @@
                 "value": {
                     "type": "string"
                 },
-                "flag": {
+                "enabled": {
                     "type": "boolean"
                 }
             }
