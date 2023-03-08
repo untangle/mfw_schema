@@ -11,12 +11,6 @@
                 "cloud_classification": {
                     "type": "boolean"
                 },
-                "bypass_filters": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/application_control_bypass_filters"
-                    }
-                },
                 "custom_applications": {
                     "type": "array",
                     "items": {
@@ -54,21 +48,6 @@
                 }
             }
         },
-        "application_control_bypass_filters": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "enum": ["CLIENT_ADDRESS", "CLIENT_PORT", "SERVER_ADDRESS", "SERVER_PORT", "PROTOCOL_TYPE"]
-                },
-                "value": {
-                    "type": "string"
-                },
-                "enabled": {
-                    "type": "boolean"
-                }
-            }
-        },
         "application_control_custom_applications": {
             "type": "object",
             "properties": {
@@ -95,6 +74,9 @@
                         "type": "boolean"
                     },
                     "flag": {
+                        "type": "boolean"
+                    },
+                    "bypass": {
                         "type": "boolean"
                     }
                 }
