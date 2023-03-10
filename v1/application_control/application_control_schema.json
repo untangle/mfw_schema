@@ -11,10 +11,10 @@
                 "cloud_classification": {
                     "type": "boolean"
                 },
-                "custom_applications": {
+                "custom_rules": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_custom_applications"
+                        "$ref": "#/definitions/application_control_custom_rules"
                     }
                 },
                 "actions": {
@@ -48,7 +48,7 @@
                 }
             }
         },
-        "application_control_custom_applications": {
+        "application_control_custom_rules": {
             "type": "object",
             "properties": {
                 "name": {
@@ -66,19 +66,8 @@
                         "$ref": "#/definitions/application_control_custom_applications_conditions"
                     }
                 },
-                "actions": {
-                    "block": {
-                        "type": "boolean"
-                    },
-                    "drop": {
-                        "type": "boolean"
-                    },
-                    "flag": {
-                        "type": "boolean"
-                    },
-                    "bypass": {
-                        "type": "boolean"
-                    }
+                "action": {
+                    "type": "string"
                 }
             }
         },
