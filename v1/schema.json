@@ -25,7 +25,8 @@
         "threatprevention": { "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" },
         "uris": { "$ref": "file:uris/uris_schema.json#/definitions/uris_settings" },
         "webfilter": { "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings" },
-        "application_control": { "$ref": "file:application_control/application_control_schema.json#/definitions/application_control_settings" }
+        "application_control": { "$ref": "file:application_control/application_control_schema.json#/definitions/application_control_settings" },
+        "stats": {"$ref": "file:stats/stats_schema.json#/definitions/stats_settings" } 
     },
     "definitions": {
     }
