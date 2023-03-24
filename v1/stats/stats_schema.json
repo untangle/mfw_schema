@@ -21,7 +21,7 @@
                     "type": "string",
                     "description": "Name of Ping Analyzer"
                 },
-                "applyToInterfaceIds": {
+                "interfaceIds": {
                     "type": "array",
                     "items": {"type": "integer"}
                 },
