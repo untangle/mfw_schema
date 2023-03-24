@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "stats_settings": {
+            "type": "object",
+            "description": "Stats service settings",
+            "additionalProperties": false,
+            "properties": {
+                "pingAnalyzers": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/ping_analyzer_settings"}
+                }
+            }
+        },
+        "ping_analyzer_settings": {
+            "type": "object",
+            "description": "Ping Analyzer object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of Ping Analyzer"
+                },
+                "interfaceIds": {
+                    "type": "array",
+                    "items": {"type": "integer"}
+                },
+                "ipv4Addresses": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                },
+                "ipv6Addresses": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Turns a Ping Analyzer on or off"
+                }
+            }
+        }
+    }
+}
