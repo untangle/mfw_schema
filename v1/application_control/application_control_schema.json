@@ -34,13 +34,13 @@
         "application_control_actions": {
             "type": "object",
             "properties": {
-                "block": {
+                "reject": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
-                "drop": {
+                "block": {
                     "type": "array",
                     "items": {
                         "type": "string"
