@@ -17,10 +17,10 @@
                         "$ref": "#/definitions/application_control_bypass_filters"
                     }
                 },
-                "custom_applications": {
+                "custom_rules": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_custom_applications"
+                        "$ref": "#/definitions/application_control_custom_rules"
                     }
                 },
                 "actions": {
@@ -69,7 +69,7 @@
                 }
             }
         },
-        "application_control_custom_applications": {
+        "application_control_custom_rules": {
             "type": "object",
             "properties": {
                 "name": {
@@ -84,7 +84,7 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_custom_applications_conditions"
+                        "$ref": "#/definitions/application_control_custom_rules_conditions"
                     }
                 },
                 "actions": {
@@ -100,7 +100,7 @@
                 }
             }
         },
-        "application_control_custom_applications_conditions": {
+        "application_control_custom_rules_conditions": {
             "type": "array",
             "items": { 
                 "type": "object",
