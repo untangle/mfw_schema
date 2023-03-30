@@ -63,7 +63,7 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/application_control_custom_applications_conditions"
+                        "$ref": "#/definitions/application_control_custom_rules_conditions"
                     }
                 },
                 "action": {
@@ -71,7 +71,7 @@
                 }
             }
         },
-        "application_control_custom_applications_conditions": {
+        "application_control_custom_rules_conditions": {
             "type": "array",
             "items": { 
                 "type": "object",
