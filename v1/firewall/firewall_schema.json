@@ -104,7 +104,11 @@
                     "type": "array",
                     "items": { "$ref": "#/definitions/rule_condition" }
                 },
-                "action": { "$ref": "#/definitions/rule_action" }
+                "action": { "$ref": "#/definitions/rule_action" },
+                "readOnly": {
+                    "type": "boolean",
+                    "description": "True if read only, False otherwise"
+                }
             }
         },
         "rule_condition": {

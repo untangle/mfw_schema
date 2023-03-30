@@ -57,6 +57,10 @@
                     "type": "array",
                     "description": "The list of policy interface criteria",
                     "items": { "$ref": "#/definitions/wan_criterion" }
+                },
+                "readOnly": {
+                    "type": "boolean",
+                    "description": "True if read only, False otherwise"
                 }
             },
             "allOf": [
