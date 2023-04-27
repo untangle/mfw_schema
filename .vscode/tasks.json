@@ -16,15 +16,42 @@
     "inputs": [
         {
             "id": "schema",
-            "type": "promptString",
+            "type": "pickString",
             "description": "pick one of the schemas to validate",
-            "default": "./v1/geoip/geoip_schema.json"
+            "options": [
+                "./v1/accounts/accounts_schema.json",
+                "./v1/firewall/access_table_schema.json",
+                "./v1/ipsec_server/ipsec_server_schema.json",
+                "./v1/threatprevention/threatprevention_schema.json",
+                "./v1/application_control/application_control_schema.json",
+                "./v1/firewall/filter_table_schema.json",
+                "./v1/network/network_schema.json",
+                "./v1/uris/uris_schema.json",
+                "./v1/dashboard/dashboard_schema.json",
+                "./v1/firewall/firewall_schema.json",
+                "./v1/policy_manager/policy_manager_schema.json",
+                "./v1/wan/wan_schema.json",
+                "./v1/dhcp/dhcp_schema.json",
+                "./v1/firewall/nat_table_schema.json",
+                "./v1/reports/reports_schema.json",
+                "./v1/webfilter/webfilter_schema.json",
+                "./v1/discovery/discovery_schema.json",
+                "./v1/firewall/port_forward_schema.json",
+                "./v1/routes/routes_schema.json",
+                "./v1/dns/dns_schema.json",
+                "./v1/firewall/shaping_table_schema.json",
+                "./v1/stats/stats_schema.json",
+                "./v1/files/files_schema.json",
+                "./v1/geoip/geoip_schema.json",
+                "./v1/system/system_schema.json"
+            ],
+            "default": "./v1/schema.json"
         },
         {
             "id": "json",
             "type": "promptString",
             "description": "pick one of the schemas to validate",
-            "default": "./v1 /schema.json"
+            "default": "./v1/schema.json"
         },
     ]
 }
