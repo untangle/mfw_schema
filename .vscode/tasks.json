@@ -51,7 +51,7 @@
             "id": "json",
             "type": "promptString",
             "description": "pick a json file to validate",
-            "default": "./v1/policy_manager/test_settings.json",
+            "default": "./v1/policy_manager/test_settings.json"
         }
     ]
 }

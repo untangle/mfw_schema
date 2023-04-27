@@ -108,14 +108,17 @@
             "discovery": {
                 "$ref": "#/definitions/discovery_schema"
             },
+            "discover": {
+                "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings"
+            },
             "geoip": {
-                "$ref": "#/definitions/geoip_schema"
+                "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings"
             },
             "threadprevention": {
-                "$ref": "#/definitions/threatprevention_schema"
+                "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" 
             },
             "webfilter": {
-                "$ref": "#/definitions/webfilter_schema"
+                "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
         "policy_manager_policies": {
