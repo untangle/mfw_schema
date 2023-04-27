@@ -106,9 +106,6 @@
                 "webfilter"
             ],
             "discovery": {
-                "$ref": "#/definitions/discovery_schema"
-            },
-            "discover": {
                 "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings"
             },
             "geoip": {
