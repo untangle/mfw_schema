@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Validate",
+            "type": "shell",
+            "command": "./validate.py ${input:schema} ${input:json}",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "schema",
+            "type": "promptString",
+            "description": "pick one of the schemas to validate",
+            "default": "./v1/geoip/geoip_schema.json"
+        },
+        {
+            "id": "json",
+            "type": "promptString",
+            "description": "pick one of the schemas to validate",
+            "default": "./v1 /schema.json"
+        },
+    ]
+}
