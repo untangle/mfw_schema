@@ -53,16 +53,15 @@
             "enum": [
                 "CLIENT_ADDRESS", 
                 "CLIENT_PORT", 
-                "DAY",
+                "DAY_OF_WEEK",
                 "DEST_ADDRESS",
-                "DEST_PORT",
                 "INTERFACE", 
                 "SERVER_ADDRESS", 
                 "SERVER_PORT", 
                 "SOURCE_ADDRESS", 
                 "PROTOCOL_TYPE",
-                "TIME",
-                "VLAN"
+                "TIME_OF_DAY",
+                "VLAN_ID"
             ],
             "op": {
                 "type": "string",
