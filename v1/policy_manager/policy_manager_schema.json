@@ -55,6 +55,7 @@
                 "CLIENT_PORT", 
                 "DAY",
                 "DEST_ADDRESS",
+                "DEST_PORT",
                 "INTERFACE", 
                 "SERVER_ADDRESS", 
                 "SERVER_PORT", 
