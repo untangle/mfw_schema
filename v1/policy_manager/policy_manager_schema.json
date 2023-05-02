@@ -102,7 +102,7 @@
             "enum": [
                 "discovery",
                 "geoip",
-                "threadprevention",
+                "threatprevention",
                 "webfilter"
             ],
             "discovery": {
@@ -111,7 +111,7 @@
             "geoip": {
                 "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings"
             },
-            "threadprevention": {
+            "threatprevention": {
                 "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" 
             },
             "webfilter": {
