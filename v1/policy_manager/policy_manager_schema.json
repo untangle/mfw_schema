@@ -8,27 +8,33 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "flows": {
+                "flow": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_flows"
+                        "$ref": "#/definitions/policy_manager_flow"
                     }
                 },
-                "configurations": {
+                "condition": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_configurations"
+                        "$ref": "#/definitions/polocy_manager_condition"
                     }
                 },
-                "policies": {
+                "configuration": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_policies"
+                        "$ref": "#/definitions/policy_manager_configuration"
+                    }
+                },
+                "policy": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_policy"
                     }
                 }
             }
         },
-        "policy_manager_flows": {
+        "policy_manager_flow": {
             "type": "array",
             "properties": {
                 "id": {
@@ -40,16 +46,16 @@
                 "description": {
                     "type": "string"
                 },
-                "conditions": {
+                "condition": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_conditions"
+                        "$ref": "#/definitions/policy_manager_condition"
                     }
                 }
             }
         },
-        "policy_manager_conditions": {
-            "type": "string",
+        "policy_manager_condition": {
+            "condition": "string",
             "enum": [
                 "CLIENT_ADDRESS", 
                 "CLIENT_PORT", 
@@ -63,15 +69,20 @@
                 "TIME_OF_DAY",
                 "VLAN_ID"
             ],
-            "op": {
-                "type": "string",
-                "enum": ["==","!=","<",">","<=",">="]
-            },
-            "value": {
-                "type": "string"
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "op": {
+                    "type": "string",
+                    "enum": ["==","!=","<",">","<=",">="]
+                },
+                "value": {
+                    "type": "string"
+                }
             }
         },
-        "policy_manager_configurations": {
+        "policy_manager_configuration": {
             "type": "object",
             "properties": {
                 "id": {
@@ -83,21 +94,15 @@
                 "description": {
                     "type": "string"
                 },
-                "redirect": {
-                    "type": "boolean"
-                },
-                "sensitivity": {
-                    "type": "integer"
-                },
                 "category": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_categories"
+                        "$ref": "#/definitions/policy_manager_category"
                     }
                 }
             }
         },
-        "policy_manager_categories": {
+        "policy_manager_category": {
             "type": "string",
             "enum": [
                 "discovery",
@@ -118,7 +123,7 @@
                 "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
-        "policy_manager_policies": {
+        "policy_manager_policy": {
             "type": "array",
             "items": { 
                 "type": "object",
@@ -138,16 +143,16 @@
                     "defaults": {
                         "type": "boolean"
                     },    
-                    "configurations": {
+                    "configuration": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/definitions/policy_manager_configurations"
+                            "$ref": "#/definitions/policy_manager_configuration"
                         }
                     },
-                    "flows": {
+                    "flow": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/definitions/policy_manager_flows"
+                            "$ref": "#/definitions/policy_manager_flow"
                         }
                     }
                 }
