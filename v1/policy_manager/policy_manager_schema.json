@@ -8,33 +8,27 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "flow": {
+                "flowCategories": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_flow"
+                        "$ref": "#/definitions/policy_manager_flowCategories"
                     }
                 },
-                "condition": {
+                "configurations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/polocy_manager_condition"
+                        "$ref": "#/definitions/policy_manager_configurations"
                     }
                 },
-                "configuration": {
+                "policies": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_configuration"
-                    }
-                },
-                "policy": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/policy_manager_policy"
+                        "$ref": "#/definitions/policy_manager_policies"
                     }
                 }
             }
         },
-        "policy_manager_flow": {
+        "policy_manager_flowCategories": {
             "type": "array",
             "properties": {
                 "id": {
@@ -46,15 +40,15 @@
                 "description": {
                     "type": "string"
                 },
-                "condition": {
+                "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_condition"
+                        "$ref": "#/definitions/policy_manager_conditions"
                     }
                 }
             }
         },
-        "policy_manager_condition": {
+        "policy_manager_conditions": {
             "condition": "string",
             "enum": [
                 "CLIENT_ADDRESS", 
@@ -82,7 +76,7 @@
                 }
             }
         },
-        "policy_manager_configuration": {
+        "policy_manager_configurations": {
             "type": "object",
             "properties": {
                 "id": {
@@ -123,7 +117,7 @@
                 "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
-        "policy_manager_policy": {
+        "policy_manager_policies": {
             "type": "array",
             "items": { 
                 "type": "object",
@@ -143,16 +137,16 @@
                     "defaults": {
                         "type": "boolean"
                     },    
-                    "configuration": {
+                    "configurations": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/definitions/policy_manager_configuration"
+                            "$ref": "#/definitions/policy_manager_configurations"
                         }
                     },
-                    "flow": {
+                    "flowCategories": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/definitions/policy_manager_flow"
+                            "$ref": "#/definitions/policy_manager_flowCategories"
                         }
                     }
                 }
