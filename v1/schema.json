@@ -2,32 +2,76 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "description": "schema for the JSON settings",
     "type": "object",
-    "required": ["version","system","network"],
+    "required": [
+        "version",
+        "system",
+        "network"
+    ],
     "properties": {
         "version": {
             "type": "integer",
             "minimum": 1
         },
-        "network": { "$ref": "file:network/network_schema.json#/definitions/network_settings" },
-        "system": { "$ref": "file:system/system_schema.json#/definitions/system_settings" },
-        "reports": { "$ref": "file:reports/reports_schema.json#/definitions/reports_settings" },
-        "firewall": { "$ref": "file:firewall/firewall_schema.json#/definitions/firewall_settings" },
-        "dhcp": { "$ref": "file:dhcp/dhcp_schema.json#/definitions/dhcp_settings" },
-        "dns": { "$ref": "file:dns/dns_schema.json#/definitions/dns_settings" },
-        "accounts": { "$ref": "file:accounts/accounts_schema.json#/definitions/accounts_settings" },
-        "dashboard": { "$ref": "file:dashboard/dashboard_schema.json#/definitions/dashboard_settings" },
-        "files": { "$ref": "file:files/files_schema.json#/definitions/files_settings" },
-        "wan": { "$ref": "file:wan/wan_schema.json#/definitions/wan_settings" },
-        "discovery": { "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings" },
-        "geoip": { "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings" },
-        "ipsec": { "$ref": "file:ipsec_server/ipsec_server_schema.json#/definitions/ipsec_server_settings" },
-        "routes": { "$ref": "file:routes/routes_schema.json#/definitions/routes_settings" },
-        "threatprevention": { "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" },
-        "uris": { "$ref": "file:uris/uris_schema.json#/definitions/uris_settings" },
-        "webfilter": { "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings" },
-        "application_control": { "$ref": "file:application_control/application_control_schema.json#/definitions/application_control_settings" },
-        "stats": {"$ref": "file:stats/stats_schema.json#/definitions/stats_settings" } 
+        "network": {
+            "$ref": "file:network/network_schema.json#/definitions/network_settings"
+        },
+        "system": {
+            "$ref": "file:system/system_schema.json#/definitions/system_settings"
+        },
+        "reports": {
+            "$ref": "file:reports/reports_schema.json#/definitions/reports_settings"
+        },
+        "firewall": {
+            "$ref": "file:firewall/firewall_schema.json#/definitions/firewall_settings"
+        },
+        "dhcp": {
+            "$ref": "file:dhcp/dhcp_schema.json#/definitions/dhcp_settings"
+        },
+        "dns": {
+            "$ref": "file:dns/dns_schema.json#/definitions/dns_settings"
+        },
+        "accounts": {
+            "$ref": "file:accounts/accounts_schema.json#/definitions/accounts_settings"
+        },
+        "dashboard": {
+            "$ref": "file:dashboard/dashboard_schema.json#/definitions/dashboard_settings"
+        },
+        "files": {
+            "$ref": "file:files/files_schema.json#/definitions/files_settings"
+        },
+        "wan": {
+            "$ref": "file:wan/wan_schema.json#/definitions/wan_settings"
+        },
+        "discovery": {
+            "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings"
+        },
+        "geoip": {
+            "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings"
+        },
+        "ipsec": {
+            "$ref": "file:ipsec_server/ipsec_server_schema.json#/definitions/ipsec_server_settings"
+        },
+        "routes": {
+            "$ref": "file:routes/routes_schema.json#/definitions/routes_settings"
+        },
+        "threatprevention": {
+            "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings"
+        },
+        "uris": {
+            "$ref": "file:uris/uris_schema.json#/definitions/uris_settings"
+        },
+        "webfilter": {
+            "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
+        },
+        "application_control": {
+            "$ref": "file:application_control/application_control_schema.json#/definitions/application_control_settings"
+        },
+        "policy_manager": {
+            "$ref": "file:policy_manager/policy_manager_schema.json#/definitions/policy_manager_settings"
+        },
+        "stats": {
+            "$ref": "file:stats/stats_schema.json#/definitions/stats_settings"
+        }
     },
-    "definitions": {
-    }
+    "definitions": {}
 }
