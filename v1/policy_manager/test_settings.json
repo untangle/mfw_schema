@@ -89,31 +89,6 @@
                         }
                     ]
                 }
-            },
-            {
-                "description": "test",
-                "id": "56bfd272-5bef-4a53-8a21-304ebf24bdee",
-                "name": "test ND",
-                "discovery": {
-                    "enabled": true,
-                    "plugins": [
-                        {
-                            "autoInterval": 86400,
-                            "enabled": true,
-                            "type": "lldp"
-                        },
-                        {
-                            "autoInterval": 86400,
-                            "enabled": false,
-                            "type": "nmap"
-                        },
-                        {
-                            "autoInterval": 86400,
-                            "enabled": false,
-                            "type": "neighbour"
-                        }
-                    ]
-                }
             }
         ],
         "enabled": true,
@@ -189,7 +164,6 @@
                     "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5",
                     "95922aef-3968-4de5-9385-3f426fb32b99"
                 ],
-                "defaults": false,
                 "description": "For students config",
                 "enabled": true,
                 "flows": [
@@ -203,7 +177,6 @@
                 "configurations": [
                     "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"
                 ],
-                "defaults": false,
                 "description": "For teachers",
                 "enabled": true,
                 "flows": [
@@ -216,7 +189,6 @@
                 "configurations": [
                     "30a95c8e-594c-4530-984b-05c7ae300131"
                 ],
-                "defaults": false,
                 "description": "test",
                 "enabled": true,
                 "flows": [
@@ -230,7 +202,6 @@
                     "7ed1558e-ae30-4699-beab-77e09babecb3",
                     "95922aef-3968-4de5-9385-3f426fb32b99"
                 ],
-                "defaults": false,
                 "description": "test123",
                 "enabled": true,
                 "flows": [

@@ -104,9 +104,6 @@
                 "threatprevention",
                 "webfilter"
             ],
-            "discovery": {
-                "$ref": "file:discovery/discovery_schema.json#/definitions/discovery_settings"
-            },
             "geoip": {
                 "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings"
             },
