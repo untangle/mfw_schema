@@ -72,7 +72,10 @@
                     "enum": ["==","!=","<",">","<=",">="]
                 },
                 "value": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "string": "string"
+                    }
                 }
             }
         },
