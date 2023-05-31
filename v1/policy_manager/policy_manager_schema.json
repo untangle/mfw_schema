@@ -151,6 +151,41 @@
                     }
                 }
             }
+        },
+        "policy_manager_filters": {
+            "type": "array",
+            "items": { 
+                "type": "object",
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_filter"
+                    }
+                },
+                "action": {
+                    "type": "string",
+                    "enum": [
+                        "drop",
+                        "acceopt",
+                        "reject"
+                    ]
+                }
+            }
+        },
+        "policy_manager_filter" : {
+            "type" : "object",
+            "properties" :{
+                "operator": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "property": {
+                    "type": "string"
+                }
+            }
+
         }
     }
 }
