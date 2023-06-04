@@ -156,7 +156,13 @@
             "type": "array",
             "items": { 
                 "type": "object",
-                "filters": {
+                "name": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "bool"
+                },
+                "conditions": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/policy_manager_filter"
