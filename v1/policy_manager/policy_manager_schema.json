@@ -166,8 +166,9 @@
                     "type": "string",
                     "enum": [
                         "drop",
-                        "acceopt",
-                        "reject"
+                        "accept",
+                        "reject",
+                        "redirect"
                     ]
                 }
             }
