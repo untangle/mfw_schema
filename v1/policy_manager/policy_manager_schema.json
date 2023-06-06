@@ -151,6 +151,48 @@
                     }
                 }
             }
+        },
+        "policy_manager_filters": {
+            "type": "array",
+            "items": { 
+                "type": "object",
+                "name": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "bool"
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_filter"
+                    }
+                },
+                "action": {
+                    "type": "string",
+                    "enum": [
+                        "drop",
+                        "accept",
+                        "reject",
+                        "redirect"
+                    ]
+                }
+            }
+        },
+        "policy_manager_filter" : {
+            "type" : "object",
+            "properties" :{
+                "operator": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "property": {
+                    "type": "string"
+                }
+            }
+
         }
     }
 }
