@@ -155,6 +155,91 @@
                 "description": "123",
                 "id": "b34671cb-5e08-484d-aad6-72d3500efcda",
                 "name": "test"
+            },
+            {
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "CLIENT_ADDRESS",
+                        "groupid": "702d4c99-9599-455f-8271-215e5680f038"
+                    },
+                    {
+                        "op": "!=",
+                        "type": "SERVER_ADDDRESS",
+                        "groupid": "702d4c99-9599-455f-8271-315e5680f038"
+                    },
+                    {
+                        "op": "match",
+                        "type": "SERVICE_ENDPOINT",
+                        "groupid": "702d4c99-9599-455f-8271-415e5680f038"
+                    },
+                    {
+                        "op": "match",
+                        "type": "INTERFACE",
+                        "groupid": "702d4c99-9599-455f-8271-515e5680f038"                        
+                    }
+                ],
+                "description": "Dedicated to students",
+                "id": "30a95c8e-594c-4530-984b-05c7ae300132",
+                "name": "Students Flow"
+            }
+        ],
+        "groups": [
+            {
+                "name": "IPAddrList Student IP",
+                "id": "702d4c99-9599-455f-8271-215e5680f038",
+                "type": "IPAddrList",
+                "items": [
+                    "1.2.3.4",
+                    "1.2.3.5/24",
+                    "1.2.3.4-1.2.3.20"
+                ]
+            },
+            {
+                "name": "Geo IP Location Test Group",
+                "id": "702d4c99-9599-455f-8271-315e5680f038",
+                "type": "GeoIPLocation",
+                "items": [
+                    "AE",
+                    "AF",
+                    "AG"
+                ]
+            },
+            {
+                "name": "Service Endpoint Test Group",
+                "id": "702d4c99-9599-455f-8271-415e5680f038",
+                "type": "ServiceEndpoint",
+                "items": [
+                    {
+                        "protocol": "TCP",
+                        "ipspecifier": "12.34.56.78",
+                        "port": "12345"
+                    },
+                    {
+                        "protocol": "UDP",
+                        "ipspecifier": "12.34.56.0/24",
+                        "port": "12345"
+                    },
+                    {
+                        "protocol": "UDP",
+                        "ipspecifier": "1.2.3.4-1.2.3.5",
+                        "port": "12345"
+                    }
+                ]
+            },
+            {
+                "name": "Interface Zone Test Group",
+                "id": "702d4c99-9599-455f-8271-515e5680f038",
+                "type": "InterfaceZone",
+                "items": [
+                    "WAN",
+                    "LAN",
+                    "LTE",
+                    "WiFi",
+                    "WireGuard",
+                    "IPSEC",
+                    "VLAN"
+                ]                
             }
         ],
         "policies": [
