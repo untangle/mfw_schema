@@ -290,13 +290,20 @@
                     "protocol": {
                         "enum": [
                             "TCP",
-                            "UDP"
+                            "UDP",
+                            "L2TP",
+                            "ESP",
+                            "AH"
                         ]
                     },
-                    "ipspecifier": {
+                    "dstipspecifier": {
                         "$ref": "#/definitions/policy_manager_ipspecifier"
                     },
-                    "port": "string"
+                    "dstport": "string"
+                    "srcipspecifier": {
+                        "$ref": "#/definitions/policy_manager_ipspecifier"
+                    },
+                    "srcport": "string"
                 }
             ]
         },
