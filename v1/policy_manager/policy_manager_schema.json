@@ -237,7 +237,7 @@
                                 "$ref": "#/definitions/policy_manager_interfacezone"
                             },
                             {
-                                "$ref": "#/definitions/policy_manager_ipaddlist"
+                                "$ref": "#/definitions/policy_manager_ipaddrlist"
                             },
                             {
                                 "$ref": "#/definitions/policy_manager_service_endpoint"
