@@ -299,7 +299,7 @@
                     "dstipspecifier": {
                         "$ref": "#/definitions/policy_manager_ipspecifier"
                     },
-                    "dstport": "string"
+                    "dstport": "string",
                     "srcipspecifier": {
                         "$ref": "#/definitions/policy_manager_ipspecifier"
                     },
