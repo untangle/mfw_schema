@@ -69,13 +69,25 @@
                 },
                 "op": {
                     "type": "string",
-                    "enum": ["==","!=","<",">","<=",">="]
+                    "enum": ["==","!=","<",">","<=",">=","match"]
                 },
                 "value": {
-                    "type": "array",
-                    "items": {
-                        "string": "string"
-                    }
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "string": "string"
+                            }    
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "groupId": {
+                                    "type": "string"
+                                }
+                            }    
+                        }
+                    ]
                 }
             }
         },
@@ -185,7 +197,7 @@
                 "operator": {
                     "type": "string"
                 },
-                "value": {
+                "type": {
                     "type": "string"
                 },
                 "property": {
@@ -193,6 +205,114 @@
                 }
             }
 
+        },
+        "policy_manager_group" : {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "GeoIPLocation",
+                        "InterfaceZone",
+                        "IPAddrList",
+                        "ServiceEndpoint"
+                    ]
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/policy_manager_geoiplocation"
+                            },
+                            {
+                                "$ref": "#/definitions/policy_manager_interfacezone"
+                            },
+                            {
+                                "$ref": "#/definitions/policy_manager_ipaddrlist"
+                            },
+                            {
+                                "$ref": "#/definitions/policy_manager_service_endpoint"
+                            }
+                        ]
+                                }
+                }
+            }
+        },
+        "policy_manager_geoiplocation": {
+            "type": "array",
+            "items": [
+                {
+                    "country": "string"
+                }
+            ]
+        },
+        "policy_manager_interfacezone": {
+            "type": "array",
+            "items": [
+                {
+                    "interface": {
+                        "enum": [             
+                            "WAN",
+                            "LAN",
+                            "LTE",
+                            "WiFi",
+                            "WireGuard",
+                            "IPSEC",
+                            "VLAN"
+                        ]    
+                    }   
+                }
+            ]
+        },
+        "policy_manager_ipaddrlist": {
+            "type": "array",
+            "items": [
+                {
+                    "ipspecifier": {
+                        "$ref": "#/definitions/policy_manager_ipspecifier"
+                    }
+                }
+            ]
+        },
+        "policy_manager_service_endpoint": {
+            "type": "array",
+            "items": [
+                {
+                    "protocol": {
+                        "enum": [
+                            "TCP",
+                            "UDP",
+                            "L2TP",
+                            "ESP",
+                            "AH"
+                        ]
+                    },
+                    "dstipspecifier": {
+                        "$ref": "#/definitions/policy_manager_ipspecifier"
+                    },
+                    "dstport": "string",
+                    "srcipspecifier": {
+                        "$ref": "#/definitions/policy_manager_ipspecifier"
+                    },
+                    "srcport": "string"
+                }
+            ]
+        },
+        "policy_manager_ipspecifier": {
+            "anyof": [
+                "ip",
+                "cidr",
+                "iprange"
+            ]
         }
     }
 }
