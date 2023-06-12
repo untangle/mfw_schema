@@ -16,7 +16,11 @@
                 },
                 "blockListType": {
                     "type": "string",
-                    "description": "Either IP or URL as options"
+                    "description": "Either IP or URL block list type from source"
+                },
+                "blockListRegexType": {
+                    "type": "string",
+                    "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
                 },
                 "interval": {
                     "description": "The polling interval in days, hours, minutes and seconds to fetch the block list from source.",
@@ -47,11 +51,8 @@
                         
                     }
                     
-                },
-                "fileType": {
-                    "type": "string",
-                    "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
                 }
+                
             }
         }
        
