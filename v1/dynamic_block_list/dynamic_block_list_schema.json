@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "dynamic_block_list": {
+            "type": "object",
+            "description": "Dynamic block list either IP address or URL",
+            "additionalProperties": false,
+            "properties": {
+                "blocklistName": {
+                    "type": "string",
+                    "description": "Name of the block list from source"
+                },
+                "blockListSource": {
+                    "type": "string",
+                    "description": "The source URL or the local file path"
+                },
+                "blockListType": {
+                    "type": "string",
+                    "description": "Either IP or URL as options"
+                },
+                "interval": {
+                    "description": "The polling interval in days, hours, minutes and seconds to fetch the block list from source.",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "True, if the polling is enabled for that configuration"
+                        },
+                        "dayOfWeek": {
+                            "description": "The day of week to auto fetch the blocklist from source (0-6) (0 is Sunday 6 is Saturday)",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "hourOfDay": {
+                            "description": "The hour of day to auto fetch the blocklist from source  (0-23)",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 23
+                        },
+                        "minuteOfHour": {
+                            "description": "The minute of hour to auto fetch the blocklist from source  (0-59)",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 59
+                        }
+                        
+                    }
+                    
+                },
+                "fileType": {
+                    "type": "string",
+                    "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
+                }
+            }
+        }
+       
+    }
+}
