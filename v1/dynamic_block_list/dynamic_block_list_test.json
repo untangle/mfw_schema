@@ -4,6 +4,7 @@
     "dynamic_lists": [
       { 
         "blocklistName": "region blocklist ",
+        "id": "0909wer-1234-4de5-7897-3f426fb32b99",
         "blockListType": "IPList",
         "enable": true,
         "blockListSource": "https://opendbl.net/lists/etknown.list",
@@ -17,6 +18,7 @@
         },
         { 
             "blocklistName": "Internal blocklist",
+            "id": "0909wer-3968-4de5-9385-3f426df3m11",
             "blockListType": "IPList",
             "enable": false,
             "blockListSource": "https://opendbl.net/lists/etknown.list",

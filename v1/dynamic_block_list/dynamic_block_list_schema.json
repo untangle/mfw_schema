@@ -2,21 +2,21 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 
-        "dynamic_block_list": {
+        "dynamic_block_list_settings": {
             "type": "object",
-            "description": "Dynamic block list either IP address or URL",
+            "description": "Dynamic block list configurations containing either IP address or URL's",
             "additionalProperties": false,
             "properties": {
                 "block_lists": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/block_lists"
+                        "$ref": "#/definitions/configurations"
                     }
                  }
             }
         },
-        
-        "block_lists": {
+
+        "configurations": {
             "type": "array",
             "properties": {
                 "enabled": {
