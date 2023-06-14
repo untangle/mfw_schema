@@ -1,0 +1,33 @@
+{
+    "dynamic_block_list": {
+    "Global configurations exist at this level": true,
+    "dynamic_lists": [
+      { 
+        "blocklistName": "region blocklist ",
+        "blockListType": "IPList",
+        "enable": true,
+        "blockListSource": "https://opendbl.net/lists/etknown.list",
+        "interval": {
+              "enabled": true,
+              "dayOfWeek": 5,
+              "hourOfDay": 10,
+              "minuteOfHour": 30  
+          },
+          "blockListRegexType" : "CSV"
+        },
+        { 
+            "blocklistName": "Internal blocklist",
+            "blockListType": "IPList",
+            "enable": false,
+            "blockListSource": "https://opendbl.net/lists/etknown.list",
+            "interval": {
+                  "enabled": true,
+                  "dayOfWeek": 5,
+                  "hourOfDay": 10,
+                  "minuteOfHour": 30  
+              },
+              "blockListRegexType" : "TXT"
+        }
+      ]
+    }
+}

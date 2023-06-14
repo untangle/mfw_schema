@@ -1,11 +1,28 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
+
         "dynamic_block_list": {
             "type": "object",
             "description": "Dynamic block list either IP address or URL",
             "additionalProperties": false,
             "properties": {
+                "block_lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/block_lists"
+                    }
+                 }
+            }
+        },
+        
+        "block_lists": {
+            "type": "array",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "True, if user want this configuration to be active."
+                },
                 "blocklistName": {
                     "type": "string",
                     "description": "Name of the block list from source"
