@@ -55,9 +55,11 @@
                 "CLIENT_PORT", 
                 "DAY_OF_WEEK",
                 "DEST_ADDRESS",
+                "GEOIP_LOCATION",
                 "INTERFACE", 
                 "SERVER_ADDRESS", 
                 "SERVER_PORT", 
+                "SERVICE_ENDPOINT",
                 "SOURCE_ADDRESS", 
                 "PROTOCOL_TYPE",
                 "TIME_OF_DAY",
@@ -296,14 +298,10 @@
                             "AH"
                         ]
                     },
-                    "dstipspecifier": {
+                    "ipspecifier": {
                         "$ref": "#/definitions/policy_manager_ipspecifier"
                     },
-                    "dstport": "string",
-                    "srcipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
-                    },
-                    "srcport": "string"
+                    "port": "string"
                 }
             ]
         },
