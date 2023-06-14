@@ -165,7 +165,7 @@
                     },
                     {
                         "op": "!=",
-                        "type": "SERVER_ADDDRESS",
+                        "type": "GEOIP_LOCATION",
                         "groupid": "702d4c99-9599-455f-8271-315e5680f038"
                     },
                     {
