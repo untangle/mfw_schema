@@ -25,6 +25,10 @@
                                                                 "type": {
                                                                     "type": "string",
                                                                     "enum": ["JUMP","GOTO","ACCEPT","RETURN","DROP","SET_PRIORITY"]
+                                                                },
+                                                                "return_action": {
+                                                                    "type": "boolean",
+                                                                    "description": "True if an additional RETURN action is to be added ahead of SET_PRIORITY"
                                                                 }
                                                             }}]
                                                     }
