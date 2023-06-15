@@ -3,32 +3,32 @@
     "Global configurations exist at this level": true,
     "dynamic_lists": [
       { 
-        "blocklistName": "region blocklist ",
+        "name": "region blocklist ",
         "id": "0909wer-1234-4de5-7897-3f426fb32b99",
-        "blockListType": "IPList",
+        "type": "IPList",
         "enable": true,
-        "blockListSource": "https://opendbl.net/lists/etknown.list",
+        "source": "https://opendbl.net/lists/etknown.list",
         "interval": {
               "enabled": true,
               "dayOfWeek": 5,
               "hourOfDay": 10,
               "minuteOfHour": 30  
           },
-          "blockListRegexType" : "CSV"
+          "regexType" : "^([^,\n]*),([^,\n]*)$"
         },
         { 
-            "blocklistName": "Internal blocklist",
+            "name": "Internal blocklist",
             "id": "0909wer-3968-4de5-9385-3f426df3m11",
-            "blockListType": "IPList",
+            "type": "IPList",
             "enable": false,
-            "blockListSource": "https://opendbl.net/lists/etknown.list",
+            "source": "https://opendbl.net/lists/etknown.list",
             "interval": {
                   "enabled": true,
                   "dayOfWeek": 5,
                   "hourOfDay": 10,
                   "minuteOfHour": 30  
               },
-              "blockListRegexType" : "TXT"
+              "regexType" : "(\b(?:d{1,3}.){3}d{1,3}\b)"
         }
       ]
     }

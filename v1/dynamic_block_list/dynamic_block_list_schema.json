@@ -23,52 +23,23 @@
                     "type": "boolean",
                     "description": "True, if user want this configuration to be active."
                 },
-                "blocklistName": {
+                "name": {
                     "type": "string",
                     "description": "Name of the block list from source"
                 },
-                "blockListSource": {
+                "source": {
                     "type": "string",
                     "description": "The source URL or the local file path"
                 },
-                "blockListType": {
+                "type": {
                     "type": "string",
                     "description": "Either IP or URL block list type from source"
                 },
-                "blockListRegexType": {
+                "regexType": {
                     "type": "string",
                     "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
                 },
-                "interval": {
-                    "description": "The polling interval in days, hours, minutes and seconds to fetch the block list from source.",
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "description": "True, if the polling is enabled for that configuration"
-                        },
-                        "dayOfWeek": {
-                            "description": "The day of week to auto fetch the blocklist from source (0-6) (0 is Sunday 6 is Saturday)",
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 6
-                        },
-                        "hourOfDay": {
-                            "description": "The hour of day to auto fetch the blocklist from source  (0-23)",
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 23
-                        },
-                        "minuteOfHour": {
-                            "description": "The minute of hour to auto fetch the blocklist from source  (0-59)",
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 59
-                        }
-                        
-                    }
-                    
-                }
+                "interval": { "$ref": "file:system/system_schema.json#/definitions/system_settings/auto_settings" }
                 
             }
         }
