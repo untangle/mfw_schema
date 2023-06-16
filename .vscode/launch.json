@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Validate policy",
+            "type": "python",
+            "request": "launch",
+            "program": "./validate.py",
+            "args": ["./v1/policy_manager/policy_manager_schema.json", "./v1/policy_manager/test_settings.json"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
