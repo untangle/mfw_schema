@@ -34,6 +34,7 @@
                 "./v1/dhcp/dhcp_schema.json",
                 "./v1/discovery/discovery_schema.json",
                 "./v1/dns/dns_schema.json",
+                "./v1/dynamic_block_list/dynamic_block_list_schema.json",
                 "./v1/files/files_schema.json",
                 "./v1/firewall/access_table_schema.json",
                 "./v1/firewall/firewall_schema.json",
