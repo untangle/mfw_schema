@@ -1,7 +1,6 @@
 {
-    "dynamic_block_list": {
-    "Global configurations exist at this level": true,
-    "dynamic_lists": [
+    "dynamic_lists": {
+    "block_lists": [
       { 
         "name": "region blocklist ",
         "id": "0909wer-1234-4de5-7897-3f426fb32b99",
