@@ -4,6 +4,7 @@ import os
 import json
 import jsonschema
 import sys
+import unittest
 
 def usage():
     """Print usage"""
@@ -32,6 +33,7 @@ json_file.close()
 jsonschema.validate(json_data, schema_data, resolver=resolver)
 
 def printCondition(prefix,c):
+    errors = 0
     if c.get('value') != None:
         print(prefix,'Condition:',c['type'], c['op'], c['value'])
     else:
@@ -41,18 +43,24 @@ def printCondition(prefix,c):
             group = groups[groupid]
             printGroup('\t'+prefix, group)
             group['ref'] = 1 + group['ref']
+            items = group.get('items')
+            errors += checkGroupItems('\t', group, items)
+    return errors
 
 configurations = {}
 
 def printConfiguration(prefix, c):
     print(prefix,'Config:',c)
+    return 0
 
 flows = {}
 
 def printFlow(prefix,f):
+    errors = 0
     print(prefix,'Flow:', f['id'], '\tName:,',f['name'], '\tDescriptions:',f['description'])
     for condition in flow['conditions']:
-        printCondition('\t'+prefix,condition)
+        errors += printCondition('\t'+prefix,condition)
+    return errors
 
 groups = {}
 
@@ -60,6 +68,7 @@ def printGroup(prefix, g):
     print(prefix,'Group:', g['id'], '\tName:',g['name'], '\tItems:',g['items'])
 
 def checkGroupItems(prefix, g, items):
+    errors = 0
     type = g['type']
     if items == None or len(items) == 0:
         print('\t'+prefix, "Error - Group wtih empty items list")
@@ -67,11 +76,12 @@ def checkGroupItems(prefix, g, items):
         for i in items:
             if 2 != len(i):
                 print('\t'+prefix, 'Error - GeoIPLocation with weird format', i, 'in group', g)
-                #exit(-1)
+                errors += 1
     elif type == 'InterfaceZone':
         for i in items:
             if not i.isdigit():
                 print('\t'+prefix, 'Error - InterfazeZone with non-integer entry', i, 'in group', g)
+                errors += 1
     elif type == 'IPAddrList':
         # IP Addr List Validation
         print('IPAdrrList found - not validated')
@@ -81,19 +91,21 @@ def checkGroupItems(prefix, g, items):
                 if k == "protocol":
                     if not v.isdigit():
                         print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
-                        #exit(-1)
+                        errors += 1
                 elif k == "port":
                     if not v.isdigit():
                         print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
-                        #exit(-1)
+                        errors += 1
                 else:
                     print('\t'+prefix, 'Error - ServiceEndPoint ihad unexpected field', k, v, 'in group', g)    
-                        #exit(-1)
+                    errors += 1
+    return errors
 
 
 #Added some parsing for the policy_manager_schema
 #This could be extened for any schema
 if schema_filename.endswith("policy_manager_schema.json"):
+    errors = 0
     print('Parsing policy_manager data...')
     expected = {}
     for k in schema_data['definitions']['policy_manager_settings']['properties']:
@@ -132,11 +144,11 @@ if schema_filename.endswith("policy_manager_schema.json"):
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
         for configid in policy['configurations']:
             config = configurations[configid]
-            printConfiguration('\t',config)
+            errors += printConfiguration('\t',config)
             config['ref'] = 1 + config['ref']
         for flowid in policy['flows']:
             flow = flows[flowid]
-            printFlow('\t',flow)
+            errors += printFlow('\t',flow)
             flow['ref'] = 1 + flow['ref']
 
     print('Flows:')
@@ -156,8 +168,6 @@ if schema_filename.endswith("policy_manager_schema.json"):
     for g, group in groups.items():
         if group['ref'] > 0:
             printGroup('\t',group)
-            items = group.get('items')
-            checkGroupItems('\t', group, items)
         else:
             foundOrphaned = True
     if foundOrphaned:
@@ -177,4 +187,4 @@ if schema_filename.endswith("policy_manager_schema.json"):
         for c, config in configurations.items():
             if config['ref'] == 0:
                 printConfiguration('\t', config)
-    
+    print('Found', errors,'errors')

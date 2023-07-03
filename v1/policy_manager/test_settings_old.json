@@ -211,15 +211,18 @@
                 "type": "ServiceEndpoint",
                 "items": [
                     {
-                        "protocol": "6",
+                        "protocol": "TCP",
+                        "ipspecifier": "12.34.56.78",
                         "port": "12345"
                     },
                     {
-                        "protocol": "17",
+                        "protocol": "UDP",
+                        "ipspecifier": "12.34.56.0/24",
                         "port": "12345"
                     },
                     {
-                        "protocol": "17",
+                        "protocol": "UDP",
+                        "ipspecifier": "1.2.3.4-1.2.3.5",
                         "port": "12345"
                     }
                 ]
@@ -229,8 +232,13 @@
                 "id": "702d4c99-9599-455f-8271-515e5680f038",
                 "type": "InterfaceZone",
                 "items": [
-                    "4",
-                    "5"
+                    "WAN",
+                    "LAN",
+                    "LTE",
+                    "WiFi",
+                    "WireGuard",
+                    "IPSEC",
+                    "VLAN"
                 ]                
             }
         ],
