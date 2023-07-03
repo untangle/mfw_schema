@@ -40,7 +40,7 @@ def printCondition(prefix,c):
         if groupid != None:
             group = groups[groupid]
             printGroup('\t'+prefix, group)
-            g['ref'] = 1 + g['ref']
+            group['ref'] = 1 + group['ref']
 
 configurations = {}
 
@@ -58,6 +58,38 @@ groups = {}
 
 def printGroup(prefix, g):
     print(prefix,'Group:', g['id'], '\tName:',g['name'], '\tItems:',g['items'])
+
+def checkGroupItems(prefix, g, items):
+    type = g['type']
+    if items == None or len(items) == 0:
+        print('\t'+prefix, "Error - Group wtih empty items list")
+    elif type == 'GeoIPLocation':
+        for i in items:
+            if 2 != len(i):
+                print('\t'+prefix, 'Error - GeoIPLocation with weird format', i, 'in group', g)
+                #exit(-1)
+    elif type == 'InterfaceZone':
+        for i in items:
+            if not i.isdigit():
+                print('\t'+prefix, 'Error - InterfazeZone with non-integer entry', i, 'in group', g)
+    elif type == 'IPAddrList':
+        # IP Addr List Validation
+        print('IPAdrrList found - not validated')
+    elif type == 'ServiceEndpoint':
+        for i in items:
+            for k,v in i.items():
+                if k == "protocol":
+                    if not v.isdigit():
+                        print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
+                        #exit(-1)
+                elif k == "port":
+                    if not v.isdigit():
+                        print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
+                        #exit(-1)
+                else:
+                    print('\t'+prefix, 'Error - ServiceEndPoint ihad unexpected field', k, v, 'in group', g)    
+                        #exit(-1)
+
 
 #Added some parsing for the policy_manager_schema
 #This could be extened for any schema
@@ -124,6 +156,8 @@ if schema_filename.endswith("policy_manager_schema.json"):
     for g, group in groups.items():
         if group['ref'] > 0:
             printGroup('\t',group)
+            items = group.get('items')
+            checkGroupItems('\t', group, items)
         else:
             foundOrphaned = True
     if foundOrphaned:
