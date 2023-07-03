@@ -6,32 +6,6 @@ import jsonschema
 import sys
 import unittest
 
-def usage():
-    """Print usage"""
-    sys.stderr.write("""\
-%s Usage:
-  %s <schema_file> <json_file>
-""" % (sys.argv[0],sys.argv[0]))
-    exit(1)
-    
-if len(sys.argv) < 3:
-    usage()
-
-schema_filename = os.path.abspath(sys.argv[1])
-json_filename = os.path.abspath(sys.argv[2])
-(path, _) = os.path.split(schema_filename)
-resolver = jsonschema.RefResolver('file://' + path + '/', None)
-
-schema_file = open(schema_filename)
-schema_data = json.load(schema_file)
-schema_file.close()
-
-json_file = open(json_filename)
-json_data = json.load(json_file)
-json_file.close()
-
-jsonschema.validate(json_data, schema_data, resolver=resolver)
-
 def printCondition(prefix,c):
     errors = 0
     if c.get('value') != None:
@@ -55,9 +29,9 @@ def printConfiguration(prefix, c):
 
 flows = {}
 
-def printFlow(prefix,f):
+def printFlow(prefix,flow):
     errors = 0
-    print(prefix,'Flow:', f['id'], '\tName:,',f['name'], '\tDescriptions:',f['description'])
+    print(prefix,'Flow:', flow['id'], '\tName:,',flow['name'], '\tDescriptions:',flow['description'])
     for condition in flow['conditions']:
         errors += printCondition('\t'+prefix,condition)
     return errors
@@ -101,10 +75,9 @@ def checkGroupItems(prefix, g, items):
                     errors += 1
     return errors
 
-
+def validate_policy():
 #Added some parsing for the policy_manager_schema
 #This could be extened for any schema
-if schema_filename.endswith("policy_manager_schema.json"):
     errors = 0
     print('Parsing policy_manager data...')
     expected = {}
@@ -188,3 +161,32 @@ if schema_filename.endswith("policy_manager_schema.json"):
             if config['ref'] == 0:
                 printConfiguration('\t', config)
     print('Found', errors,'errors')
+
+def usage():
+    """Print usage"""
+    sys.stderr.write("""\
+%s Usage:
+  %s <schema_file> <json_file>
+""" % (sys.argv[0],sys.argv[0]))
+    exit(1)
+    
+if len(sys.argv) < 3:
+    usage()
+
+schema_filename = os.path.abspath(sys.argv[1])
+json_filename = os.path.abspath(sys.argv[2])
+(path, _) = os.path.split(schema_filename)
+resolver = jsonschema.RefResolver('file://' + path + '/', None)
+
+schema_file = open(schema_filename)
+schema_data = json.load(schema_file)
+schema_file.close()
+
+json_file = open(json_filename)
+json_data = json.load(json_file)
+json_file.close()
+
+jsonschema.validate(json_data, schema_data, resolver=resolver)
+
+if schema_filename.endswith("policy_manager_schema.json"):
+    validate_policy()
