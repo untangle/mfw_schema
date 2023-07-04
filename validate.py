@@ -4,7 +4,6 @@ import os
 import json
 import jsonschema
 import sys
-import unittest
 
 def printCondition(prefix,c):
     errors = 0
@@ -23,9 +22,36 @@ def printCondition(prefix,c):
 
 configurations = {}
 
+def checkConfiguration(prefix, c):
+    errors = 0
+    if None != c.get('webfilter'):
+        webf = c['webfilter']
+        print(prefix, 'Webfilter:\tEnabled:',webf['enabled'])
+        if None != webf.get('blockList'):
+            print('\t'+prefix, 'BlockList', webf['blockList'])
+        if None != webf.get('categories'):
+            print('\t'+prefix, 'Categories', webf['categories'])
+        if None != webf.get('passList'):
+            print('\t'+prefix, 'PassList', webf['passList'])
+    elif None != c.get('threatprevention'):
+        tp = c['threatprevention']
+        print(prefix, 'Threatprevention:\tEnabled:', tp['enabled'],'\tRedirect:',tp['redirect'],'\tSensitivity:',tp['sensitivity'])
+        if None != tp.get('passList'):
+            print('\t'+prefix, 'PassList', tp['passList'])
+    elif None != c.get('discovery'):
+        disc = c['discovery']
+        print(prefix, 'Discovery:',disc)
+    elif None != c.get('geoip'):
+        geoip = c['geoip']
+        print(prefix, 'Geoip:\tName:',c['name'],'\tDesc:',c['description'])
+        print(prefix, geoip)
+    else:
+        print(prefix, 'Error: Unkown configuration type:', c)
+        errors += 1
+    return errors
+
 def printConfiguration(prefix, c):
-    print(prefix,'Config:',c)
-    return 0
+    print(prefix,'Config:',c['id'], 'Name:', c['name'], 'Desc:', c['description'])
 
 flows = {}
 
@@ -117,8 +143,9 @@ def validate_policy():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
         for configid in policy['configurations']:
             config = configurations[configid]
-            errors += printConfiguration('\t',config)
+            printConfiguration('\t',config)
             config['ref'] = 1 + config['ref']
+            errors += checkConfiguration('\t\t', config)
         for flowid in policy['flows']:
             flow = flows[flowid]
             errors += printFlow('\t',flow)
