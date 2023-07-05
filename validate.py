@@ -219,4 +219,3 @@ jsonschema.validate(json_data, schema_data, resolver=resolver)
 #This could be extened for any schema
 if schema_filename.endswith("policy_manager_schema.json"):
     validate_policy()
-
