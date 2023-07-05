@@ -267,17 +267,7 @@
             "type": "array",
             "items": [
                 {
-                    "interface": {
-                        "enum": [             
-                            "WAN",
-                            "LAN",
-                            "LTE",
-                            "WiFi",
-                            "WireGuard",
-                            "IPSEC",
-                            "VLAN"
-                        ]    
-                    }   
+                    "interface": "int"
                 }
             ]
         },
@@ -295,18 +285,7 @@
             "type": "array",
             "items": [
                 {
-                    "protocol": {
-                        "enum": [
-                            "TCP",
-                            "UDP",
-                            "L2TP",
-                            "ESP",
-                            "AH"
-                        ]
-                    },
-                    "ipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
-                    },
+                    "protocol": "int",
                     "port": "string"
                 }
             ]
