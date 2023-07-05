@@ -215,5 +215,24 @@ json_file.close()
 
 jsonschema.validate(json_data, schema_data, resolver=resolver)
 
+#Added some parsing for the policy_manager_schema
+#This could be extened for any schema
 if schema_filename.endswith("policy_manager_schema.json"):
-    validate_policy()
+    print('Parsing policy_manager data...')
+    expected = {}
+    for k in schema_data['definitions']['policy_manager_settings']['properties']:
+        print('Expecting a key for', k)
+        expected[k] = 0
+    for entry in json_data['policy_manager']:
+        if not entry in expected:
+            print('Error: Found unexpected entry', entry)
+        else:
+            expected[entry] += 1
+    for k in expected:
+        v = expected[k]
+        if v == 0:
+            print('Error: Did not find definition of', k)
+        elif v > 1:
+            print('Error: Found duplicate entry for', k)
+        else:
+            print('Found expected entry', k)
