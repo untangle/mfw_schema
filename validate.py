@@ -77,26 +77,13 @@ def checkGroupItems(prefix, g, items):
             if 2 != len(i):
                 print('\t'+prefix, 'Error - GeoIPLocation with weird format', i, 'in group', g)
                 errors += 1
-    elif type == 'InterfaceZone':
-        for i in items:
-            if not i.isdigit():
-                print('\t'+prefix, 'Error - InterfazeZone with non-integer entry', i, 'in group', g)
-                errors += 1
     elif type == 'IPAddrList':
         # IP Addr List Validation
         print('IPAdrrList found - not validated')
     elif type == 'ServiceEndpoint':
         for i in items:
             for k,v in i.items():
-                if k == "protocol":
-                    if not v.isdigit():
-                        print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
-                        errors += 1
-                elif k == "port":
-                    if not v.isdigit():
-                        print('\t'+prefix, 'Error - ServiceEndPoint with non-integer protocol', v, 'in group', g)
-                        errors += 1
-                else:
+                if k != "protocol" and k != "port":
                     print('\t'+prefix, 'Error - ServiceEndPoint ihad unexpected field', k, v, 'in group', g)    
                     errors += 1
     return errors
