@@ -286,7 +286,7 @@
             "items": [
                 {
                     "protocol": "int",
-                    "port": "string"
+                    "port": "int"
                 }
             ]
         },
