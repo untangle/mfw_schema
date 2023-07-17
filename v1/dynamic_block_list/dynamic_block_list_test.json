@@ -4,7 +4,7 @@
         "name": "region blocklist ",
         "id": "0909wer-1234-4de5-7897-3f426fb32b99",
         "type": "IPList",
-        "enable": true,
+        "enabled": true,
         "source": "https://opendbl.net/lists/etknown.list",
         "interval": {
               "enabled": true,
@@ -18,7 +18,7 @@
             "name": "Internal blocklist",
             "id": "0909wer-3968-4de5-9385-3f426df3m11",
             "type": "IPList",
-            "enable": false,
+            "enabled": false,
             "source": "https://opendbl.net/lists/etknown.list",
             "interval": {
                   "enabled": true,
