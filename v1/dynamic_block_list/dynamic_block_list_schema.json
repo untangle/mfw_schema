@@ -3,21 +3,9 @@
     "definitions": {
 
         "dynamic_block_list_settings": {
-            "type": "object",
-            "description": "Dynamic block list configurations containing either IP address or URL's",
-            "additionalProperties": false,
-            "properties": {
-                "block_lists": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/configurations"
-                    }
-                 }
-            }
-        },
-
-        "configurations": {
             "type": "array",
+            "description": "Dynamic block list configurations",
+            "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean",
@@ -42,7 +30,6 @@
                 "interval": { "$ref": "file:system/system_schema.json#/definitions/system_settings/auto_settings" }
                 
             }
-        }
-       
+            }
     }
 }

@@ -1,6 +1,5 @@
 {
-    "dynamic_lists": {
-    "block_lists": [
+    "dynamic_lists":  [
       { 
         "name": "region blocklist ",
         "id": "0909wer-1234-4de5-7897-3f426fb32b99",
@@ -30,5 +29,4 @@
               "regexType" : "TXT"
         }
       ]
-    }
 }
