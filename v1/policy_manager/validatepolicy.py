@@ -5,6 +5,11 @@ import json
 import jsonschema
 import sys
 
+# These functions will run if policy_manager data  is found in the json data on invocation of validate.py
+# These are not strictly required but They supplement the validation done by the json parser by sanity 
+# checking the internal cross-references based on id and checking for orphans.
+
+# Print a policy condition with indentation
 def printCondition(prefix,c):
     errors = 0
     if c.get('value') != None:
@@ -20,8 +25,10 @@ def printCondition(prefix,c):
             errors += checkGroupItems('\t', group, items)
     return errors
 
+# Used to keep track of individual configurations
 configurations = {}
 
+# Check a policy configuration with indentation
 def checkConfiguration(prefix, c):
     errors = 0
     if None != c.get('webfilter'):
@@ -50,11 +57,14 @@ def checkConfiguration(prefix, c):
         errors += 1
     return errors
 
+# Print a policy condition with indentation
 def printConfiguration(prefix, c):
     print(prefix,'Config:',c['id'], 'Name:', c['name'], 'Desc:', c['description'])
 
+# Used to keep track of individual flows
 flows = {}
 
+# Print a policy flow with indentation
 def printFlow(prefix,flow):
     errors = 0
     print(prefix,'Flow:', flow['id'], '\tName:,',flow['name'], '\tDescriptions:',flow['description'])
@@ -62,11 +72,14 @@ def printFlow(prefix,flow):
         errors += printCondition('\t'+prefix,condition)
     return errors
 
+# User to keep track of individual groups
 groups = {}
 
+# Print a group with indentation
 def printGroup(prefix, g):
     print(prefix,'Group:', g['id'], '\tName:',g['name'], '\tItems:',g['items'])
 
+# Check items in a group with indentation
 def checkGroupItems(prefix, g, items):
     errors = 0
     type = g['type']
@@ -88,44 +101,33 @@ def checkGroupItems(prefix, g, items):
                     errors += 1
     return errors
 
+# Validate the overall policy configuratoin
 def validate_policy(json_data, schema_data):
-#Added some parsing for the policy_manager_schema
-#This could be extened for any schema
     errors = 0
     print('Parsing policy_manager data...')
-    expected = {}
-    for k in schema_data['definitions']['policy_manager_settings']['properties']:
-        print('Expecting a key for', k)
-        expected[k] = 0
-    for entry in json_data['policy_manager']:
-        if not entry in expected:
-            print('Error: Found unexpected entry', entry)
-        else:
-            expected[entry] += 1
-    for k in expected:
-        v = expected[k]
-        if v == 0:
-            print('Error: Did not find definition of', k)
-        elif v > 1:
-            print('Error: Found duplicate entry for', k)
-        else:
-            print('Found expected entry', k)
-
+    # Keep track of configurations indexed by id
+    # and also keep track of whether each is referenced
     for c in json_data['policy_manager']['configurations']:
         configurations[c['id']]=c
         c['ref'] = 0
 
+    # Keep track of flows indexed by id
+    # and also keep track of whether each is referenced
     for k in json_data['policy_manager']['flows']:
         flows[k['id']]=k
         k['ref'] = 0
 
+    # Keep track of groups indexed by id
+    # and also keep track of whether each is referenced
     for g in json_data['policy_manager']['groups']:
         groups[g['id']]=g
         g['ref'] = 0
 
+    # Build a map of policies indexed by id
     policies = {}
     for p in json_data['policy_manager']['policies']:
         policies[p['id']]=p
+
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
         for configid in policy['configurations']:

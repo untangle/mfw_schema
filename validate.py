@@ -35,5 +35,5 @@ jsonschema.validate(json_data, schema_data, resolver=resolver)
 
 #Added some parsing for the policy_manager_schema
 #This could be extened for any schema
-if schema_filename.endswith("policy_manager_schema.json"):
+if json_data['policy_manager'] != None:
     validate_policy(json_data, schema_data)
