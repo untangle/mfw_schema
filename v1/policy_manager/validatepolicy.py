@@ -12,12 +12,12 @@ import sys
 # Print a policy condition with indentation
 def printCondition(prefix,c):
     errors = 0
-    if c.get('value') != None:
+    if c.get('value') is not None:
         print(prefix,'Condition:',c['type'], c['op'], c['value'])
     else:
         print(prefix,'Condition:',c['type'], c['op'], '\tGroup:', c['groupid'])
         groupid = c.get('groupid')
-        if groupid != None:
+        if groupid is not None:
             group = groups[groupid]
             printGroup('\t'+prefix, group)
             group['ref'] = 1 + group['ref']

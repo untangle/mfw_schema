@@ -15,7 +15,7 @@
         {
             "label": "Test policy_manager",
             "type": "shell",
-            "command": "./validate.py v1/policy_manager/schema.json v1/policy_manager/test_settings.json",
+            "command": "./validate.py v1/policy_manager/test_schema.json v1/policy_manager/test_settings.json",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -46,7 +46,7 @@
                 "./v1/ipsec_server/ipsec_server_schema.json",
                 "./v1/network/network_schema.json",
                 "./v1/policy_manager/policy_manager_schema.json",
-                "./v1/policy_manager/schema.json",
+                "./v1/policy_manager/test_schema.json",
                 "./v1/reports/reports_schema.json",
                 "./v1/routes/routes_schema.json",
                 "./v1/stats/stats_schema.json",
