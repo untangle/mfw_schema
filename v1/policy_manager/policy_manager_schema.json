@@ -223,70 +223,54 @@
                 "description": {
                     "type": "string"
                 },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "GeoIPLocation",
-                        "InterfaceZone",
-                        "IPAddrList",
-                        "ServiceEndpoint"
+                "choice": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/policy_manager_geoiplocation"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_interfacezone"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_ipaddrlist"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_service_endpoint"
+                        }
                     ]
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/policy_manager_geoiplocation"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_interfacezone"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_ipaddrlist"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_service_endpoint"
-                            }
-                        ]
-                                }
                 }
             }
         },
         "policy_manager_geoiplocation": {
+            "id": "GeoIPLocation",
             "type": "array",
-            "items": [
-                {
-                    "country": "string"
-                }
-            ]
+            "items": {
+                "country": "string"
+            }
         },
         "policy_manager_interfacezone": {
+            "id": "InterfaceZone",
             "type": "array",
-            "items": [
-                {
-                    "interface": "int"
-                }
-            ]
+            "items": {
+                "interface": "int"
+            }
         },
         "policy_manager_ipaddrlist": {
+            "id": "IPAddrList",
             "type": "array",
-            "items": [
-                {
-                    "ipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
+            "items": {
+                "ipspecifier": {
+                    "$ref": "#/definitions/policy_manager_ipspecifier"
                     }
-                }
-            ]
+            }
         },
         "policy_manager_service_endpoint": {
+            "id": "ServiceEndpoint",
             "type": "array",
-            "items": [
-                {
-                    "protocol": "int",
-                    "port": "int"
-                }
-            ]
+            "items": {
+                "protocol": "int",
+                "port": "int"
+            }
         },
         "policy_manager_ipspecifier": {
             "anyof": [
