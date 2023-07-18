@@ -11,7 +11,7 @@
                 "flows": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_flowCategories"
+                        "$ref": "#/definitions/policy_manager_flowCategory"
                     }
                 },
                 "configurations": {
@@ -34,8 +34,8 @@
                 }
             }
         },
-        "policy_manager_flowCategories": {
-            "type": "array",
+        "policy_manager_flowCategory": {
+            "type": "object",
             "properties": {
                 "id": {
                     "type": "string"
@@ -49,12 +49,13 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_conditions"
+                        "$ref": "#/definitions/policy_manager_condition"
                     }
                 }
             }
         },
-        "policy_manager_conditions": {
+        "policy_manager_condition": {
+            "type": "object",
             "condition": "string",
             "enum": [
                 "CLIENT_ADDRESS", 
