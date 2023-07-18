@@ -17,7 +17,7 @@
                 "configurations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_configurations"
+                        "$ref": "#/definitions/policy_manager_configuration"
                     }
                 },
                 "groups": {
@@ -29,7 +29,7 @@
                 "policies": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_policies"
+                        "$ref": "#/definitions/policy_manager_policy"
                     }
                 }
             }
@@ -56,25 +56,24 @@
         },
         "policy_manager_condition": {
             "type": "object",
-            "condition": "string",
-            "enum": [
-                "CLIENT_ADDRESS", 
-                "CLIENT_PORT", 
-                "DAY_OF_WEEK",
-                "DEST_ADDRESS",
-                "GEOIP_LOCATION",
-                "INTERFACE", 
-                "SERVER_ADDRESS", 
-                "SERVER_PORT", 
-                "SERVICE_ENDPOINT",
-                "SOURCE_ADDRESS", 
-                "PROTOCOL_TYPE",
-                "TIME_OF_DAY",
-                "VLAN_ID"
-            ],
             "properties": {
-                "id": {
-                    "type": "string"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "CLIENT_ADDRESS", 
+                        "CLIENT_PORT", 
+                        "DAY_OF_WEEK",
+                        "DEST_ADDRESS",
+                        "GEOIP_LOCATION",
+                        "INTERFACE", 
+                        "SERVER_ADDRESS", 
+                        "SERVER_PORT", 
+                        "SERVICE_ENDPOINT",
+                        "SOURCE_ADDRESS", 
+                        "PROTOCOL_TYPE",
+                        "TIME_OF_DAY",
+                        "VLAN_ID"
+                    ]
                 },
                 "op": {
                     "type": "string",
@@ -100,7 +99,7 @@
                 }
             }
         },
-        "policy_manager_configurations": {
+        "policy_manager_configuration": {
             "type": "object",
             "properties": {
                 "id": {
@@ -138,37 +137,34 @@
                 "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
-        "policy_manager_policies": {
-            "type": "array",
-            "items": { 
-                "type": "object",
-                "properties": {
-                    "id": {
+        "policy_manager_policy": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },    
+                "defaults": {
+                    "type": "boolean"
+                },    
+                "configurations": {
+                    "type": "array",
+                    "items": {
                         "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "enabled": {
-                        "type": "boolean"
-                    },    
-                    "defaults": {
-                        "type": "boolean"
-                    },    
-                    "configurations": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/policy_manager_configurations"
-                        }
-                    },
-                    "flowCategories": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/policy_manager_flowCategories"
-                        }
+                    }
+                },
+                "flowCategories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_flowCategories"
                     }
                 }
             }
@@ -228,6 +224,7 @@
                     "type": "string"
                 },
                 "type": {
+                    "type": "string",
                     "enum": [
                         "GeoIPLocation",
                         "InterfaceZone",
