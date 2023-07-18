@@ -84,7 +84,7 @@ def checkGroupItems(prefix, g, items):
     errors = 0
     type = g['type']
     if items == None or len(items) == 0:
-        print('\t'+prefix, "Error - Group wtih empty items list")
+        print('\t'+prefix, "Error - Group with empty items list")
     elif type == 'GeoIPLocation':
         for i in items:
             if 2 != len(i):
