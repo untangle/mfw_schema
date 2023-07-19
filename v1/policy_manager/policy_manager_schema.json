@@ -36,6 +36,7 @@
         },
         "policy_manager_flowCategory": {
             "type": "object",
+            "required": ["id"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -101,6 +102,7 @@
         },
         "policy_manager_configuration": {
             "type": "object",
+            "required": ["id"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -139,6 +141,7 @@
         },
         "policy_manager_policy": {
             "type": "object",
+            "required": ["id"],
             "properties": {
                 "id": {
                     "type": "string"
