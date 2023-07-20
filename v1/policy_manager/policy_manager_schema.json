@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "policy_manager_settings": {
+            "required": ["flows", "configurations", "policies"],
             "type": "object",
             "description": "Policy Manager settings",
             "properties": {
