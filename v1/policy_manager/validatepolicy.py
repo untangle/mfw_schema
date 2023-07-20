@@ -9,8 +9,8 @@ import sys
 # These are not strictly required but They supplement the validation done by the json parser by sanity 
 # checking the internal cross-references based on id and checking for orphans.
 
-# Print a policy condition with indentation
 def printCondition(prefix,c):
+    """ Print a policy condition with indentation """
     errors = 0
     if c.get('value') is not None:
         print(prefix,'Condition:',c['type'], c['op'], c['value'])
@@ -28,27 +28,27 @@ def printCondition(prefix,c):
 # Used to keep track of individual configurations
 configurations = {}
 
-# Check a policy configuration with indentation
 def checkConfiguration(prefix, c):
+    """ Check a policy configuration with indentation """
     errors = 0
-    if None != c.get('webfilter'):
+    if c.get('webfilter') is not None:
         webf = c['webfilter']
         print(prefix, 'Webfilter:\tEnabled:',webf['enabled'])
-        if None != webf.get('blockList'):
+        if webf.get('blockList') is not None:
             print('\t'+prefix, 'BlockList', webf['blockList'])
-        if None != webf.get('categories'):
+        if webf.get('categories') is not None:
             print('\t'+prefix, 'Categories', webf['categories'])
-        if None != webf.get('passList'):
+        if webf.get('passList') is not None:
             print('\t'+prefix, 'PassList', webf['passList'])
-    elif None != c.get('threatprevention'):
+    elif c.get('threatprevention') is not None:
         tp = c['threatprevention']
         print(prefix, 'Threatprevention:\tEnabled:', tp['enabled'],'\tRedirect:',tp['redirect'],'\tSensitivity:',tp['sensitivity'])
-        if None != tp.get('passList'):
+        if tp.get('passList') is not None:
             print('\t'+prefix, 'PassList', tp['passList'])
-    elif None != c.get('discovery'):
+    elif c.get('discovery') is not None:
         disc = c['discovery']
         print(prefix, 'Discovery:',disc)
-    elif None != c.get('geoip'):
+    elif c.get('geoip') is not None:
         geoip = c['geoip']
         print(prefix, 'Geoip:\tName:',c['name'],'\tDesc:',c['description'])
         print(prefix, geoip)
@@ -57,15 +57,15 @@ def checkConfiguration(prefix, c):
         errors += 1
     return errors
 
-# Print a policy condition with indentation
 def printConfiguration(prefix, c):
+    """ Print a policy condition with indentation """
     print(prefix,'Config:',c['id'], 'Name:', c['name'], 'Desc:', c['description'])
 
 # Used to keep track of individual flows
 flows = {}
 
-# Print a policy flow with indentation
 def printFlow(prefix,flow):
+    """ Print a policy flow with indentation """
     errors = 0
     print(prefix,'Flow:', flow['id'], '\tName:,',flow['name'], '\tDescriptions:',flow['description'])
     for condition in flow['conditions']:
@@ -75,15 +75,16 @@ def printFlow(prefix,flow):
 # User to keep track of individual groups
 groups = {}
 
-# Print a group with indentation
 def printGroup(prefix, g):
+    """ Print a group with indentation """
+
     print(prefix,'Group:', g['id'], '\tName:',g['name'], '\tItems:',g['items'])
 
-# Check items in a group with indentation
 def checkGroupItems(prefix, g, items):
+    """ Check items in a group with indentation """
     errors = 0
     type = g['type']
-    if items == None or len(items) == 0:
+    if items is None or len(items) == 0:
         print('\t'+prefix, "Error - Group with empty items list")
     elif type == 'GeoIPLocation':
         for i in items:
@@ -101,8 +102,8 @@ def checkGroupItems(prefix, g, items):
                     errors += 1
     return errors
 
-# Validate the overall policy configuratoin
 def validate_policy(json_data, schema_data):
+    """ Validate the overall policy configuration """
     errors = 0
     print('Parsing policy_manager data...')
     # Keep track of configurations indexed by id
