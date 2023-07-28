@@ -6,13 +6,9 @@
         "type": "IPList",
         "enabled": true,
         "source": "https://opendbl.net/lists/etknown.list",
-        "interval": {
-              "enabled": true,
-              "dayOfWeek": 5,
-              "hourOfDay": 10,
-              "minuteOfHour": 30  
-          },
-          "regexType" : "CSV"
+        "PullingUnit" : "Months",
+        "PullingTime" : 2,
+        "regexType" : "CSV"
         },
         { 
             "name": "Internal blocklist",
@@ -20,12 +16,8 @@
             "type": "IPList",
             "enabled": false,
             "source": "https://opendbl.net/lists/etknown.list",
-            "interval": {
-                  "enabled": true,
-                  "dayOfWeek": 5,
-                  "hourOfDay": 10,
-                  "minuteOfHour": 30  
-              },
+            "PullingUnit" : "Days",
+            "PullingTime" : 3,
               "regexType" : "TXT"
         }
       ]
