@@ -27,7 +27,7 @@
                     "type": "string",
                     "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
                 },
-                "PullingUnit": {
+                "pullingUnit": {
                     "type": "string",
                     "description": "Tells us the interval of fetching whether its Minutes, Hours, Days or Months as a unit"
                 },

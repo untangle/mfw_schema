@@ -6,8 +6,8 @@
         "type": "IPList",
         "enabled": true,
         "source": "https://opendbl.net/lists/etknown.list",
-        "PullingUnit" : "Months",
-        "PullingTime" : 2,
+        "pullingUnit" : "Months",
+        "pullingTime" : 2,
         "regexType" : "CSV"
         },
         { 
@@ -16,9 +16,9 @@
             "type": "IPList",
             "enabled": false,
             "source": "https://opendbl.net/lists/etknown.list",
-            "PullingUnit" : "Days",
-            "PullingTime" : 3,
-              "regexType" : "TXT"
+            "pullingUnit" : "Days",
+            "pullingTime" : 3,
+            "regexType" : "TXT"
         }
       ]
 }
