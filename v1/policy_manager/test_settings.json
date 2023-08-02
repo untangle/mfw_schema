@@ -92,7 +92,7 @@
             }
         ],
         "enabled": true,
-        "policy_conditions": [
+        "rules": [
             {
                 "conditions": [
                     {
@@ -238,11 +238,19 @@
             {
                 "description": "For students config",
                 "enabled": true,
-                "policy_services": [
-                    {"30a95c8e-594c-4530-984b-05c7ae300132": "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c"},
-                    {"f5766de4-64a3-48b9-9a43-c91125406e93": "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"},
-                    {"30a95c8e-594c-4530-984b-05c7ae300132": "95922aef-3968-4de5-9385-3f426fb32b99"}
-
+                "services": [
+                    { 
+                        "rules": "30a95c8e-594c-4530-984b-05c7ae300132",
+                        "configuration": "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c"
+                    },
+                    {
+                        "rules": "f5766de4-64a3-48b9-9a43-c91125406e93", 
+                        "configuration": "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"
+                    },
+                    {
+                        "rules": "30a95c8e-594c-4530-984b-05c7ae300132",
+                        "configuration": "95922aef-3968-4de5-9385-3f426fb32b99"
+                    }
                 ],
                 "id": "30a95c8e-594c-4530-984b-05c7ae300138",
                 "name": "Students"
