@@ -9,16 +9,16 @@
         "pullingUnit" : "Months",
         "pullingTime" : 2,
         "regexType" : "CSV"
-        },
-        { 
-            "name": "Internal blocklist",
-            "id": "0909wer-3968-4de5-9385-3f426df3m11",
-            "type": "IPList",
-            "enabled": false,
-            "source": "https://opendbl.net/lists/etknown.list",
-            "pullingUnit" : "Days",
-            "pullingTime" : 3,
-            "regexType" : "TXT"
-        }
-      ]
+      },
+      { 
+        "name": "Internal blocklist",
+        "id": "0909wer-3968-4de5-9385-3f426df3m11",
+        "type": "IPList",
+        "enabled": false,
+        "source": "https://opendbl.net/lists/etknown.list",
+        "pullingUnit" : "Days",
+        "pullingTime" : 3,
+        "regexType" : "TXT"
+      }
+    ]
 }
