@@ -7,7 +7,7 @@
     ],
     "properties": {
     "dynamic_lists": {
-           "$ref": "file:./dynamic_lists_schema.json#/definitions/dynamic_list_settings"
+           "$ref": "file:./dynamic_lists_schema.json#/definitions/dynamic_lists_settings"
     }
     }
 }
