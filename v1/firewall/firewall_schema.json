@@ -264,6 +264,10 @@
                 },
                 "policy": {
                     "type": "integer"
+                },
+                "return_action": {
+                    "type": "boolean",
+                    "description": "True if an additional RETURN action is to be added ahead of SET_PRIORITY"
                 }
             }
         }

@@ -5,6 +5,8 @@ import json
 import jsonschema
 import sys
 
+from  v1.policy_manager.validatepolicy import validate_policy
+
 def usage():
     """Print usage"""
     sys.stderr.write("""\
@@ -30,3 +32,8 @@ json_data = json.load(json_file)
 json_file.close()
 
 jsonschema.validate(json_data, schema_data, resolver=resolver)
+
+#Added some parsing for the policy_manager_schema
+#This could be extened for any schema
+if json_data['policy_manager'] is not None:
+    validate_policy(json_data, schema_data)

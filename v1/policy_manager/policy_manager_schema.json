@@ -2,34 +2,42 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "policy_manager_settings": {
+            "required": ["flows", "configurations", "policies"],
             "type": "object",
             "description": "Policy Manager settings",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
-                "flowCategories": {
+                "flows": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_flowCategories"
+                        "$ref": "#/definitions/policy_manager_flowCategory"
                     }
                 },
                 "configurations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_configurations"
+                        "$ref": "#/definitions/policy_manager_configuration"
+                    }
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_group"
                     }
                 },
                 "policies": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_policies"
+                        "$ref": "#/definitions/policy_manager_policy"
                     }
                 }
             }
         },
-        "policy_manager_flowCategories": {
-            "type": "array",
+        "policy_manager_flowCategory": {
+            "type": "object",
+            "required": ["id"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -43,29 +51,31 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_conditions"
+                        "$ref": "#/definitions/policy_manager_condition"
                     }
                 }
             }
         },
-        "policy_manager_conditions": {
-            "condition": "string",
-            "enum": [
-                "CLIENT_ADDRESS", 
-                "CLIENT_PORT", 
-                "DAY_OF_WEEK",
-                "DEST_ADDRESS",
-                "INTERFACE", 
-                "SERVER_ADDRESS", 
-                "SERVER_PORT", 
-                "SOURCE_ADDRESS", 
-                "PROTOCOL_TYPE",
-                "TIME_OF_DAY",
-                "VLAN_ID"
-            ],
+        "policy_manager_condition": {
+            "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "CLIENT_ADDRESS", 
+                        "CLIENT_PORT", 
+                        "DAY_OF_WEEK",
+                        "DEST_ADDRESS",
+                        "GEOIP_LOCATION",
+                        "INTERFACE", 
+                        "SERVER_ADDRESS", 
+                        "SERVER_PORT", 
+                        "SERVICE_ENDPOINT",
+                        "SOURCE_ADDRESS", 
+                        "PROTOCOL_TYPE",
+                        "TIME_OF_DAY",
+                        "VLAN_ID"
+                    ]
                 },
                 "op": {
                     "type": "string",
@@ -91,8 +101,9 @@
                 }
             }
         },
-        "policy_manager_configurations": {
+        "policy_manager_configuration": {
             "type": "object",
+            "required": ["id"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -129,37 +140,35 @@
                 "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
-        "policy_manager_policies": {
-            "type": "array",
-            "items": { 
-                "type": "object",
-                "properties": {
-                    "id": {
+        "policy_manager_policy": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },    
+                "defaults": {
+                    "type": "boolean"
+                },    
+                "configurations": {
+                    "type": "array",
+                    "items": {
                         "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "enabled": {
-                        "type": "boolean"
-                    },    
-                    "defaults": {
-                        "type": "boolean"
-                    },    
-                    "configurations": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/policy_manager_configurations"
-                        }
-                    },
-                    "flowCategories": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/policy_manager_flowCategories"
-                        }
+                    }
+                },
+                "flowCategories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_flowCategories"
                     }
                 }
             }
@@ -208,6 +217,7 @@
         },
         "policy_manager_group" : {
             "type": "object",
+            "required": ["type"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -218,94 +228,51 @@
                 "description": {
                     "type": "string"
                 },
-                "type": {
-                    "enum": [
-                        "GeoIPLocation",
-                        "InterfaceZone",
-                        "IPAddrList",
-                        "ServiceEndpoint"
+                "type": {"enum": ["GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint"]},
+                "choice": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/policy_manager_geoiplocation"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_interfacezone"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_ipaddrlist"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manager_service_endpoint"
+                        }
                     ]
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/policy_manager_geoiplocation"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_interfacezone"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_ipaddrlist"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_service_endpoint"
-                            }
-                        ]
-                                }
                 }
             }
         },
         "policy_manager_geoiplocation": {
             "type": "array",
-            "items": [
-                {
-                    "country": "string"
-                }
-            ]
+            "items": {
+                "country": "string"
+            }
         },
         "policy_manager_interfacezone": {
             "type": "array",
-            "items": [
-                {
-                    "interface": {
-                        "enum": [             
-                            "WAN",
-                            "LAN",
-                            "LTE",
-                            "WiFi",
-                            "WireGuard",
-                            "IPSEC",
-                            "VLAN"
-                        ]    
-                    }   
-                }
-            ]
+            "items": {
+                "interface": "int"
+            }
         },
         "policy_manager_ipaddrlist": {
             "type": "array",
-            "items": [
-                {
-                    "ipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
+            "items": {
+                "ipspecifier": {
+                    "$ref": "#/definitions/policy_manager_ipspecifier"
                     }
-                }
-            ]
+            }
         },
         "policy_manager_service_endpoint": {
             "type": "array",
-            "items": [
-                {
-                    "protocol": {
-                        "enum": [
-                            "TCP",
-                            "UDP",
-                            "L2TP",
-                            "ESP",
-                            "AH"
-                        ]
-                    },
-                    "dstipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
-                    },
-                    "dstport": "string",
-                    "srcipspecifier": {
-                        "$ref": "#/definitions/policy_manager_ipspecifier"
-                    },
-                    "srcport": "string"
-                }
-            ]
+            "items": {
+                "protocol": "int",
+                "port": "int"
+            }
         },
         "policy_manager_ipspecifier": {
             "anyof": [

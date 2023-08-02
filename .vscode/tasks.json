@@ -15,7 +15,7 @@
         {
             "label": "Test policy_manager",
             "type": "shell",
-            "command": "./validate.py ./v1/policy_manager/policy_manager_schema.json ./v1/policy_manager/test_settings.json",
+            "command": "./validate.py v1/policy_manager/test_schema.json v1/policy_manager/test_settings.json",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -28,6 +28,7 @@
             "type": "pickString",
             "description": "pick one of the schemas to validate against",
             "options": [
+                "./v1/schema.json",
                 "./v1/accounts/accounts_schema.json",
                 "./v1/application_control/application_control_schema.json",
                 "./v1/dashboard/dashboard_schema.json",
@@ -46,6 +47,7 @@
                 "./v1/ipsec_server/ipsec_server_schema.json",
                 "./v1/network/network_schema.json",
                 "./v1/policy_manager/policy_manager_schema.json",
+                "./v1/policy_manager/test_schema.json",
                 "./v1/reports/reports_schema.json",
                 "./v1/routes/routes_schema.json",
                 "./v1/stats/stats_schema.json",
@@ -55,7 +57,7 @@
                 "./v1/wan/wan_schema.json",
                 "./v1/webfilter/webfilter_schema.json"
             ],
-            "default": "./v1/policy_manager/policy_manager_schema.json"
+            "default": "./v1/schema.json"
         },
         {
             "id": "json",

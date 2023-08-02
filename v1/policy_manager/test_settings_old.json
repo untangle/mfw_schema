@@ -98,12 +98,12 @@
                     {
                         "op": "==",
                         "type": "SOURCE_ADDRESS",
-                        "value": ["192.168.5.1/24"]
+                        "value": "192.168.5.1/24"
                     },
                     {
                         "op": "!=",
                         "type": "CLIENT_ADDRESS",
-                        "value": ["3.4.5.6"]
+                        "value": "3.4.5.6"
                     }
                 ],
                 "description": "Dedicated to students",
@@ -115,7 +115,7 @@
                     {
                         "op": "==",
                         "type": "CLIENT_PORT",
-                        "value": ["23"]
+                        "value": "23"
                     }
                 ],
                 "description": "For teachers",
@@ -127,17 +127,17 @@
                     {
                         "op": "==",
                         "type": "SOURCE_ADDRESS",
-                        "value": ["192.168.5.6"]
+                        "value": "192.168.5.6"
                     },
                     {
                         "op": "==",
                         "type": "CLIENT_PORT",
-                        "value": ["23"]
+                        "value": "23"
                     },
                     {
                         "op": "==",
                         "type": "SERVER_PORT",
-                        "value": ["123"]
+                        "value": "123"
                     }
                 ],
                 "description": "Flow used in multiple policies",
@@ -149,7 +149,7 @@
                     {
                         "op": "==",
                         "type": "CLIENT_PORT",
-                        "value": ["34"]
+                        "value": "34"
                     }
                 ],
                 "description": "123",
@@ -211,16 +211,19 @@
                 "type": "ServiceEndpoint",
                 "items": [
                     {
-                        "protocol": 6,
-                        "port": 12345
+                        "protocol": "TCP",
+                        "ipspecifier": "12.34.56.78",
+                        "port": "12345"
                     },
                     {
-                        "protocol": 17,
-                        "port": 12345
+                        "protocol": "UDP",
+                        "ipspecifier": "12.34.56.0/24",
+                        "port": "12345"
                     },
                     {
-                        "protocol": 17,
-                        "port": 12345
+                        "protocol": "UDP",
+                        "ipspecifier": "1.2.3.4-1.2.3.5",
+                        "port": "12345"
                     }
                 ]
             },
@@ -229,8 +232,13 @@
                 "id": "702d4c99-9599-455f-8271-515e5680f038",
                 "type": "InterfaceZone",
                 "items": [
-                    4,
-                    5
+                    "WAN",
+                    "LAN",
+                    "LTE",
+                    "WiFi",
+                    "WireGuard",
+                    "IPSEC",
+                    "VLAN"
                 ]                
             }
         ],
