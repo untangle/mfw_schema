@@ -72,8 +72,8 @@
         "stats": {
             "$ref": "file:stats/stats_schema.json#/definitions/stats_settings"
         },
-        "dynamic_block_list": {
-            "$ref": "file:dynamic_block_list/dynamic_block_list_schema.json#/definitions/dynamic_block_list_settings"
+        "dynamic_lists": {
+            "$ref": "file:dynamic_lists/dynamic_lists_schema.json#/definitions/dynamic_lists_settings"
         }
     },
     "definitions": {}

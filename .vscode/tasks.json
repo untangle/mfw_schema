@@ -23,7 +23,7 @@
         }
     ],
     "inputs": [
-        {   
+        {
             "id": "schema",
             "type": "pickString",
             "description": "pick one of the schemas to validate against",
@@ -34,7 +34,7 @@
                 "./v1/dhcp/dhcp_schema.json",
                 "./v1/discovery/discovery_schema.json",
                 "./v1/dns/dns_schema.json",
-                "./v1/dynamic_block_list/dynamic_block_list_schema.json",
+                "./v1/dynamic_lists/dynamic_lists_schema.json",
                 "./v1/files/files_schema.json",
                 "./v1/firewall/access_table_schema.json",
                 "./v1/firewall/firewall_schema.json",
@@ -55,7 +55,7 @@
                 "./v1/wan/wan_schema.json",
                 "./v1/webfilter/webfilter_schema.json"
             ],
-            "default": "./v1/policy_manager/policy_manager_schema.json",
+            "default": "./v1/policy_manager/policy_manager_schema.json"
         },
         {
             "id": "json",

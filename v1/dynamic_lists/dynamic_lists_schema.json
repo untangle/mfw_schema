@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 
-        "dynamic_block_list_settings": {
+        "dynamic_list_settings": {
             "type": "array",
             "description": "Dynamic block list configurations",
             "additionalProperties": false,
