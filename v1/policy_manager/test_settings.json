@@ -2,6 +2,48 @@
     "policy_manager": {
         "configurations": [
             {
+                "description": "Default Filter block",
+                "id": "eed73dc8-4fbd-489f-ba02-cc2a34e675af",
+                "name": "Default block filter",
+                "filter": {
+                    "type": "BLOCK"
+                }
+            },
+            {
+                "description": "Default Filter Allow",
+                "id": "64459faa-0dcf-413e-a107-c8044b58ec1f",
+                "name": "Default allow filter",
+                "filter": {
+                    "type": "ALLOW"
+                }
+            },
+            {
+                "description": "Port Forward for some web service",
+                "id": "62982d6f-93fe-43f2-948f-3537d065362d",
+                "name": "PF for Web App",
+                "port_forward": {
+                    "dnat_address": "1.2.3.4",
+                    "dnat_port": 50
+                }
+            },
+            {
+                "description": "some NAT action description",
+                "id": "33b915cb-1720-4e2b-a210-9ab11cb70e14",
+                "name": "NAT for service",
+                "nat": {
+                    "snat_address": "1.2.3.4"
+                }
+            },
+            // This Shaping action may change as QOS epic is scoped - since we need to expand DSCP actions
+            {
+                "description": "Some Shaping action",
+                "id": "bba87f64-1cbe-44b5-84e8-f3f3fe920839",
+                "name": "Apply DSCP",
+                "shaping": {
+                    "priority": 3
+                }
+            },
+            {
                 "description": "Students",
                 "id": "30a95c8e-594c-4530-984b-05c7ae300131",
                 "name": "Geoip fencing",
