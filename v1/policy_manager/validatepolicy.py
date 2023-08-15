@@ -61,14 +61,14 @@ def printConfiguration(prefix, c):
     """ Print a policy condition with indentation """
     print(prefix,'Config:',c['id'], 'Name:', c['name'], 'Desc:', c['description'])
 
-# Used to keep track of individual flows
-flows = {}
+# Used to keep track of individual condition_objects
+condition_objects = {}
 
-def printFlow(prefix,flow):
-    """ Print a policy flow with indentation """
+def printConditionObject(prefix,condition_object):
+    """ Print a policy condition_object with indentation """
     errors = 0
-    print(prefix,'Flow:', flow['id'], '\tName:,',flow['name'], '\tDescriptions:',flow['description'])
-    for condition in flow['conditions']:
+    print(prefix,'ConditionObject:', condition_object['id'], '\tName:,',condition_object['name'], '\tDescriptions:',condition_object['description'])
+    for condition in condition_object['conditions']:
         errors += printCondition('\t'+prefix,condition)
     return errors
 
@@ -112,10 +112,10 @@ def validate_policy(json_data, schema_data):
         configurations[c['id']]=c
         c['ref'] = 0
 
-    # Keep track of flows indexed by id
+    # Keep track of condition_objects indexed by id
     # and also keep track of whether each is referenced
-    for k in json_data['policy_manager']['flows']:
-        flows[k['id']]=k
+    for k in json_data['policy_manager']['condition_objects']:
+        condition_objects[k['id']]=k
         k['ref'] = 0
 
     # Keep track of groups indexed by id
@@ -131,28 +131,41 @@ def validate_policy(json_data, schema_data):
 
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
-        for configid in policy['configurations']:
-            config = configurations[configid]
-            printConfiguration('\t',config)
-            config['ref'] = 1 + config['ref']
-            errors += checkConfiguration('\t\t', config)
-        for flowid in policy['flows']:
-            flow = flows[flowid]
-            errors += printFlow('\t',flow)
-            flow['ref'] = 1 + flow['ref']
+        if 'services' in policy:
+            for service in policy['services']:
+                print('\tService:')
+                configid = service['configuration']
+                config = configurations[configid]
+                printConfiguration('\t\t',config)
+                config['ref'] = 1 + config['ref']
+                errors += checkConfiguration('\t\t', config)
+                coid = service['condition_object']
+                condition_object = condition_objects[coid]
+                errors += printConditionObject('\t\t',condition_object)
+                condition_object['ref'] = 1 + condition_object['ref']
+        else:
+                for configud in policy['configurations']:
+                    config = configurations[configid]
+                    printConfiguration('\t',config)
+                    config['ref'] = 1 + config['ref']
+                    errors += checkConfiguration('\t\t', config)
+                for coid in policy['condition_objects']:
+                    condition_object = condition_objects[coid]
+                    errors += printConditionObject('\t',condition_object)
+                    condition_object['ref'] = 1 + condition_object['ref']
 
-    print('Flows:')
+    print('condition_objects:')
     foundOrphaned = False
-    for f, flow in flows.items():
-        if flow['ref'] > 0:
-            printFlow('\t',flow)
+    for f, condition_object in condition_objects.items():
+        if condition_object['ref'] > 0:
+            printConditionObject('\t',condition_object)
         else:
             foundOrphaned = True
     if foundOrphaned:
-        print('Orphaned Flows:')
-        for f, flow in flows.items():
-            if flow['ref'] == 0:
-                printFlow('\t',flow)
+        print('Orphaned condition_objects:')
+        for f, condition_object in condition_objects.items():
+            if condition_object['ref'] == 0:
+                printConditionObject('\t',condition_object)
     print('Groups:')
     foundOrphaned = False
     for g, group in groups.items():
