@@ -52,6 +52,9 @@ def checkConfiguration(prefix, c):
         geoip = c['geoip']
         print(prefix, 'Geoip:\tName:',c['name'],'\tDesc:',c['description'])
         print(prefix, geoip)
+    elif c.get('shaping') is not None:
+        shaping = c['shaping']
+        print(prefix, "Shaping:\t", shaping)
     else:
         print(prefix, 'Error: Unkown configuration type:', c)
         errors += 1
@@ -154,7 +157,7 @@ def validate_policy(json_data, schema_data):
                     errors += printConditionObject('\t',condition_object)
                     condition_object['ref'] = 1 + condition_object['ref']
 
-    print('condition_objects:')
+    print('ConditionObjects:')
     foundOrphaned = False
     for f, condition_object in condition_objects.items():
         if condition_object['ref'] > 0:
@@ -162,7 +165,7 @@ def validate_policy(json_data, schema_data):
         else:
             foundOrphaned = True
     if foundOrphaned:
-        print('Orphaned condition_objects:')
+        print('Orphaned ConditionObjects:')
         for f, condition_object in condition_objects.items():
             if condition_object['ref'] == 0:
                 printConditionObject('\t',condition_object)
