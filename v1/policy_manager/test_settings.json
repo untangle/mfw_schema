@@ -34,7 +34,6 @@
                     "snat_address": "1.2.3.4"
                 }
             },
-            // This Shaping action may change as QOS epic is scoped - since we need to expand DSCP actions
             {
                 "description": "Some Shaping action",
                 "id": "bba87f64-1cbe-44b5-84e8-f3f3fe920839",
@@ -274,6 +273,15 @@
                     4,
                     5
                 ]                
+            },
+            {
+                "name": "Sample condition group - Students OR Teachers",
+                "id": "703d5c99-9599-455f-8271-515e5680f038",
+                "type": "ConditionGroup",
+                "items": [
+                    "90f23fe9-c492-4a31-abad-fe2d065bb79f",
+                    "7bb85306-c823-48d2-ad86-a41868d1de82"
+                ]
             }
         ],
         "policies": [
