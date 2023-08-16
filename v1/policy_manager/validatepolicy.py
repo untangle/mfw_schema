@@ -103,6 +103,9 @@ def checkGroupItems(prefix, g, items):
                 if k != "protocol" and k != "port":
                     print('\t'+prefix, 'Error - ServiceEndPoint ihad unexpected field', k, v, 'in group', g)    
                     errors += 1
+    else:
+        print('\t'+prefix, 'Error - Unknown Group type', type)
+        errors += 1
     return errors
 
 def validate_policy(json_data, schema_data):
