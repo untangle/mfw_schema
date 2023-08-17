@@ -9,6 +9,8 @@ import sys
 # These are not strictly required but They supplement the validation done by the json parser by sanity 
 # checking the internal cross-references based on id and checking for orphans.
 
+ids = {}
+
 def printCondition(prefix,c):
     """ Print a policy condition with indentation """
     errors = 0
@@ -117,23 +119,42 @@ def validate_policy(json_data, schema_data):
     for c in json_data['policy_manager']['configurations']:
         configurations[c['id']]=c
         c['ref'] = 0
+        if ids.get(c['id']) is None:
+            ids[c['id']] = 1
+        else:
+            ids[c['id']] += 1
 
     # Keep track of condition_objects indexed by id
     # and also keep track of whether each is referenced
     for k in json_data['policy_manager']['condition_objects']:
-        condition_objects[k['id']]=k
+        id = k['id']
+        condition_objects[id]=k
         k['ref'] = 0
+        if ids.get(id) is None:
+            ids[id] = 1
+        else:
+            ids[id] += 1
 
     # Keep track of groups indexed by id
     # and also keep track of whether each is referenced
     for g in json_data['policy_manager']['groups']:
-        groups[g['id']]=g
+        id = g['id']
+        groups[id]=g
         g['ref'] = 0
+        if ids.get(id) is None:
+            ids[id] = 1
+        else:
+            ids[id] += 1
 
     # Build a map of policies indexed by id
     policies = {}
     for p in json_data['policy_manager']['policies']:
-        policies[p['id']]=p
+        id = p['id']
+        policies[id]=p
+        if ids.get(id) is None:
+            ids[id] = 1
+        else:
+            ids[id] += 1
 
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
@@ -204,4 +225,9 @@ def validate_policy(json_data, schema_data):
         for c, config in configurations.items():
             if config['ref'] == 0:
                 printConfiguration('\t', config)
+    for id in ids:
+        count = ids[id]
+        if count>1:
+            print('ID replicated: ', id, 'count:', count)
+            errors += 1
     print('Found', errors,'errors')
