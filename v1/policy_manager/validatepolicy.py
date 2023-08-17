@@ -138,6 +138,13 @@ def validate_policy(json_data, schema_data):
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
         if 'services' in policy:
+            if policy.get('condition_object') is not None:
+                topcoid = policy['condition_object']
+                condition_object = condition_objects[topcoid]
+                errors += printConditionObject('\t\t',condition_object)
+                condition_object['ref'] = 1 + condition_object['ref']
+            else:
+                topcoid = None
             for service in policy['services']:
                 print('\tService:')
                 configid = service['configuration']
@@ -145,12 +152,13 @@ def validate_policy(json_data, schema_data):
                 printConfiguration('\t\t',config)
                 config['ref'] = 1 + config['ref']
                 errors += checkConfiguration('\t\t', config)
-                coid = service['condition_object']
-                condition_object = condition_objects[coid]
-                errors += printConditionObject('\t\t',condition_object)
-                condition_object['ref'] = 1 + condition_object['ref']
+                if service.get('condition_object') is not None:
+                    coid = service['condition_object']
+                    condition_object = condition_objects[coid]
+                    errors += printConditionObject('\t\t',condition_object)
+                    condition_object['ref'] = 1 + condition_object['ref']
         else:
-                for configud in policy['configurations']:
+                for configid in policy['configurations']:
                     config = configurations[configid]
                     printConfiguration('\t',config)
                     config['ref'] = 1 + config['ref']
