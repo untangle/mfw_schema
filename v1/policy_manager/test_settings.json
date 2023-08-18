@@ -269,7 +269,8 @@
                 "description": "test",
                 "enabled": true,
                 "flows": [
-                    "f5766de4-64a3-48b9-9a43-c91125406e93"
+                    "f5766de4-64a3-48b9-9a43-c91125406e93",
+                    "b34671cb-5e08-484d-aad6-72d3500efcda"
                 ],
                 "id": "fa5a811e-a0eb-45e2-8f48-e20e16baabec",
                 "name": "Aux"
