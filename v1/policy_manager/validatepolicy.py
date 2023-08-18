@@ -11,8 +11,8 @@ TestPolicyManager tests all parts of the policy manager schema
 
 First, it runs jsonschema.validate to check against the policy_manager_schema.json file
 Second, it runs tests on things that the schema cannot check. Right now, that is only ensuring that all id's in 
-policy_manager/policies/[either configurations or flows] have a match in configurations or flows (that is, there are 
-no orphan id's)
+policy_manager/policies/[either configurations or condition objects] have a match in configurations or condition 
+objects (that is, there are no orphan id's)
 """
 class TestPolicyManager(unittest.TestCase):
     # consts
@@ -23,7 +23,7 @@ class TestPolicyManager(unittest.TestCase):
     json_policy_manager = ""
     json_configurations = ""
     json_groups         = ""
-    json_flows          = ""
+    json_condition_objs = "" # formerly flows
     json_policies       = ""
     
     @classmethod
@@ -77,7 +77,7 @@ class TestPolicyManager(unittest.TestCase):
             cls.json_policy_manager = copy.deepcopy(cls.json_data["policy_manager"])
             cls.json_configurations = copy.deepcopy(cls.json_policy_manager["configurations"])
             cls.json_groups         = copy.deepcopy(cls.json_policy_manager["groups"])
-            cls.json_flows          = copy.deepcopy(cls.json_policy_manager["flows"])
+            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager["condition_objects"])
             cls.json_policies       = copy.deepcopy(cls.json_policy_manager["policies"])
         
     def test_configuration_ids_in_policies(self):
@@ -98,52 +98,54 @@ class TestPolicyManager(unittest.TestCase):
         
         self.assertEqual(ids_in_policies, ids_in_configurations, "Failed due to a mismatch in ids between policies and configurations.")
         
-    def test_flow_ids_in_policies(self):
+    def test_condition_obj_ids_in_policies(self):
         """
-        Tests that any id's which exist in policy_manager/policies/flows also exist in each individual 
-        policy_manager/flows/id
+        Tests that any id's which exist in policy_manager/policies/condition_objects also exist in each individual 
+        policy_manager/condition_objects/id
         """
-        # grab flow ids from policies, which are stored as lists
+        # grab condition object ids from policies, which are stored as lists
         ids_in_policies = []
         for policy in self.json_policies:
-            ids_in_policies += policy["flows"]
+            ids_in_policies += policy["condition_objects"]
         # we're only looking for matches, so strip duplicates and sort to make the comparison work
         ids_in_policies = sorted(list(set(ids_in_policies)))
             
-        # ids in flows are not a list, so grabbing them is easier. Strip duplicates and sort like above.
-        ids_in_flows = [flow["id"] for flow in self.json_flows]
-        ids_in_flows = sorted(list(set(ids_in_flows)))
+        # ids in condition objects are not a list, so grabbing them is easier. Strip duplicates and sort like above.
+        ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
+        ids_in_condition_objs = sorted(list(set(ids_in_condition_objs)))
         
-        self.assertEqual(ids_in_policies, ids_in_flows, "Failed due to a mismatch in ids between policies and flows.")
+        self.assertEqual(ids_in_policies, ids_in_condition_objs, "Failed due to a mismatch in ids between policies and condition objects.")
         
-    def test_group_ids_in_flows(self):
+    def test_group_ids_in_condition_objs(self):
         """
-        Tests that any id's which exist in policy_manager/flows/condition/groupid also exist in each individual 
-        policy_manager/groups/id
+        Tests that any id's which exist in policy_manager/condition objects/condition/groupid also exist in each 
+        individual policy_manager/groups/id
         """
-        # grab group ids from flows, which are individually nested within conditions
-        ids_in_flows = []
-        for flow in self.json_flows:
-            ids_in_flows += [condition["groupid"] for condition in flow["conditions"] if "groupid" in condition]
+        # grab group ids from condition objs, which are individually nested within conditions
+        ids_in_condition_objs = []
+        for condition_obj in self.json_condition_objs:
+            ids_in_condition_objs += [condition["groupid"] for condition in condition_obj["conditions"] if "groupid" in condition]
         # we're only looking for matches, so strip duplicates and sort to make the comparison work
-        ids_in_flows = sorted(list(set(ids_in_flows)))
+        ids_in_condition_objs = sorted(list(set(ids_in_condition_objs)))
         
         # ids in groups are not a list, so grabbing them is easier. Strip duplicates and sort like above.
         ids_in_groups = [group["id"] for group in self.json_groups]
         ids_in_groups = sorted(list(set(ids_in_groups)))
         
-        self.assertEqual(ids_in_flows, ids_in_groups, "Failed due to a mismatch in ids between flows and groups")
+        self.assertEqual(ids_in_condition_objs, ids_in_groups, "Failed due to a mismatch in ids between condition objs and groups")
         
-    def test_group_properties(self):
+    def test_group_types(self):
         """
-        Tests the properties of groups to make sure that they are the correct format
+        Tests the types of each group to make sure that they are the correct format
         """
         for group in self.json_groups:
             group_items = group["items"]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
             group_type = group["type"]
-            if group_type == "GeoIPLocation":
+            if group_type == "ConditionGroup":
+                pass # TODO can this be validated?
+            elif group_type == "GeoIPLocation":
                 for item in group_items:
                     self.assertEquals(len(item), 2, "Failed because GeoIPLocation has a weird format: " + item + 
                                       " in group's items: " +  str(group_items))
@@ -163,7 +165,7 @@ class TestPolicyManager(unittest.TestCase):
         Prints the validated policy manager string. Should only print if validation was successful.
         """
         try:
-            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_flows, cls.json_groups)
+            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, cls.json_groups)
             print("--- Printing validated schema details ---")
             print(printer.buildAllPoliciesString())
         except KeyError as e:
@@ -171,7 +173,7 @@ class TestPolicyManager(unittest.TestCase):
         
 """
 PolicyManagerStringBuilder builds strings out of the passed .json information, composed of policies, configurations, 
-flows, and groups. The intent is two-fold:
+condition objects, and groups. The intent is two-fold:
 1. Use buildAllPoliciesString() prints a string representation of the entire policy manager after the .json is 
     validated and tested
 2. debugging, so you can print individual items, groups of items, nested or non-nested info, etc.
@@ -183,19 +185,19 @@ Returns:
     PolicyManagerStringBuilder type: An object which returns built strings on the objects given to it
 """
 class PolicyManagerStringBuilder():
-    def __init__(self, policies, configurations, flows, groups):
+    def __init__(self, policies, configurations, condition_objs, groups):
         """
         Initialize the object with the dictionaries to be printed, grabbed directly from the .json
 
         Args:
-            policies (dict): A policy, which has id, name, description, enabled, configurations, and flows
+            policies (dict): A policy, which has id, name, description, enabled, configurations, and condition objects
             configurations (dict): A configuration, which has id, name, and description
-            flows (dict): A flow, which has id, name, descriptions, and conditions. The conditions have type, op, and either value or a group
+            condition_objs (dict): A condition object, which has id, name, descriptions, and conditions. The conditions have type, op, and either value or a group
             groups (dict): A group, which has id, name, items, and type
         """
         self.policies = policies
         self.configurations = configurations
-        self.flows = flows
+        self.condition_objs = condition_objs
         self.groups = groups
         
     def buildAllPoliciesString(self, prefix='', getNestedInfo=True):
@@ -204,7 +206,7 @@ class PolicyManagerStringBuilder():
 
         Args:
             prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
-            getNestedInfo (bool, optional): Whether nested info (configurations and flows) should be returned. Defaults to True.
+            getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be returned. Defaults to True.
 
         Returns:
             string: A string representation of all policies. Alternatively, a string represntation of the entire policy manager
@@ -217,26 +219,27 @@ class PolicyManagerStringBuilder():
     def buildPolicyString(self, policy, prefix='', getNestedInfo=True):
         """
         Builds and returns a string that represents a policy and its properties. If getNestedInfo is included, will 
-        print configurations and flows (and their nested info) linked to the "id" of the policy
+        print configurations and condition objects (and their nested info) linked to the "id" of the policy
 
         Args:
             policy (dict): The dict of a policy grabbed from the .json
             prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
-            getNestedInfo (bool, optional): Whether nested info (configurations and flows) should be returned. Defaults to True.
+            getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be returned. Defaults to True.
 
         Returns:
             string: A string representation of a policy and its properties
         """
         policy_arr = [' '.join([prefix, "Policy:", policy["id"], "\tName:", policy["name"], "\tDesc:", policy["description"], "\tEnabled:", str(policy["enabled"])])]
         if getNestedInfo:
-            for config_id in policy["configurations"]:
-                for configuration in self.configurations:
-                    if configuration["id"] == config_id:
-                        policy_arr.append(self.buildConfigurationString(configuration, prefix='\t'))
-            for flow_id in policy["flows"]:
-                for flow in self.flows:
-                    if flow["id"] == flow_id:
-                        policy_arr.append(self.buildFlowString(flow, prefix='\t'))
+            for service in policy["services"]:
+                if "configuration" in service:
+                    for configuration in self.configurations:
+                        if configuration["id"] == service["configuration"]:
+                            policy_arr.append(self.buildConfigurationString(configuration, prefix='\t'))
+                if "condition_object" in service:
+                    for condition_obj in self.condition_objs:
+                        if condition_obj["id"] == service["condition_object"]:
+                            policy_arr.append(self.buildAllConditionObjsString(condition_obj, prefix='\t'))
         return '\n'.join(policy_arr)
                 
     def buildAllConfigurationsString(self, prefix=''):
@@ -267,47 +270,47 @@ class PolicyManagerStringBuilder():
         """
         return ' '.join([prefix, "Config:", configuration["id"], "\tName:", configuration["name"], "\tDesc:", configuration["description"]])
     
-    def buildAllFlowsString(self, prefix='', getNestedInfo=True):
+    def buildAllConditionObjsString(self, prefix='', getNestedInfo=True):
         """
-        Builds and returns a string that represents all flows, in multiple lines
+        Builds and returns a string that represents all condition objects, in multiple lines
 
         Args:
             prefix (str, optional): A string to add to the beginning of each string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to True.
 
         Returns:
-            string: A string representation of all flows and their properties
+            string: A string representation of all condition objects and their properties
         """
-        flows_arr = []
-        for flow in self.flows:
-            flows_arr.append(self.buildFlowString(flow, prefix=prefix, getNestedInfo=getNestedInfo))
-        return '\n'.join(flows_arr)
+        condition_objs_arr = []
+        for condition_obj in self.condition_objs:
+            condition_objs_arr.append(self.buildConditionObjectString(condition_obj, prefix=prefix, getNestedInfo=getNestedInfo))
+        return '\n'.join(condition_objs_arr)
             
-    def buildFlowString(self, flow, prefix='', getNestedInfo=True):
+    def buildConditionObjectString(self, condition_obj, prefix='', getNestedInfo=True):
         """
-        Builds and returns a string that represents a flow and its properties. Prints more detailed information for the
-        conditions in the flow. If getNestedInfo is included, will print groups linked to the "groupid" of the 
-        conditions
+        Builds and returns a string that represents a condition object and its properties. Prints more detailed 
+        information for the conditions in the condition object. If getNestedInfo is included, will print groups linked 
+        to the "groupid" of the conditions
 
         Args:
-            flow (dict): A dict of a flow grabbed from the .json
+            condition object (dict): A dict of a condition object grabbed from the .json
             prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to True.
 
         Returns:
-            string: A string representation of a flow and its properties
+            string: A string representation of a condition object and its properties
         """
-        flow_arr = [' '.join([prefix, "Flow:", flow["id"], "\tName:,", flow["name"], "\tDescriptions:", flow["description"]])]
-        for condition in flow["conditions"]:
+        condition_obj_arr = [' '.join([prefix, "Condition Object:", condition_obj["id"], "\tName:,", condition_obj["name"], "\tDescriptions:", condition_obj["description"]])]
+        for condition in condition_obj["conditions"]:
             if "value" in condition:
-                flow_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
+                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
             else:
-                flow_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tGroup:", condition["groupid"]]))
+                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tGroup:", condition["groupid"]]))
                 if getNestedInfo:
                     for group in self.groups:
                         if group["id"] == condition["groupid"]:
-                            flow_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
-        return '\n'.join(flow_arr)
+                            condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
+        return '\n'.join(condition_obj_arr)
                 
     def buildAllGroupsString(self, prefix=''):
         """
