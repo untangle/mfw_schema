@@ -85,10 +85,10 @@ class TestPolicyManager(unittest.TestCase):
         Tests that any id's which exist in policy_manager/policies/configurations also exist in each individual 
         policy_manager/configurations/id
         """
-        # grab configuration ids from policies, which are stored as lists
+        # grab configuration ids from policies, which are stored as individual id's in services
         ids_in_policies = []
         for policy in self.json_policies:
-            ids_in_policies += policy["configurations"]
+            ids_in_policies += [service["configuration"] for service in policy["services"] if "configuration" in service]
         # we're only looking for matches, so strip duplicates and sort to make the comparison work
         ids_in_policies = sorted(list(set(ids_in_policies)))
             
@@ -103,10 +103,10 @@ class TestPolicyManager(unittest.TestCase):
         Tests that any id's which exist in policy_manager/policies/condition_objects also exist in each individual 
         policy_manager/condition_objects/id
         """
-        # grab condition object ids from policies, which are stored as lists
+        # grab condition object ids from policies, which are stored as individual id's in services
         ids_in_policies = []
         for policy in self.json_policies:
-            ids_in_policies += policy["condition_objects"]
+            ids_in_policies += [service["condition_object"] for service in policy["services"] if "condition_object" in service]
         # we're only looking for matches, so strip duplicates and sort to make the comparison work
         ids_in_policies = sorted(list(set(ids_in_policies)))
             
