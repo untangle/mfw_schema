@@ -5,7 +5,7 @@ import os
 import unittest
 import sys
 
-import  v1.policy_manager.new_validatepolicy as validatepolicy
+import  v1.policy_manager.validatepolicy as validatepolicy
 
 def main():
     """

@@ -3,7 +3,6 @@
 import copy
 import json
 import jsonschema
-import referencing
 import os
 import unittest
 
