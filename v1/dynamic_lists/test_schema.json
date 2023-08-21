@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "dynamic_lists"
+    ],
+    "properties": {
+    "dynamic_lists": {
+           "$ref": "file:./dynamic_lists_schema.json#/definitions/dynamic_lists_settings"
+    }
+    }
+}

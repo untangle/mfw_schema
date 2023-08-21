@@ -130,6 +130,14 @@
                         }
                     ]
                 }
+            },
+            {
+                "description": "Intentional orphan configuration",
+                "id": "96922aef-3968-4de5-9385-3f426fb32b99",
+                "name": "Orphan configuraion",
+                "filter": {
+                    "type": "ALLOW"
+                }
             }
         ],
         "enabled": true,
@@ -218,11 +226,28 @@
                         "op": "match",
                         "type": "INTERFACE",
                         "groupid": "702d4c99-9599-455f-8271-515e5680f038"                        
+                    },
+                    {
+                        "op": "==",
+                        "type": "SOURCE_ADDRESS",
+                        "groupid": "703d5c99-9599-455f-8271-515e5680f038"
                     }
                 ],
                 "description": "Dedicated to students",
                 "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af3",
                 "name": "Students Flow"
+            },
+            {
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "SERVER_PORT",
+                        "value": ["22"]
+                    }
+                ],
+                "description": "Intentional orphan condition object",
+                "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af4",
+                "name": "Orphan condition object"
             }
         ],
         "groups": [
@@ -282,6 +307,14 @@
                     "90f23fe9-c492-4a31-abad-fe2d065bb79f",
                     "7bb85306-c823-48d2-ad86-a41868d1de82"
                 ]
+            },
+            {
+                "name": "Intentional orphan group",
+                "id": "703d5c99-9599-455f-8271-515e5680f039",
+                "type": "GeoIPLocation",
+                "items": [
+                    "US"
+                ]
             }
         ],
         "policies": [
@@ -305,16 +338,23 @@
                 ],
                 "id": "92e8d6de-36fd-4240-8bd5-7e7bfa3317c6",
                 "name": "Students",
-                "condition_object": "90f23fe9-c492-4a31-abad-fe2d065bb79f"
+                "condition_objects": [
+                    "90f23fe9-c492-4a31-abad-fe2d065bb79f"
+                ]
             },
             {
                 "configurations": [
-                    "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"
+                    "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5",
+                    "33b915cb-1720-4e2b-a210-9ab11cb70e14",
+                    "62982d6f-93fe-43f2-948f-3537d065362d",
+                    "64459faa-0dcf-413e-a107-c8044b58ec1f",
+                    "eed73dc8-4fbd-489f-ba02-cc2a34e675af"
                 ],
                 "description": "For teachers",
                 "enabled": true,
                 "condition_objects": [
-                    "7bb85306-c823-48d2-ad86-a41868d1de82"
+                    "7bb85306-c823-48d2-ad86-a41868d1de82",
+                    "d898c925-b7d0-4f8a-9cc7-d021b18c7af3"
                 ],
                 "id": "60a9e031-4188-4d06-8083-108ebec63a9e",
                 "name": "Teachers"
@@ -326,7 +366,8 @@
                 "description": "test",
                 "enabled": true,
                 "condition_objects": [
-                    "f5766de4-64a3-48b9-9a43-c91125406e93"
+                    "f5766de4-64a3-48b9-9a43-c91125406e93",
+                    "b34671cb-5e08-484d-aad6-72d3500efcda"
                 ],
                 "id": "fa5a811e-a0eb-45e2-8f48-e20e16baabec",
                 "name": "Aux"
