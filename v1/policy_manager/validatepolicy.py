@@ -11,6 +11,13 @@ import sys
 
 ids = {}
 
+def countID(id):
+    """ Increment the count for a specific ID to check that ID's aren't reused """
+    if ids.get(id) is None:
+        ids[id] = 1
+    else:
+        ids[id] += 1
+
 def printCondition(prefix,c):
     """ Print a policy condition with indentation """
     errors = 0
@@ -119,10 +126,7 @@ def validate_policy(json_data, schema_data):
     for c in json_data['policy_manager']['configurations']:
         configurations[c['id']]=c
         c['ref'] = 0
-        if ids.get(c['id']) is None:
-            ids[c['id']] = 1
-        else:
-            ids[c['id']] += 1
+        countID(c['id'])
 
     # Keep track of condition_objects indexed by id
     # and also keep track of whether each is referenced
@@ -130,10 +134,7 @@ def validate_policy(json_data, schema_data):
         id = k['id']
         condition_objects[id]=k
         k['ref'] = 0
-        if ids.get(id) is None:
-            ids[id] = 1
-        else:
-            ids[id] += 1
+        countID(id)
 
     # Keep track of groups indexed by id
     # and also keep track of whether each is referenced
@@ -141,20 +142,14 @@ def validate_policy(json_data, schema_data):
         id = g['id']
         groups[id]=g
         g['ref'] = 0
-        if ids.get(id) is None:
-            ids[id] = 1
-        else:
-            ids[id] += 1
+        countID(id)
 
     # Build a map of policies indexed by id
     policies = {}
     for p in json_data['policy_manager']['policies']:
         id = p['id']
         policies[id]=p
-        if ids.get(id) is None:
-            ids[id] = 1
-        else:
-            ids[id] += 1
+        countID(id)
 
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
