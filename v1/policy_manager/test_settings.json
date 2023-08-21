@@ -130,6 +130,14 @@
                         }
                     ]
                 }
+            },
+            {
+                "description": "Intentional orphan configuration",
+                "id": "96922aef-3968-4de5-9385-3f426fb32b99",
+                "name": "Orphan configuraion",
+                "filter": {
+                    "type": "ALLOW"
+                }
             }
         ],
         "enabled": true,
@@ -218,11 +226,28 @@
                         "op": "match",
                         "type": "INTERFACE",
                         "groupid": "702d4c99-9599-455f-8271-515e5680f038"                        
+                    },
+                    {
+                        "op": "==",
+                        "type": "SOURCE_ADDRESS",
+                        "groupid": "703d5c99-9599-455f-8271-515e5680f038"
                     }
                 ],
                 "description": "Dedicated to students",
                 "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af3",
                 "name": "Students Flow"
+            },
+            {
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "SERVER_PORT",
+                        "value": ["22"]
+                    }
+                ],
+                "description": "Intentional orphan condition object",
+                "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af4",
+                "name": "Orphan condition object"
             }
         ],
         "groups": [
@@ -281,6 +306,14 @@
                 "items": [
                     "90f23fe9-c492-4a31-abad-fe2d065bb79f",
                     "7bb85306-c823-48d2-ad86-a41868d1de82"
+                ]
+            },
+            {
+                "name": "Intentional orphan group",
+                "id": "703d5c99-9599-455f-8271-515e5680f039",
+                "type": "GeoIPLocation",
+                "items": [
+                    "US"
                 ]
             }
         ],
