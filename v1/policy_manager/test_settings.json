@@ -2,6 +2,47 @@
     "policy_manager": {
         "configurations": [
             {
+                "description": "Default Filter block",
+                "id": "eed73dc8-4fbd-489f-ba02-cc2a34e675af",
+                "name": "Default block filter",
+                "filter": {
+                    "type": "BLOCK"
+                }
+            },
+            {
+                "description": "Default Filter Allow",
+                "id": "64459faa-0dcf-413e-a107-c8044b58ec1f",
+                "name": "Default allow filter",
+                "filter": {
+                    "type": "ALLOW"
+                }
+            },
+            {
+                "description": "Port Forward for some web service",
+                "id": "62982d6f-93fe-43f2-948f-3537d065362d",
+                "name": "PF for Web App",
+                "port_forward": {
+                    "dnat_address": "1.2.3.4",
+                    "dnat_port": 50
+                }
+            },
+            {
+                "description": "some NAT action description",
+                "id": "33b915cb-1720-4e2b-a210-9ab11cb70e14",
+                "name": "NAT for service",
+                "nat": {
+                    "snat_address": "1.2.3.4"
+                }
+            },
+            {
+                "description": "Some Shaping action",
+                "id": "bba87f64-1cbe-44b5-84e8-f3f3fe920839",
+                "name": "Apply DSCP",
+                "shaping": {
+                    "priority": 3
+                }
+            },
+            {
                 "description": "Students",
                 "id": "30a95c8e-594c-4530-984b-05c7ae300131",
                 "name": "Geoip fencing",
@@ -92,7 +133,7 @@
             }
         ],
         "enabled": true,
-        "flows": [
+        "condition_objects": [
             {
                 "conditions": [
                     {
@@ -107,7 +148,7 @@
                     }
                 ],
                 "description": "Dedicated to students",
-                "id": "30a95c8e-594c-4530-984b-05c7ae300132",
+                "id": "90f23fe9-c492-4a31-abad-fe2d065bb79f",
                 "name": "Students Flow"
             },
             {
@@ -180,7 +221,7 @@
                     }
                 ],
                 "description": "Dedicated to students",
-                "id": "30a95c8e-594c-4530-984b-05c7ae300132",
+                "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af3",
                 "name": "Students Flow"
             }
         ],
@@ -232,23 +273,39 @@
                     4,
                     5
                 ]                
+            },
+            {
+                "name": "Sample condition group - Students OR Teachers",
+                "id": "703d5c99-9599-455f-8271-515e5680f038",
+                "type": "ConditionGroup",
+                "items": [
+                    "90f23fe9-c492-4a31-abad-fe2d065bb79f",
+                    "7bb85306-c823-48d2-ad86-a41868d1de82"
+                ]
             }
         ],
         "policies": [
             {
-                "configurations": [
-                    "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c",
-                    "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5",
-                    "95922aef-3968-4de5-9385-3f426fb32b99"
-                ],
                 "description": "For students config",
                 "enabled": true,
-                "flows": [
-                    "30a95c8e-594c-4530-984b-05c7ae300132",
-                    "f5766de4-64a3-48b9-9a43-c91125406e93"
+                "services": [
+                    { 
+                        "configuration": "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c"
+                    },
+                    {
+                        "condition_object": "f5766de4-64a3-48b9-9a43-c91125406e93", 
+                        "configuration": "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"
+                    },
+                    {
+                        "configuration": "95922aef-3968-4de5-9385-3f426fb32b99"
+                    },
+                    {
+                        "configuration": "bba87f64-1cbe-44b5-84e8-f3f3fe920839"
+                    }
                 ],
-                "id": "30a95c8e-594c-4530-984b-05c7ae300138",
-                "name": "Students"
+                "id": "92e8d6de-36fd-4240-8bd5-7e7bfa3317c6",
+                "name": "Students",
+                "condition_object": "90f23fe9-c492-4a31-abad-fe2d065bb79f"
             },
             {
                 "configurations": [
@@ -256,7 +313,7 @@
                 ],
                 "description": "For teachers",
                 "enabled": true,
-                "flows": [
+                "condition_objects": [
                     "7bb85306-c823-48d2-ad86-a41868d1de82"
                 ],
                 "id": "60a9e031-4188-4d06-8083-108ebec63a9e",
@@ -268,9 +325,8 @@
                 ],
                 "description": "test",
                 "enabled": true,
-                "flows": [
-                    "f5766de4-64a3-48b9-9a43-c91125406e93",
-                    "b34671cb-5e08-484d-aad6-72d3500efcda"
+                "condition_objects": [
+                    "f5766de4-64a3-48b9-9a43-c91125406e93"
                 ],
                 "id": "fa5a811e-a0eb-45e2-8f48-e20e16baabec",
                 "name": "Aux"
@@ -282,7 +338,7 @@
                 ],
                 "description": "test123",
                 "enabled": true,
-                "flows": [
+                "condition_objects": [
                     "f5766de4-64a3-48b9-9a43-c91125406e93"
                 ],
                 "id": "5690e8b8-c0e2-4cf4-9350-e8378cc96053",
