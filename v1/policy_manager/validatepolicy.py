@@ -9,6 +9,15 @@ import sys
 # These are not strictly required but They supplement the validation done by the json parser by sanity 
 # checking the internal cross-references based on id and checking for orphans.
 
+ids = {}
+
+def countID(id):
+    """ Increment the count for a specific ID to check that ID's aren't reused """
+    if ids.get(id) is None:
+        ids[id] = 1
+    else:
+        ids[id] += 1
+
 def printCondition(prefix,c):
     """ Print a policy condition with indentation """
     errors = 0
@@ -52,6 +61,9 @@ def checkConfiguration(prefix, c):
         geoip = c['geoip']
         print(prefix, 'Geoip:\tName:',c['name'],'\tDesc:',c['description'])
         print(prefix, geoip)
+    elif c.get('shaping') is not None:
+        shaping = c['shaping']
+        print(prefix, "Shaping:\t", shaping)
     else:
         print(prefix, 'Error: Unkown configuration type:', c)
         errors += 1
@@ -61,14 +73,14 @@ def printConfiguration(prefix, c):
     """ Print a policy condition with indentation """
     print(prefix,'Config:',c['id'], 'Name:', c['name'], 'Desc:', c['description'])
 
-# Used to keep track of individual flows
-flows = {}
+# Used to keep track of individual condition_objects
+condition_objects = {}
 
-def printFlow(prefix,flow):
-    """ Print a policy flow with indentation """
+def printConditionObject(prefix,condition_object):
+    """ Print a policy condition_object with indentation """
     errors = 0
-    print(prefix,'Flow:', flow['id'], '\tName:,',flow['name'], '\tDescriptions:',flow['description'])
-    for condition in flow['conditions']:
+    print(prefix,'ConditionObject:', condition_object['id'], '\tName:,',condition_object['name'], '\tDescriptions:',condition_object['description'])
+    for condition in condition_object['conditions']:
         errors += printCondition('\t'+prefix,condition)
     return errors
 
@@ -100,6 +112,9 @@ def checkGroupItems(prefix, g, items):
                 if k != "protocol" and k != "port":
                     print('\t'+prefix, 'Error - ServiceEndPoint ihad unexpected field', k, v, 'in group', g)    
                     errors += 1
+    else:
+        print('\t'+prefix, 'Error - Unknown Group type', type)
+        errors += 1
     return errors
 
 def validate_policy(json_data, schema_data):
@@ -111,48 +126,76 @@ def validate_policy(json_data, schema_data):
     for c in json_data['policy_manager']['configurations']:
         configurations[c['id']]=c
         c['ref'] = 0
+        countID(c['id'])
 
-    # Keep track of flows indexed by id
+    # Keep track of condition_objects indexed by id
     # and also keep track of whether each is referenced
-    for k in json_data['policy_manager']['flows']:
-        flows[k['id']]=k
+    for k in json_data['policy_manager']['condition_objects']:
+        id = k['id']
+        condition_objects[id]=k
         k['ref'] = 0
+        countID(id)
 
     # Keep track of groups indexed by id
     # and also keep track of whether each is referenced
     for g in json_data['policy_manager']['groups']:
-        groups[g['id']]=g
+        id = g['id']
+        groups[id]=g
         g['ref'] = 0
+        countID(id)
 
     # Build a map of policies indexed by id
     policies = {}
     for p in json_data['policy_manager']['policies']:
-        policies[p['id']]=p
+        id = p['id']
+        policies[id]=p
+        countID(id)
 
     for p, policy in policies.items():
         print('Analyzing policy:', p, '\tName:', policy['name'], '\tDesc:', policy['description'], '\tEnabled:', policy['enabled'])
-        for configid in policy['configurations']:
-            config = configurations[configid]
-            printConfiguration('\t',config)
-            config['ref'] = 1 + config['ref']
-            errors += checkConfiguration('\t\t', config)
-        for flowid in policy['flows']:
-            flow = flows[flowid]
-            errors += printFlow('\t',flow)
-            flow['ref'] = 1 + flow['ref']
+        if 'services' in policy:
+            if policy.get('condition_object') is not None:
+                topcoid = policy['condition_object']
+                condition_object = condition_objects[topcoid]
+                errors += printConditionObject('\t\t',condition_object)
+                condition_object['ref'] = 1 + condition_object['ref']
+            else:
+                topcoid = None
+            for service in policy['services']:
+                print('\tService:')
+                configid = service['configuration']
+                config = configurations[configid]
+                printConfiguration('\t\t',config)
+                config['ref'] = 1 + config['ref']
+                errors += checkConfiguration('\t\t', config)
+                if service.get('condition_object') is not None:
+                    coid = service['condition_object']
+                    condition_object = condition_objects[coid]
+                    errors += printConditionObject('\t\t',condition_object)
+                    condition_object['ref'] = 1 + condition_object['ref']
+        else:
+                for configid in policy['configurations']:
+                    config = configurations[configid]
+                    printConfiguration('\t',config)
+                    config['ref'] = 1 + config['ref']
+                    errors += checkConfiguration('\t\t', config)
+                for coid in policy['condition_objects']:
+                    condition_object = condition_objects[coid]
+                    errors += printConditionObject('\t',condition_object)
+                    condition_object['ref'] = 1 + condition_object['ref']
 
-    print('Flows:')
+    print('ConditionObjects:')
     foundOrphaned = False
-    for f, flow in flows.items():
-        if flow['ref'] > 0:
-            printFlow('\t',flow)
+    for f, condition_object in condition_objects.items():
+        if condition_object['ref'] > 0:
+            printConditionObject('\t',condition_object)
         else:
             foundOrphaned = True
     if foundOrphaned:
-        print('Orphaned Flows:')
-        for f, flow in flows.items():
-            if flow['ref'] == 0:
-                printFlow('\t',flow)
+        print('Orphaned ConditionObjects:')
+        for f, condition_object in condition_objects.items():
+            if condition_object['ref'] == 0:
+                printConditionObject('\t',condition_object)
     print('Groups:')
     foundOrphaned = False
     for g, group in groups.items():
@@ -177,4 +220,9 @@ def validate_policy(json_data, schema_data):
         for c, config in configurations.items():
             if config['ref'] == 0:
                 printConfiguration('\t', config)
+    for id in ids:
+        count = ids[id]
+        if count>1:
+            print('ID replicated: ', id, 'count:', count)
+            errors += 1
     print('Found', errors,'errors')

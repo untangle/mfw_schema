@@ -313,7 +313,7 @@
                 ],
                 "description": "For teachers",
                 "enabled": true,
-                "flows": [
+                "condition_objects": [
                     "7bb85306-c823-48d2-ad86-a41868d1de82"
                 ],
                 "id": "60a9e031-4188-4d06-8083-108ebec63a9e",
@@ -325,7 +325,7 @@
                 ],
                 "description": "test",
                 "enabled": true,
-                "flows": [
+                "condition_objects": [
                     "f5766de4-64a3-48b9-9a43-c91125406e93"
                 ],
                 "id": "fa5a811e-a0eb-45e2-8f48-e20e16baabec",
@@ -338,7 +338,7 @@
                 ],
                 "description": "test123",
                 "enabled": true,
-                "flows": [
+                "condition_objects": [
                     "f5766de4-64a3-48b9-9a43-c91125406e93"
                 ],
                 "id": "5690e8b8-c0e2-4cf4-9350-e8378cc96053",
