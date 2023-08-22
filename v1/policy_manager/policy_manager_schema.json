@@ -2,14 +2,14 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "policy_manager_settings": {
-            "required": ["flows", "configurations", "policies"],
+            "required": ["condition_objects", "configurations", "policies"],
             "type": "object",
             "description": "Policy Manager settings",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 },
-                "flows": {
+                "condition_objects": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/policy_manager_flowCategory"
@@ -228,7 +228,7 @@
                 "description": {
                     "type": "string"
                 },
-                "type": {"enum": ["GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint"]},
+                "type": {"enum": ["GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint", "ConditionGroup"]},
                 "choice": {
                     "anyOf": [
                         {
@@ -242,6 +242,9 @@
                         },
                         {
                             "$ref": "#/definitions/policy_manager_service_endpoint"
+                        },
+                        {
+                            "$ref": "#/definitions/policy_manger_condition_group"
                         }
                     ]
                 }
@@ -272,6 +275,12 @@
             "items": {
                 "protocol": "int",
                 "port": "int"
+            }
+        },
+        "policy_manager_condition_group": {
+            "type": "array",
+            "items": {
+                "coid": "string"
             }
         },
         "policy_manager_ipspecifier": {
