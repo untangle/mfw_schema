@@ -1,389 +1,900 @@
 {
     "policy_manager": {
+        "enabled": true,
         "configurations": [
             {
-                "description": "Default Filter block",
-                "id": "eed73dc8-4fbd-489f-ba02-cc2a34e675af",
-                "name": "Default block filter",
-                "filter": {
-                    "type": "BLOCK"
-                }
+            "id": "1202b42e-2f21-49e9-b42c-5614e04d0031",
+            "name": "GeoIp",
+            "description": "some geoip filter",
+            "type": "GeoipFilterConfiguration",
+            "settings": {
+                "blockedCountries": [],
+                "enabled": true,
+                "enabledLog": false,
+                "passedNetworks": []
+            }
             },
             {
-                "description": "Default Filter Allow",
-                "id": "64459faa-0dcf-413e-a107-c8044b58ec1f",
-                "name": "Default allow filter",
-                "filter": {
-                    "type": "ALLOW"
-                }
+            "id": "47a8d05d-525a-4284-99a7-5dea4beb1676",
+            "name": "Another GeoIp",
+            "description": "test",
+            "type": "GeoipFilterConfiguration",
+            "settings": {
+                "blockedCountries": [
+                "RU",
+                "NK"
+                ],
+                "enabled": true,
+                "enabledLog": false,
+                "passedNetworks": []
+            }
             },
             {
-                "description": "Port Forward for some web service",
-                "id": "62982d6f-93fe-43f2-948f-3537d065362d",
-                "name": "PF for Web App",
-                "port_forward": {
-                    "dnat_address": "1.2.3.4",
-                    "dnat_port": 50
-                }
+            "id": "f9df9aa5-4244-4344-9e62-4729fcfd3e31",
+            "name": "My AC2",
+            "description": "app control 2",
+            "type": "ApplicationControlConfiguration",
+            "settings": {
+                "blockedCountries": [
+                "RU",
+                "NK"
+                ],
+                "enabled": true,
+                "enabledLog": false,
+                "passedNetworks": []
+            }
             },
             {
-                "description": "some NAT action description",
-                "id": "33b915cb-1720-4e2b-a210-9ab11cb70e14",
-                "name": "NAT for service",
-                "nat": {
-                    "snat_address": "1.2.3.4"
+            "id": "2194a104-dc13-43a9-aaf2-d4a0a196e121",
+            "name": "My Policy",
+            "description": "Some description",
+            "type": "WanPolicyConfiguration",
+            "settings": {
+                "criteria": [
+                {
+                    "type": "ATTRIBUTE",
+                    "attribute": "VPN"
                 }
+                ],
+                "description": "Some description",
+                "name": "",
+                "interfaces": [
+                {
+                    "interfaceId": 0
+                }
+                ],
+                "type": "BEST_OF",
+                "best_of_metric": "LOWEST_JITTER"
+            }
             },
             {
-                "description": "Some Shaping action",
-                "id": "bba87f64-1cbe-44b5-84e8-f3f3fe920839",
-                "name": "Apply DSCP",
-                "shaping": {
-                    "priority": 3
+            "id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220",
+            "name": "DNS template",
+            "description": "Some DNS entries",
+            "type": "DnsConfiguration",
+            "settings": {
+                "staticEntries": [
+                {
+                    "name": "google",
+                    "description": "google dns",
+                    "address": "8.8.8.8"
                 }
+                ],
+                "localServers": []
+            }
             },
             {
-                "description": "Students",
-                "id": "30a95c8e-594c-4530-984b-05c7ae300131",
-                "name": "Geoip fencing",
-                "geoip": {
-                    "blockedCountries": [
-                        "AE",
-                        "AF",
-                        "AG"
-                    ],
-                    "enabled": false,
-                    "enabledLog": false,
-                    "passedNetworks": []
+            "id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3",
+            "name": "Moderate prevention",
+            "description": "Block moderate to high risk",
+            "type": "ThreatPreventionConfiguration",
+            "settings": {
+                "enabled": true,
+                "passList": [
+                {
+                    "description": "pass 192.168.3.4",
+                    "host": "192.168.3.4/24"
                 }
+                ],
+                "redirect": false,
+                "sensitivity": 60
+            }
             },
             {
-                "description": "Filtering for students",
-                "id": "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c",
-                "name": "WebFilter students",
-                "webfilter": {
-                    "blockList": [],
-                    "categories": [
-                        {
-                            "enabled": true,
-                            "flagged": true,
-                            "id": 49
-                        },
-                        {
-                            "enabled": true,
-                            "flagged": true,
-                            "id": 67
-                        }
-                    ],
+            "id": "b0981068-a0fa-483e-baa5-945762dd4933",
+            "name": "Suspicious prevention",
+            "description": "Block suspicious",
+            "type": "ThreatPreventionConfiguration",
+            "settings": {
+                "enabled": true,
+                "passList": [],
+                "redirect": false,
+                "sensitivity": 40
+            }
+            },
+            {
+            "id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9",
+            "name": "Default WF",
+            "description": "Default Web Filter settings",
+            "type": "WebFilterConfiguration",
+            "settings": {
+                "blockList": [],
+                "categories": [
+                {
                     "enabled": true,
-                    "passList": []
-                }
-            },
-            {
-                "description": "TP students",
-                "id": "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5",
-                "name": "TP for students",
-                "threatprevention": {
+                    "flagged": true,
+                    "id": 11
+                },
+                {
                     "enabled": true,
-                    "passList": [
-                        {
-                            "description": "some test",
-                            "host": "3.4.5.6/32"
-                        }
-                    ],
-                    "redirect": false,
-                    "sensitivity": 60
-                }
-            },
-            {
-                "description": "prevention for teachers",
-                "id": "7ed1558e-ae30-4699-beab-77e09babecb3",
-                "name": "TP Teachers",
-                "threatprevention": {
+                    "flagged": true,
+                    "id": 44
+                },
+                {
                     "enabled": true,
-                    "passList": [],
-                    "redirect": true,
-                    "sensitivity": 40
-                }
-            },
-            {
-                "description": "default discovery",
-                "id": "95922aef-3968-4de5-9385-3f426fb32b99",
-                "name": "Discovery common",
-                "discovery": {
+                    "flagged": true,
+                    "id": 49
+                },
+                {
                     "enabled": true,
-                    "plugins": [
-                        {
-                            "autoInterval": 86400,
-                            "enabled": true,
-                            "type": "lldp"
-                        },
-                        {
-                            "autoInterval": 86400,
-                            "enabled": true,
-                            "type": "nmap"
-                        },
-                        {
-                            "autoInterval": 86400,
-                            "enabled": false,
-                            "type": "neighbour"
-                        }
-                    ]
+                    "flagged": true,
+                    "id": 56
+                },
+                {
+                    "enabled": true,
+                    "flagged": true,
+                    "id": 57
+                },
+                {
+                    "enabled": true,
+                    "flagged": true,
+                    "id": 58
+                },
+                {
+                    "enabled": true,
+                    "flagged": true,
+                    "id": 59
+                },
+                {
+                    "enabled": true,
+                    "flagged": true,
+                    "id": 67
                 }
+                ],
+                "enabled": true,
+                "passList": []
+            }
             },
             {
-                "description": "Intentional orphan configuration",
-                "id": "96922aef-3968-4de5-9385-3f426fb32b99",
-                "name": "Orphan configuraion",
-                "filter": {
-                    "type": "ALLOW"
-                }
+            "id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50",
+            "name": "Captive Portal default",
+            "description": "Some CP settings",
+            "type": "CaptivePortalConfiguration",
+            "settings": {
+                "enabled": true,
+                "acceptText": "I accept the Terms of Service",
+                "acceptButtonText": "Accept",
+                "messageText": "Please accept terms of service to continue",
+                "tosText": "Some terms",
+                "welcomeText": "Captive Portal",
+                "logo": {
+                "imageName": "logo.jpg",
+                "imageData": "data:image/jpeg;base64... (15415 total length)"
+                },
+                "timeoutValue": "12",
+                "timeoutPeriod": "h"
+            }
             }
         ],
-        "enabled": true,
-        "condition_objects": [
+        "objects": [
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "SOURCE_ADDRESS",
-                        "value": ["192.168.5.1/24"]
-                    },
-                    {
-                        "op": "!=",
-                        "type": "CLIENT_ADDRESS",
-                        "value": ["3.4.5.6"]
-                    }
-                ],
-                "description": "Dedicated to students",
-                "id": "90f23fe9-c492-4a31-abad-fe2d065bb79f",
-                "name": "Students Flow"
+            "id": "cbee1455-1777-48ef-9e54-c4d4ee81632a",
+            "name": "HR",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.167.10.23"
+            ]
             },
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "CLIENT_PORT",
-                        "value": ["23"]
-                    }
-                ],
-                "description": "For teachers",
-                "id": "7bb85306-c823-48d2-ad86-a41868d1de82",
-                "name": "Teachers Flow"
+            "id": "6ce29b65-c102-4f98-bd9f-0d8a7e11117c",
+            "name": "Admins",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.168.3.10"
+            ]
             },
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "SOURCE_ADDRESS",
-                        "value": ["192.168.5.6"]
-                    },
-                    {
-                        "op": "==",
-                        "type": "CLIENT_PORT",
-                        "value": ["23"]
-                    },
-                    {
-                        "op": "==",
-                        "type": "SERVER_PORT",
-                        "value": ["123"]
-                    }
-                ],
-                "description": "Flow used in multiple policies",
-                "id": "f5766de4-64a3-48b9-9a43-c91125406e93",
-                "name": "Common Flow"
+            "id": "f430ddac-d1e8-4c1e-827e-8ec2aa47af9f",
+            "name": "Students",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.178.3.5",
+                "192.178.3.10"
+            ]
             },
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "CLIENT_PORT",
-                        "value": ["34"]
-                    }
-                ],
-                "description": "123",
-                "id": "b34671cb-5e08-484d-aad6-72d3500efcda",
-                "name": "test"
+            "id": "527576e6-60b1-4a86-be57-de9f719eeef7",
+            "name": "HTTP",
+            "description": "",
+            "type": "ServiceEndpointObject",
+            "items": [
+                {
+                "port": "80",
+                "protocol": [
+                    "6"
+                ]
+                }
+            ]
             },
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "CLIENT_ADDRESS",
-                        "groupid": "702d4c99-9599-455f-8271-215e5680f038"
-                    },
-                    {
-                        "op": "!=",
-                        "type": "GEOIP_LOCATION",
-                        "groupid": "702d4c99-9599-455f-8271-315e5680f038"
-                    },
-                    {
-                        "op": "match",
-                        "type": "SERVICE_ENDPOINT",
-                        "groupid": "702d4c99-9599-455f-8271-415e5680f038"
-                    },
-                    {
-                        "op": "match",
-                        "type": "INTERFACE",
-                        "groupid": "702d4c99-9599-455f-8271-515e5680f038"                        
-                    },
-                    {
-                        "op": "==",
-                        "type": "SOURCE_ADDRESS",
-                        "groupid": "703d5c99-9599-455f-8271-515e5680f038"
-                    }
-                ],
-                "description": "Dedicated to students",
-                "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af3",
-                "name": "Students Flow"
+            "id": "8105f355-cb98-43eb-9ac7-74542a524abb",
+            "name": "Dummy endpoint",
+            "description": "Some endpoint",
+            "type": "ServiceEndpointObject",
+            "items": [
+                {
+                "port": "88",
+                "protocol": [
+                    "6",
+                    "17"
+                ]
+                },
+                {
+                "port": "123",
+                "protocol": [
+                    "51",
+                    "107"
+                ]
+                },
+                {
+                "port": "",
+                "protocol": [
+                    "37",
+                    "8"
+                ]
+                }
+            ]
             },
             {
-                "conditions": [
-                    {
-                        "op": "==",
-                        "type": "SERVER_PORT",
-                        "value": ["22"]
-                    }
-                ],
-                "description": "Intentional orphan condition object",
-                "id": "d898c925-b7d0-4f8a-9cc7-d021b18c7af4",
-                "name": "Orphan condition object"
+            "id": "080b107d-d88a-4a36-bef4-749459a3c185",
+            "name": "Teachers",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.168.5.6-192.168.5.20"
+            ]
+            },
+            {
+            "id": "99eae585-f68c-451b-ab9f-ebb97836f880",
+            "name": "DB Servers",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.168.10.10"
+            ]
+            },
+            {
+            "id": "5d171f2e-c5b2-48e0-8540-a5cac80714ee",
+            "name": "Web Servers",
+            "description": "",
+            "type": "IpAddressObject",
+            "items": [
+                "192.168.40.40"
+            ]
+            },
+            {
+            "id": "9168567b-a664-4e3a-a344-379eb4f14fee",
+            "name": "MS SQL",
+            "description": "",
+            "type": "ServiceEndpointObject",
+            "items": [
+                {
+                "port": "1433, 4022, 135, 1434",
+                "protocol": [
+                    "6"
+                ]
+                },
+                {
+                "port": "1434",
+                "protocol": [
+                    "17"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "e1d79a65-3c43-4493-a6e6-6cc886eb7085",
+            "name": "MySQL",
+            "description": "",
+            "type": "ServiceEndpointObject",
+            "items": [
+                {
+                "port": "3306",
+                "protocol": [
+                    "6"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "15e01135-5e6a-41cb-9e8f-243eae4d9815",
+            "name": "Banned countries",
+            "description": "",
+            "type": "GeoipObject",
+            "items": [
+                "PF",
+                "GE",
+                "GH"
+            ]
+            },
+            {
+            "id": "b821864e-18ef-409c-a7bc-defc2d049d96",
+            "name": "Europe 1",
+            "description": "",
+            "type": "GeoipObject",
+            "items": [
+                "DZ",
+                "BE",
+                "BY",
+                "BD"
+            ]
+            },
+            {
+            "id": "3c5856f1-f182-40d0-ac2a-e586c7413f4f",
+            "name": "Europe 2",
+            "description": "",
+            "type": "GeoipObject",
+            "items": [
+                "HN",
+                "HU",
+                "IS",
+                "KW",
+                "LA"
+            ]
             }
         ],
-        "groups": [
+        "object_groups": [
             {
-                "name": "IPAddrList Student IP",
-                "id": "702d4c99-9599-455f-8271-215e5680f038",
-                "type": "IPAddrList",
-                "items": [
-                    "1.2.3.4",
-                    "1.2.3.5/24",
-                    "1.2.3.4-1.2.3.20"
-                ]
+            "id": "7d09ef73-8e5d-4f8b-a4e8-30af1f685273",
+            "name": "Campus",
+            "description": "",
+            "type": "GeoipObjectGroup",
+            "items": [
+                "080b107d-d88a-4a36-bef4-749459a3c185",
+                "f430ddac-d1e8-4c1e-827e-8ec2aa47af9f",
+                "6ce29b65-c102-4f98-bd9f-0d8a7e11117c"
+            ]
             },
             {
-                "name": "Geo IP Location Test Group",
-                "id": "702d4c99-9599-455f-8271-315e5680f038",
-                "type": "GeoIPLocation",
-                "items": [
-                    "AE",
-                    "AF",
-                    "AG"
-                ]
+            "id": "c8a92afc-c666-4261-8bf7-99adde197934",
+            "name": "DB-Web group",
+            "description": "",
+            "type": "IpAddressObjectGroup",
+            "items": [
+                "99eae585-f68c-451b-ab9f-ebb97836f880",
+                "5d171f2e-c5b2-48e0-8540-a5cac80714ee"
+            ]
             },
             {
-                "name": "Service Endpoint Test Group",
-                "id": "702d4c99-9599-455f-8271-415e5680f038",
-                "type": "ServiceEndpoint",
-                "items": [
-                    {
-                        "protocol": 6,
-                        "port": 12345
-                    },
-                    {
-                        "protocol": 17,
-                        "port": 12345
-                    },
-                    {
-                        "protocol": 17,
-                        "port": 12345
-                    }
-                ]
+            "id": "315a3089-2c5a-4bb2-baea-073f0f66ec00",
+            "name": "SQL Services",
+            "description": "",
+            "type": "ServiceEndpointObjectGroup",
+            "items": [
+                "9168567b-a664-4e3a-a344-379eb4f14fee",
+                "e1d79a65-3c43-4493-a6e6-6cc886eb7085"
+            ]
             },
             {
-                "name": "Interface Zone Test Group",
-                "id": "702d4c99-9599-455f-8271-515e5680f038",
-                "type": "InterfaceZone",
-                "items": [
-                    4,
-                    5
-                ]                
+            "id": "0893af13-3ed9-45c3-9301-a70a2cc8ffd2",
+            "name": "Europe",
+            "description": "",
+            "type": "GeoipObjectGroup",
+            "items": [
+                "b821864e-18ef-409c-a7bc-defc2d049d96",
+                "3c5856f1-f182-40d0-ac2a-e586c7413f4f"
+            ]
+            }
+        ],
+        "conditions": [
+            {
+            "id": "59bf280a-cb71-4a3e-97dd-af7e9f4c174c",
+            "name": "Policy Cond 1",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "==",
+                "value": "192.10.2.20"
+                }
+            ]
             },
             {
-                "name": "Sample condition group - Students OR Teachers",
-                "id": "703d5c99-9599-455f-8271-515e5680f038",
-                "type": "ConditionGroup",
-                "items": [
-                    "90f23fe9-c492-4a31-abad-fe2d065bb79f",
-                    "7bb85306-c823-48d2-ad86-a41868d1de82"
+            "id": "0abba9c5-67a3-419a-9b91-6a876b84765a",
+            "name": "Policy Cond 2",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "GEOIP",
+                "op": "match",
+                "object": [
+                    "15e01135-5e6a-41cb-9e8f-243eae4d9815"
                 ]
+                }
+            ]
             },
             {
-                "name": "Intentional orphan group",
-                "id": "703d5c99-9599-455f-8271-515e5680f039",
-                "type": "GeoIPLocation",
-                "items": [
-                    "US"
+            "id": "1458dc12-a9c2-4d0c-8203-1340c61c2c3b",
+            "name": "Policy 8/28/2023 8:10:48 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SOURCE_ADDRESS",
+                "op": "match",
+                "object": [
+                    "cbee1455-1777-48ef-9e54-c4d4ee81632a"
                 ]
+                },
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "==",
+                "value": "192.20.3.10"
+                }
+            ]
+            },
+            {
+            "id": "8671fc36-2298-4475-b928-6e046862e58a",
+            "name": "Policy 8/28/2023 8:11:22 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "GEOIP",
+                "op": "in",
+                "object": [
+                    "0893af13-3ed9-45c3-9301-a70a2cc8ffd2"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "32b8ecbe-aceb-4be3-807d-8cb3e82be2ee",
+            "name": "Policy 8/28/2023 3:11:36 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "in",
+                "object": [
+                    "c8a92afc-c666-4261-8bf7-99adde197934"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "85678956-b696-4766-bda9-1379146c512e",
+            "name": "Policy 8/28/2023 11:14:28 AM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SERVICE",
+                "op": "match",
+                "object": [
+                    "8105f355-cb98-43eb-9ac7-74542a524abb"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "b424729c-0e44-4190-802c-56dc155b9a4b",
+            "name": "Policy 8/28/2023 8:02:00 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "==",
+                "value": "192.168.2.10-192.168.2.30"
+                }
+            ]
+            },
+            {
+            "id": "c519f2ce-7ca8-4d76-be21-5fb87f176181",
+            "name": "Policy 8/28/2023 8:02:30 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SOURCE_ADDRESS",
+                "op": "match",
+                "object": [
+                    "cbee1455-1777-48ef-9e54-c4d4ee81632a",
+                    "6ce29b65-c102-4f98-bd9f-0d8a7e11117c"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "4c6c51ca-02a0-4cb0-92a9-9d90a569b9f5",
+            "name": "Policy 8/28/2023 8:04:15 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SERVICE",
+                "op": "in",
+                "object": [
+                    "315a3089-2c5a-4bb2-baea-073f0f66ec00"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "7d22052e-02aa-4e4d-a9a4-13f38e6730f5",
+            "name": "aaa",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "APPLICATION_CATEGORY",
+                "op": "==",
+                "value": "Messaging"
+                }
+            ]
+            },
+            {
+            "id": "7d6ca543-1106-4df7-86b1-26bc6c7c949c",
+            "name": "Policy 8/28/2023 8:09:15 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SERVICE",
+                "op": "match",
+                "object": [
+                    "527576e6-60b1-4a86-be57-de9f719eeef7"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "a8181213-3836-47e5-a0dc-111b2e56a16c",
+            "name": "Policy 8/28/2023 8:16:31 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "in",
+                "object": [
+                    "7d09ef73-8e5d-4f8b-a4e8-30af1f685273"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "4d5e23fa-ee6c-4b82-9b35-247825d50326",
+            "name": "Policy 8/28/2023 8:17:16 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "DESTINATION_ADDRESS",
+                "op": "match",
+                "object": [
+                    "6ce29b65-c102-4f98-bd9f-0d8a7e11117c"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "ef062718-ecb5-4592-9502-9b61482ea6a6",
+            "name": "Policy 8/28/2023 8:20:44 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SERVER_ADDRESS",
+                "op": "match",
+                "object": [
+                    "f430ddac-d1e8-4c1e-827e-8ec2aa47af9f"
+                ]
+                }
+            ]
+            },
+            {
+            "id": "612f51d7-7175-4c9b-8307-353785d33a7b",
+            "name": "Policy 8/28/2023 8:22:05 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "SERVER_ADDRESS",
+                "op": "==",
+                "value": "192.70.20.5"
+                }
+            ]
+            },
+            {
+            "id": "7ec81b28-9073-44fb-a32d-3c401b02c928",
+            "name": "Policy 8/28/2023 8:23:02 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "APPLICATION_CATEGORY",
+                "op": "==",
+                "value": "Streaming Media"
+                }
+            ]
+            },
+            {
+            "id": "000fbb3c-afe2-4e59-9846-991232115fef",
+            "name": "Policy 8/28/2023 8:23:59 PM",
+            "description": "",
+            "type": "ConditionObject",
+            "items": [
+                {
+                "type": "CLIENT_PORT",
+                "op": "==",
+                "value": 21
+                }
+            ]
+            }
+        ],
+        "rules": [
+            {
+                "id": "c2428365-65be-4901-bfc0-bde2b310fedf",
+                "name": "GeoIP rule",
+                "description": "",
+                "enabled": true,
+                "type": "GeoipFilterRuleObject",
+                "conditions": [
+                    "1458dc12-a9c2-4d0c-8203-1340c61c2c3b"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "1202b42e-2f21-49e9-b42c-5614e04d0031"
+                }
+            },
+            {
+                "id": "3a07e387-4dd9-460d-a77a-d28aeee42aaf",
+                "name": "Europe GeoIP Conf",
+                "description": "",
+                "enabled": true,
+                "type": "GeoipFilterRuleObject",
+                "conditions": [
+                    "8671fc36-2298-4475-b928-6e046862e58a"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "47a8d05d-525a-4284-99a7-5dea4beb1676"
+                }
+            },
+            {
+                "id": "d97f9f09-9adf-4a99-9851-e5086f848e82",
+                "name": "Rule",
+                "description": "",
+                "enabled": true,
+                "type": "ApplicationControlRuleObject",
+                "conditions": [],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "f9df9aa5-4244-4344-9e62-4729fcfd3e31"
+                }
+            },
+            {
+                "id": "202d3c19-9308-4cd3-981d-b5176a99b1f3",
+                "name": "My WP",
+                "description": "",
+                "enabled": true,
+                "type": "WanPolicyRuleObject",
+                "conditions": [
+                    "32b8ecbe-aceb-4be3-807d-8cb3e82be2ee"
+                ],
+                "action": {
+                    "type": "WAN_POLICY",
+                    "policy": "2194a104-dc13-43a9-aaf2-d4a0a196e121"
+                }
+            },
+            {
+                "id": "c561b522-87e9-45d9-8a2c-eb5a53e45336",
+                "name": "Security Rule 1",
+                "description": "",
+                "enabled": true,
+                "type": "SecurityRuleObject",
+                "conditions": [
+                    "85678956-b696-4766-bda9-1379146c512e"
+                ],
+                "action": {
+                    "type": "REJECT"
+                }
+            },
+            {
+                "id": "458e86e8-6032-4902-9e03-2895c007f122",
+                "name": "Security Rule 2",
+                "description": "",
+                "enabled": true,
+                "type": "SecurityRuleObject",
+                "conditions": [
+                    "b424729c-0e44-4190-802c-56dc155b9a4b",
+                    "c519f2ce-7ca8-4d76-be21-5fb87f176181",
+                    "4c6c51ca-02a0-4cb0-92a9-9d90a569b9f5"
+                ],
+                "action": {
+                    "type": "ACCEPT"
+                }
+            },
+            {
+                "id": "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830",
+                "name": "DNS Rule",
+                "description": "",
+                "enabled": true,
+                "type": "DnsRuleObject",
+                "conditions": [
+                    "7d22052e-02aa-4e4d-a9a4-13f38e6730f5"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220"
+                }
+            },
+            {
+                "id": "e8298f9c-d3b3-4b48-b250-f3f321592846",
+                "name": "Forward HTTP",
+                "description": "",
+                "enabled": true,
+                "type": "PortForwardRuleObject",
+                "conditions": [
+                    "7d6ca543-1106-4df7-86b1-26bc6c7c949c"
+                ],
+                "action": {
+                    "type": "DNAT",
+                    "dnat_address": "192.168.100.3",
+                    "dnat_port": "81"
+                }
+            },
+            {
+                "id": "eb2e370e-e9fc-4cd7-8a69-f7a5eb1794ba",
+                "name": "Campus moderate TP",
+                "description": "",
+                "enabled": true,
+                "type": "ThreatPreventionRuleObject",
+                "conditions": [
+                    "a8181213-3836-47e5-a0dc-111b2e56a16c"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3"
+                }
+            },
+            {
+                "id": "eeb33f34-65fb-4b17-8f87-9cc65fe7d4fd",
+                "name": "Admin TP",
+                "description": "",
+                "enabled": true,
+                "type": "ThreatPreventionRuleObject",
+                "conditions": [
+                    "4d5e23fa-ee6c-4b82-9b35-247825d50326"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "b0981068-a0fa-483e-baa5-945762dd4933"
+                }
+            },
+            {
+                "id": "9bf4e93f-db08-4baa-be70-601b971b38d0",
+                "name": "Default WF",
+                "description": "",
+                "enabled": true,
+                "type": "WebFilterRuleObject",
+                "conditions": [
+                    "a8181213-3836-47e5-a0dc-111b2e56a16c"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9"
+                }
+            },
+            {
+                "id": "0d21f4af-6e59-4d16-9cb0-61162f04a96b",
+                "name": "Default CP",
+                "description": "",
+                "enabled": true,
+                "type": "CaptivePortalRuleObject",
+                "conditions": [
+                    "ef062718-ecb5-4592-9502-9b61482ea6a6"
+                ],
+                "action": {
+                    "type": "SET_CONFIGURATION",
+                    "configuration_id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50"
+                }
+            },
+            {
+                "id": "4cd52582-0d4d-4a10-9b9c-f5337c579ff0",
+                "name": "Apply low priority",
+                "description": "",
+                "enabled": true,
+                "type": "ShapingRuleObject",
+                "conditions": [
+                    "612f51d7-7175-4c9b-8307-353785d33a7b",
+                    "7ec81b28-9073-44fb-a32d-3c401b02c928"
+                ],
+                "action": {
+                    "type": "SET_PRIORITY",
+                    "priority": 4
+                }
+            },
+            {
+                "id": "033612ad-775e-45ee-9867-e9a9ff0059ca",
+                "name": "New FTP source",
+                "description": "",
+                "enabled": true,
+                "type": "ShapingRuleObject",
+                "conditions": [
+                    "000fbb3c-afe2-4e59-9846-991232115fef"
+                ],
+                "action": {
+                    "type": "SNAT",
+                    "snat_address": "192.168.20.1"
+                }
             }
         ],
         "policies": [
             {
-                "description": "For students config",
-                "enabled": true,
-                "services": [
-                    { 
-                        "configuration": "ae25229b-c3d5-4e06-9da2-ceeaa9b1c50c"
-                    },
-                    {
-                        "condition_object": "f5766de4-64a3-48b9-9a43-c91125406e93", 
-                        "configuration": "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5"
-                    },
-                    {
-                        "configuration": "95922aef-3968-4de5-9385-3f426fb32b99"
-                    },
-                    {
-                        "configuration": "bba87f64-1cbe-44b5-84e8-f3f3fe920839"
-                    }
+                "id": "924435c1-2bed-446c-8921-02f98eeb3f18",
+                "name": "Policy One",
+                "description": "",
+                "conditions": [
+                    "59bf280a-cb71-4a3e-97dd-af7e9f4c174c",
+                    "0abba9c5-67a3-419a-9b91-6a876b84765a"
                 ],
-                "id": "92e8d6de-36fd-4240-8bd5-7e7bfa3317c6",
-                "name": "Students",
-                "condition_objects": [
-                    "90f23fe9-c492-4a31-abad-fe2d065bb79f"
-                ]
-            },
-            {
-                "configurations": [
-                    "d9b27e4a-2b8b-4500-a64a-51e7ee5777d5",
-                    "33b915cb-1720-4e2b-a210-9ab11cb70e14",
-                    "62982d6f-93fe-43f2-948f-3537d065362d",
-                    "64459faa-0dcf-413e-a107-c8044b58ec1f",
-                    "eed73dc8-4fbd-489f-ba02-cc2a34e675af"
-                ],
-                "description": "For teachers",
-                "enabled": true,
-                "condition_objects": [
-                    "7bb85306-c823-48d2-ad86-a41868d1de82",
-                    "d898c925-b7d0-4f8a-9cc7-d021b18c7af3"
-                ],
-                "id": "60a9e031-4188-4d06-8083-108ebec63a9e",
-                "name": "Teachers"
-            },
-            {
-                "configurations": [
-                    "30a95c8e-594c-4530-984b-05c7ae300131"
-                ],
-                "description": "test",
-                "enabled": true,
-                "condition_objects": [
-                    "f5766de4-64a3-48b9-9a43-c91125406e93",
-                    "b34671cb-5e08-484d-aad6-72d3500efcda"
-                ],
-                "id": "fa5a811e-a0eb-45e2-8f48-e20e16baabec",
-                "name": "Aux"
-            },
-            {
-                "configurations": [
-                    "7ed1558e-ae30-4699-beab-77e09babecb3",
-                    "95922aef-3968-4de5-9385-3f426fb32b99"
-                ],
-                "description": "test123",
-                "enabled": true,
-                "condition_objects": [
-                    "f5766de4-64a3-48b9-9a43-c91125406e93"
-                ],
-                "id": "5690e8b8-c0e2-4cf4-9350-e8378cc96053",
-                "name": "test"
+                "rules": {
+                    "geoip-filter": [
+                    "c2428365-65be-4901-bfc0-bde2b310fedf",
+                    "3a07e387-4dd9-460d-a77a-d28aeee42aaf"
+                    ],
+                    "application-control": [
+                    "d97f9f09-9adf-4a99-9851-e5086f848e82"
+                    ],
+                    "wan-rule": [
+                    "202d3c19-9308-4cd3-981d-b5176a99b1f3"
+                    ],
+                    "security": [
+                    "c561b522-87e9-45d9-8a2c-eb5a53e45336",
+                    "458e86e8-6032-4902-9e03-2895c007f122"
+                    ],
+                    "dns": [
+                    "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830"
+                    ],
+                    "port-forward": [
+                    "e8298f9c-d3b3-4b48-b250-f3f321592846"
+                    ],
+                    "threat-prevention": [
+                    "eb2e370e-e9fc-4cd7-8a69-f7a5eb1794ba",
+                    "eeb33f34-65fb-4b17-8f87-9cc65fe7d4fd"
+                    ],
+                    "web-filter": [
+                    "9bf4e93f-db08-4baa-be70-601b971b38d0"
+                    ],
+                    "captive-portal": [
+                    "0d21f4af-6e59-4d16-9cb0-61162f04a96b"
+                    ],
+                    "shaping": [
+                    "4cd52582-0d4d-4a10-9b9c-f5337c579ff0"
+                    ],
+                    "nat": [
+                    "033612ad-775e-45ee-9867-e9a9ff0059ca"
+                    ]
+                }
             }
         ]
     }
