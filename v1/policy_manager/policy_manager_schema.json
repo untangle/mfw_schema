@@ -167,23 +167,18 @@
                 },
                 "op": {
                     "type": "string",
-                    "enum": ["==","!=","<",">","<=",">=","match"]
+                    "enum": ["==","!=","<",">","<=",">=","in","match"]
                 },
-                "value": {
-                    "anyOf": [
+                "object": {
+                    "oneOf": [
+                        {
+                            "value": "string"
+                        },
                         {
                             "type": "array",
                             "items": {
-                                "string": "string"
-                            }    
-                        },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "groupId": {
-                                    "$ref": "#/definitions/policy_manager_condition_group_id"
-                                }
-                            }    
+                                "object": "string"
+                            }
                         }
                     ]
                 }
@@ -375,8 +370,12 @@
                                 "$ref": "#/definitions/policy_manager_condition_id"
                             }
                         },
-                        "dnat_address": "string",
-                        "dnat_port": "integer"
+                        "dnat_address": {
+                            "type": "string"
+                        },
+                        "dnat_port": {
+                            "type": "integer"
+                        }
                     }
                 },
                 {
@@ -494,109 +493,45 @@
                                 "$ref": "#/definitions/policy_manager_condition_id"
                             }
                         },
-                        "priority": "integer"
+                        "priority": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["NatRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "snat_address": {
+                            "type": "string"
+                        }
                     }
                 }                    
-
             ]
         },
         "policy_manager_rule_id": {
             "type": "string"
-        },
-        "policy_manager_geoip_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }
-        },
-        "policy_manager_application_control_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "type": "SET_CONFIGURATION",
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }
-        },
-        "policy_manager_wan_policy_rule": {
-            "type": "object",
-            "required": ["policy"],
-            "properties": {
-                "policy": {
-                    "$ref": "#/definitions/policy_manager_object_id"    
-                }
-            }
-        },
-        "policy_manager_security_rule": {
-            "type": "object"
-        },
-        "policy_manager_dns_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "type": "SET_CONFIGURATION",
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }
-        },
-        "policy_manager_port_forward_rule": {
-            "type": "object",
-            "required": ["type", "dnat_address", "dnat_port"],
-            "properties": {
-                "type": "DNAT",
-                "dnat_address": "ip",
-                "dnat_port": "integer"
-            }
-        },
-        "policy_manager_threat_prevention_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "type": "SET_CONFIGURATION",
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }
-        },
-        "policy_manager_web_filter_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "type": "SET_CONFIGURATION",
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }
-        },
-        "policy_manager_captive_portal_rule": {
-            "type": "object",
-            "required": ["type", "configuration_id"],
-            "properties": {
-                "type": "SET_CONFIGURATION",
-                "configuration_id": {
-                    "$ref": "#/definitions/policy_manager_configuration_id"    
-                }
-            }            
-        },
-        "policy_manager_shaping_rule": {
-            "type": "object",
-            "required": ["type", "priority"],
-            "properties": {
-                "type": "SET_PRIORITY",
-                "priority": "integer"
-            }            
-        },
-        "policy_manager_nat_rule": {
-            "type": "object",
-            "required": ["type"],
-            "properties": {
-                "type": "MASQUERADE"
-            }
         },
         "policy_manager_policy": {
             "type": "object",
@@ -705,10 +640,12 @@
                 "description": {
                     "type": "string"
                 },
-                "type": "string",
-                "enum": [
-                    "GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint", "ConditionGroup"
-                    ],
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint", "ConditionGroup"
+                        ]
+                },
                 "choice": {
                     "anyOf": [
                         {

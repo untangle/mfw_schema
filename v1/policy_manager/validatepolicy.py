@@ -86,8 +86,11 @@ class TestPolicyManager(unittest.TestCase):
         if cls.json_data:
             cls.json_policy_manager = copy.deepcopy(cls.json_data["policy_manager"])
             cls.json_configurations = copy.deepcopy(cls.json_policy_manager["configurations"])
-            cls.json_groups         = copy.deepcopy(cls.json_policy_manager["groups"])
-            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager["condition_objects"])
+            cls.json_objects        = copy.deepcopy(cls.json_policy_manager["objects"])
+            cls.json_object_groups  = copy.deepcopy(cls.json_policy_manager["object_groups"])
+            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager["conditions"])
+            cls.json_condition_groups = copy.deepcopy(cls.json_policy_manager["condition_groups"])
+            cls.json_rules          = copy.deepcopy(cls.json_policy_manager["rules"])
             cls.json_policies       = copy.deepcopy(cls.json_policy_manager["policies"])
             
     # ~~~ HELPER METHODS
@@ -191,14 +194,14 @@ class TestPolicyManager(unittest.TestCase):
         # orphans the other way around are stored as warnings and printed later
         self.warnings_add_orphan(ids_in_condition_objs, ids_in_policies, "condition_objects")
         
-    def test_group_ids_in_condition_objs(self):
+    def test_object_ids_in_condition_objs(self):
         """
         Tests that any group id's under condition objects exist in groups (but not the other way around)
         """
         # grab group ids from condition objs, which are individually nested within conditions
         ids_in_condition_objs = []
         for condition_obj in self.json_condition_objs:
-            ids_in_condition_objs += [condition["groupid"] for condition in condition_obj["conditions"] if "groupid" in condition]
+            ids_in_condition_objs += [condition["object"] for condition in condition_obj["conditions"] if "object" in condition]
         # we're only looking for matches, so strip duplicates to make the comparison work
         ids_in_condition_objs = list(set(ids_in_condition_objs))
         
@@ -410,10 +413,10 @@ class PolicyManagerStringBuilder():
             if "value" in condition:
                 condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
             else:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tGroup:", condition["groupid"]]))
+                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tGroup:", condition["object"]]))
                 if getNestedInfo:
                     for group in self.groups:
-                        if group["id"] == condition["groupid"]:
+                        if group["id"] == condition["object"]:
                             condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
         return '\n'.join(condition_obj_arr)
                 

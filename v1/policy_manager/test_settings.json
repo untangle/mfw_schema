@@ -650,6 +650,7 @@
             ]
             }
         ],
+        "condition_groups": [],
         "rules": [
             {
                 "id": "c2428365-65be-4901-bfc0-bde2b310fedf",
@@ -838,7 +839,7 @@
                 "name": "New FTP source",
                 "description": "",
                 "enabled": true,
-                "type": "ShapingRuleObject",
+                "type": "NatRuleObject",
                 "conditions": [
                     "000fbb3c-afe2-4e59-9846-991232115fef"
                 ],
@@ -853,6 +854,7 @@
                 "id": "924435c1-2bed-446c-8921-02f98eeb3f18",
                 "name": "Policy One",
                 "description": "",
+                "enabled": true,
                 "conditions": [
                     "59bf280a-cb71-4a3e-97dd-af7e9f4c174c",
                     "0abba9c5-67a3-419a-9b91-6a876b84765a"
