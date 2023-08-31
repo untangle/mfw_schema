@@ -41,7 +41,7 @@
                 },
                 "rules": {
                     "type": "array",
-                    "items": {
+                    "items": { 
                         "$ref": "#/definitions/policy_manager_rule"
                     }
                 },
@@ -181,7 +181,7 @@
                             "type": "object",
                             "properties": {
                                 "groupId": {
-                                    "type": "#/definitions/policy_manager_condition_group_id"
+                                    "$ref": "#/definitions/policy_manager_condition_group_id"
                                 }
                             }    
                         }
@@ -190,10 +190,10 @@
             }
         },
         "policy_manager_condition_group": {
-            "type": "array",
             "id": {
                 "$ref": "#/definitions/policy_manager_condition_group_id"
             },
+            "type": "array",
             "items": {
                 "$ref": "#/definitions/policy_manager_condition_id"
             }
@@ -202,64 +202,401 @@
             "type": "string"
         },
         "policy_manager_rule": {
-            "type": "object",
-            "required": ["id", "conditions", "action"],
-            "properties": {
-                "id": {
-                    "$ref": "#/definitions/policy_manager_rule_id"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "conditions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/policy_manager_condition_id"
-                    }
-                },
-                "action": {
+            "oneOf": [
+                {
                     "type": "object",
-                    "required": ["type"],
                     "properties": {
-                        "type": {
-                            "$ref": "#/definitions/policy_manager_action_type"
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
                         },
-                        "configuration_id": {
-                            "$ref": "#/definitions/policy_manager_configuration_id"
-                        },
-                        "policy": {
-                            "$ref": "#/definitions/policy_manager_configuration_id"
-                        },
-                        "dnat_address": {
-                            "$ref": "#/definitions/policy_manager_ipspecifier"
-                        },
-                        "dnat_port": {
+                        "name": {
                             "type": "string"
                         },
-                        "priority": {
-                            "type": "integer"
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["GeoipFilterRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
+                        }        
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["ApplicationControlRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
                         }
                     }
-                }
-            }        
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["WanPolicyRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_object_id"    
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["SecurityRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["DnsRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
+                        }        
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["PortForwardRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "dnat_address": "string",
+                        "dnat_port": "integer"
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["ThreatPreventionRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
+                        }        
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["WebFilterRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
+                        }        
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["CaptivePortalRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "configuration_id": {
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
+                        }        
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "#/definitions/policy_manager_rule_id"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["ShapingRuleObject"]
+                        },
+                        "conditions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/policy_manager_condition_id"
+                            }
+                        },
+                        "priority": "integer"
+                    }
+                }                    
+
+            ]
         },
         "policy_manager_rule_id": {
             "type": "string"
         },
-        "policy_manager_action_type": {
-            "type": "string",
-            "enum": [
-                "SET_CONFIGURATION",
-                "SET_PRIORITY",
-                "WAN_POLICY",
-                "ACCEPT", 
-                "REJECT",
-                "DNAT",
-                "SNAT" 
-            ]
+        "policy_manager_geoip_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }
+        },
+        "policy_manager_application_control_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "type": "SET_CONFIGURATION",
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }
+        },
+        "policy_manager_wan_policy_rule": {
+            "type": "object",
+            "required": ["policy"],
+            "properties": {
+                "policy": {
+                    "$ref": "#/definitions/policy_manager_object_id"    
+                }
+            }
+        },
+        "policy_manager_security_rule": {
+            "type": "object"
+        },
+        "policy_manager_dns_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "type": "SET_CONFIGURATION",
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }
+        },
+        "policy_manager_port_forward_rule": {
+            "type": "object",
+            "required": ["type", "dnat_address", "dnat_port"],
+            "properties": {
+                "type": "DNAT",
+                "dnat_address": "ip",
+                "dnat_port": "integer"
+            }
+        },
+        "policy_manager_threat_prevention_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "type": "SET_CONFIGURATION",
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }
+        },
+        "policy_manager_web_filter_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "type": "SET_CONFIGURATION",
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }
+        },
+        "policy_manager_captive_portal_rule": {
+            "type": "object",
+            "required": ["type", "configuration_id"],
+            "properties": {
+                "type": "SET_CONFIGURATION",
+                "configuration_id": {
+                    "$ref": "#/definitions/policy_manager_configuration_id"    
+                }
+            }            
+        },
+        "policy_manager_shaping_rule": {
+            "type": "object",
+            "required": ["type", "priority"],
+            "properties": {
+                "type": "SET_PRIORITY",
+                "priority": "integer"
+            }            
+        },
+        "policy_manager_nat_rule": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+                "type": "MASQUERADE"
+            }
         },
         "policy_manager_policy": {
             "type": "object",
@@ -283,14 +620,9 @@
                 "rule":  {
                     "type": "array",
                     "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/policy_manager_geoip_rule"
-                            },
-                            {
-                                "$ref": "#/definitions/policy_manager_application_control_rule"
+                        "ruleid": {
+                            "$ref": "#/definitions/policy_manafer_rule_id"
                             }
-                        ]
                     }    
                 }
             }        
@@ -373,7 +705,10 @@
                 "description": {
                     "type": "string"
                 },
-                "type": {"enum": ["GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint", "ConditionGroup"]},
+                "type": "string",
+                "enum": [
+                    "GeoIPLocation", "InterfaceZone", "IPAddrList", "ServiceEndpoint", "ConditionGroup"
+                    ],
                 "choice": {
                     "anyOf": [
                         {
