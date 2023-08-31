@@ -33,7 +33,8 @@ class TestPolicyManager(unittest.TestCase):
         "condition_groups":  {},
         "objects":           {},
         "object_groups":     {},
-        "policies":          {}
+        "policies":          {},
+        "rules":             {}
     }
     
     @classmethod
@@ -112,7 +113,7 @@ class TestPolicyManager(unittest.TestCase):
             if possible_orphan not in parent_ids:
                 if "orphans" not in self.warning_dict[key]:
                     self.warning_dict[key]["orphans"] = []
-                #self.warning_dict[key]["orphans"] += [possible_orphan]
+                self.warning_dict[key]["orphans"] += [possible_orphan]
                 
     def get_ids_in_policies(self, child_objs):
         """
@@ -134,6 +135,28 @@ class TestPolicyManager(unittest.TestCase):
                 ids_in_policies += policy[child_objs]
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_policies))
+                
+    def get_ids_in_rules(self, child_objs):
+        """
+        Grab child object ids from policies either under services/child_obj or just child_objs (note, that the trailing
+        's' does matter here!)
+
+        Args:
+            child_objs (string): either "configurations" or "condition_objects"
+
+        Returns:
+            list: unique list of id's under policies/child_obj
+        """
+        ids_in_rules = []
+        for rule in self.json_rules:
+            action = rule["action"]
+            if "configuration_id" in action:
+                ids_in_rules.append(action["configuration_id"])
+            elif "policy" in action:
+                ids_in_rules.append(action["policy"])
+    
+        # we're only looking for matches, so strip duplicates and to make the comparison work
+        return list(set(ids_in_rules))
                 
     def get_ids_in_condition_objs(self):
         """
@@ -160,28 +183,37 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_objects = [object["id"] for object in self.json_objects]
         self.assertEqual(len(ids_in_objects), len(set(ids_in_objects)))
         
+        ids_in_object_groups = [object_group["id"] for object_group in self.json_object_groups]
+        self.assertEqual(len(ids_in_object_groups), len(set(ids_in_object_groups)))
+        
         ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
         self.assertEqual(len(ids_in_condition_objs), len(set(ids_in_condition_objs)))
         
+        ids_in_condition_groups = [condition_group["id"] for condition_group in self.json_condition_groups]
+        self.assertEqual(len(ids_in_condition_groups), len(set(ids_in_condition_groups)))
+        
         ids_in_policies = [policy["id"] for policy in self.json_policies]
         self.assertEqual(len(ids_in_policies), len(set(ids_in_policies)))
-        
-    def test_configuration_ids_in_policies(self):
+
+        ids_in_rules = [rule["id"] for rule in self.json_rules]
+        self.assertEqual(len(ids_in_rules), len(set(ids_in_rules)))
+
+    def test_configuration_ids_in_rules(self):
         """
         Tests that any configuration id's under policies exist in configurations (but not the other way around)
         """
-        ids_in_policies = self.get_ids_in_policies("configurations")
+        ids_in_rules = self.get_ids_in_rules("configuration_id")
             
         # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
         ids_in_configurations = [configuration["id"] for configuration in self.json_configurations]
         ids_in_configurations = list(set(ids_in_configurations))
         
         # check that all id's under policies are also under configurations
-        ids_contained = all(i in ids_in_configurations for i in ids_in_policies)
-        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between policies and configurations.")
+        ids_contained = all(i in ids_in_configurations for i in ids_in_rules)
+        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between rulesand configurations.")
         
         # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_configurations, ids_in_policies, "configurations")
+        self.warnings_add_orphan(ids_in_configurations, ids_in_rules, "configurations")
         
     def test_condition_obj_ids_in_policies(self):
         """
@@ -258,7 +290,9 @@ class TestPolicyManager(unittest.TestCase):
         """
         try:
             print(cls.warning_dict)
-            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, cls.json_objects, cls.warning_dict)
+            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, 
+                                                 cls.json_condition_groups, cls.json_objects, cls.json_object_groups,
+                                                 cls.json_rules,  cls.warning_dict)
             print("--- Printing validated schema details ---")
             print(printer.buildAllPoliciesString())
         except KeyError as e:
@@ -279,7 +313,7 @@ Returns:
     PolicyManagerStringBuilder type: An object which returns built strings on the objects given to it
 """
 class PolicyManagerStringBuilder():
-    def __init__(self, policies, configurations, condition_objs, groups, warnings_dict):
+    def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, warnings_dict):
         """
         Initialize the object with the dictionaries to be printed, grabbed directly from the .json
         # NOTE spacing is done here with \t characters. However, the same can be done more cleanly with built-in Python
@@ -296,7 +330,10 @@ class PolicyManagerStringBuilder():
         self.policies = policies
         self.configurations = configurations
         self.condition_objs = condition_objs
-        self.groups = groups
+        self.condition_groups = condition_groups
+        self.objects = objects
+        self.object_groups = object_groups
+        self.rules = rules
         self.warnings_dict = warnings_dict
         
     def buildAllPoliciesString(self, prefix='', getNestedInfo=True, getWarnings=True):

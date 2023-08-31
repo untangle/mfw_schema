@@ -112,7 +112,14 @@
                 {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/policy_manager_object_id"
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/policy_manager_object_id"
+                            },
+                            {
+                                "$ref":  "#/definitions/policy_manager_object_group_id"
+                            }
+                        ]
                     }
                 }
             }
@@ -284,7 +291,7 @@
                             }
                         },
                         "configuration_id": {
-                            "$ref": "#/definitions/policy_manager_object_id"    
+                            "$ref": "#/definitions/policy_manager_configuration_id"    
                         }
                     }
                 },
@@ -549,14 +556,21 @@
                 "conditions": {
                     "type": "array",
                     "items": {
-                        "$ref":  "#/definitions/policy_manager_condition_id"
+                        "anyOf": [
+                            {
+                                "$ref":  "#/definitions/policy_manager_condition_id"
+                            },
+                            {
+                                "$ref":  "#/definitions/policy_manager_condition_group_id"
+                            }
+                        ]
                     }    
                 },
                 "rule":  {
                     "type": "array",
                     "items": {
                         "ruleid": {
-                            "$ref": "#/definitions/policy_manafer_rule_id"
+                            "$ref": "#/definitions/policy_manager_rule_id"
                             }
                     }    
                 }
