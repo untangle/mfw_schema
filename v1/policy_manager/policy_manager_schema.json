@@ -569,9 +569,7 @@
                 "rule":  {
                     "type": "array",
                     "items": {
-                        "ruleid": {
-                            "$ref": "#/definitions/policy_manager_rule_id"
-                            }
+                        "$ref": "#/definitions/policy_manager_rule_id"
                     }    
                 }
             }        

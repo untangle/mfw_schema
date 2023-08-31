@@ -3,187 +3,187 @@
         "enabled": true,
         "configurations": [
             {
-            "id": "1202b42e-2f21-49e9-b42c-5614e04d0031",
-            "name": "GeoIp",
-            "description": "some geoip filter",
-            "type": "GeoipFilterConfiguration",
-            "settings": {
-                "blockedCountries": [],
-                "enabled": true,
-                "enabledLog": false,
-                "passedNetworks": []
-            }
-            },
-            {
-            "id": "47a8d05d-525a-4284-99a7-5dea4beb1676",
-            "name": "Another GeoIp",
-            "description": "test",
-            "type": "GeoipFilterConfiguration",
-            "settings": {
-                "blockedCountries": [
-                "RU",
-                "NK"
-                ],
-                "enabled": true,
-                "enabledLog": false,
-                "passedNetworks": []
-            }
-            },
-            {
-            "id": "f9df9aa5-4244-4344-9e62-4729fcfd3e31",
-            "name": "My AC2",
-            "description": "app control 2",
-            "type": "ApplicationControlConfiguration",
-            "settings": {
-                "blockedCountries": [
-                "RU",
-                "NK"
-                ],
-                "enabled": true,
-                "enabledLog": false,
-                "passedNetworks": []
-            }
-            },
-            {
-            "id": "2194a104-dc13-43a9-aaf2-d4a0a196e121",
-            "name": "My Policy",
-            "description": "Some description",
-            "type": "WanPolicyConfiguration",
-            "settings": {
-                "criteria": [
-                {
-                    "type": "ATTRIBUTE",
-                    "attribute": "VPN"
+                "id": "1202b42e-2f21-49e9-b42c-5614e04d0031",
+                "name": "GeoIp",
+                "description": "some geoip filter",
+                "type": "GeoipFilterConfiguration",
+                "settings": {
+                    "blockedCountries": [],
+                    "enabled": true,
+                    "enabledLog": false,
+                    "passedNetworks": []
                 }
-                ],
+            },
+            {
+                "id": "47a8d05d-525a-4284-99a7-5dea4beb1676",
+                "name": "Another GeoIp",
+                "description": "test",
+                "type": "GeoipFilterConfiguration",
+                "settings": {
+                    "blockedCountries": [
+                    "RU",
+                    "NK"
+                    ],
+                    "enabled": true,
+                    "enabledLog": false,
+                    "passedNetworks": []
+                }
+            },
+            {
+                "id": "f9df9aa5-4244-4344-9e62-4729fcfd3e31",
+                "name": "My AC2",
+                "description": "app control 2",
+                "type": "ApplicationControlConfiguration",
+                "settings": {
+                    "blockedCountries": [
+                    "RU",
+                    "NK"
+                    ],
+                    "enabled": true,
+                    "enabledLog": false,
+                    "passedNetworks": []
+                }
+            },
+            {
+                "id": "2194a104-dc13-43a9-aaf2-d4a0a196e121",
+                "name": "My Policy",
                 "description": "Some description",
-                "name": "",
-                "interfaces": [
-                {
-                    "interfaceId": 0
+                "type": "WanPolicyConfiguration",
+                "settings": {
+                    "criteria": [
+                    {
+                        "type": "ATTRIBUTE",
+                        "attribute": "VPN"
+                    }
+                    ],
+                    "description": "Some description",
+                    "name": "",
+                    "interfaces": [
+                    {
+                        "interfaceId": 0
+                    }
+                    ],
+                    "type": "BEST_OF",
+                    "best_of_metric": "LOWEST_JITTER"
                 }
-                ],
-                "type": "BEST_OF",
-                "best_of_metric": "LOWEST_JITTER"
-            }
             },
             {
-            "id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220",
-            "name": "DNS template",
-            "description": "Some DNS entries",
-            "type": "DnsConfiguration",
-            "settings": {
-                "staticEntries": [
-                {
-                    "name": "google",
-                    "description": "google dns",
-                    "address": "8.8.8.8"
+                "id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220",
+                "name": "DNS template",
+                "description": "Some DNS entries",
+                "type": "DnsConfiguration",
+                "settings": {
+                    "staticEntries": [
+                    {
+                        "name": "google",
+                        "description": "google dns",
+                        "address": "8.8.8.8"
+                    }
+                    ],
+                    "localServers": []
                 }
-                ],
-                "localServers": []
-            }
             },
-            {
-            "id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3",
-            "name": "Moderate prevention",
-            "description": "Block moderate to high risk",
-            "type": "ThreatPreventionConfiguration",
-            "settings": {
-                "enabled": true,
-                "passList": [
                 {
-                    "description": "pass 192.168.3.4",
-                    "host": "192.168.3.4/24"
+                "id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3",
+                "name": "Moderate prevention",
+                "description": "Block moderate to high risk",
+                "type": "ThreatPreventionConfiguration",
+                "settings": {
+                    "enabled": true,
+                    "passList": [
+                    {
+                        "description": "pass 192.168.3.4",
+                        "host": "192.168.3.4/24"
+                    }
+                    ],
+                    "redirect": false,
+                    "sensitivity": 60
                 }
-                ],
-                "redirect": false,
-                "sensitivity": 60
-            }
-            },
-            {
-            "id": "b0981068-a0fa-483e-baa5-945762dd4933",
-            "name": "Suspicious prevention",
-            "description": "Block suspicious",
-            "type": "ThreatPreventionConfiguration",
-            "settings": {
-                "enabled": true,
-                "passList": [],
-                "redirect": false,
-                "sensitivity": 40
-            }
-            },
-            {
-            "id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9",
-            "name": "Default WF",
-            "description": "Default Web Filter settings",
-            "type": "WebFilterConfiguration",
-            "settings": {
-                "blockList": [],
-                "categories": [
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 11
                 },
                 {
+                "id": "b0981068-a0fa-483e-baa5-945762dd4933",
+                "name": "Suspicious prevention",
+                "description": "Block suspicious",
+                "type": "ThreatPreventionConfiguration",
+                "settings": {
                     "enabled": true,
-                    "flagged": true,
-                    "id": 44
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 49
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 56
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 57
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 58
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 59
-                },
-                {
-                    "enabled": true,
-                    "flagged": true,
-                    "id": 67
+                    "passList": [],
+                    "redirect": false,
+                    "sensitivity": 40
                 }
-                ],
-                "enabled": true,
-                "passList": []
-            }
             },
             {
-            "id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50",
-            "name": "Captive Portal default",
-            "description": "Some CP settings",
-            "type": "CaptivePortalConfiguration",
-            "settings": {
-                "enabled": true,
-                "acceptText": "I accept the Terms of Service",
-                "acceptButtonText": "Accept",
-                "messageText": "Please accept terms of service to continue",
-                "tosText": "Some terms",
-                "welcomeText": "Captive Portal",
-                "logo": {
-                "imageName": "logo.jpg",
-                "imageData": "data:image/jpeg;base64... (15415 total length)"
-                },
-                "timeoutValue": "12",
-                "timeoutPeriod": "h"
-            }
+                "id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9",
+                "name": "Default WF",
+                "description": "Default Web Filter settings",
+                "type": "WebFilterConfiguration",
+                "settings": {
+                    "blockList": [],
+                    "categories": [
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 11
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 44
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 49
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 56
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 57
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 58
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 59
+                    },
+                    {
+                        "enabled": true,
+                        "flagged": true,
+                        "id": 67
+                    }
+                    ],
+                    "enabled": true,
+                    "passList": []
+                }
+            },
+            {
+                "id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50",
+                "name": "Captive Portal default",
+                "description": "Some CP settings",
+                "type": "CaptivePortalConfiguration",
+                "settings": {
+                    "enabled": true,
+                    "acceptText": "I accept the Terms of Service",
+                    "acceptButtonText": "Accept",
+                    "messageText": "Please accept terms of service to continue",
+                    "tosText": "Some terms",
+                    "welcomeText": "Captive Portal",
+                    "logo": {
+                    "imageName": "logo.jpg",
+                    "imageData": "data:image/jpeg;base64... (15415 total length)"
+                    },
+                    "timeoutValue": "12",
+                    "timeoutPeriod": "h"
+                }
             }
         ],
         "objects": [
@@ -859,45 +859,23 @@
                     "59bf280a-cb71-4a3e-97dd-af7e9f4c174c",
                     "0abba9c5-67a3-419a-9b91-6a876b84765a"
                 ],
-            "rules": {
-            "geoip-filter": [
-                    "c2428365-65be-4901-bfc0-bde2b310fedf",
-                "3a07e387-4dd9-460d-a77a-d28aeee42aaf"
-            ],
-            "application-control": [
-                "d97f9f09-9adf-4a99-9851-e5086f848e82"
-            ],
-            "wan-rule": [
-                "202d3c19-9308-4cd3-981d-b5176a99b1f3"
-            ],
-            "security": [
-                    "c561b522-87e9-45d9-8a2c-eb5a53e45336",
-                "458e86e8-6032-4902-9e03-2895c007f122"
-            ],
-            "dns": [
-                "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830"
-            ],
-            "port-forward": [
-                "e8298f9c-d3b3-4b48-b250-f3f321592846"
-            ],
-            "threat-prevention": [
-                    "eb2e370e-e9fc-4cd7-8a69-f7a5eb1794ba",
-                "eeb33f34-65fb-4b17-8f87-9cc65fe7d4fd"
-            ],
-            "web-filter": [
-                "9bf4e93f-db08-4baa-be70-601b971b38d0"
-            ],
-            "captive-portal": [
-                "0d21f4af-6e59-4d16-9cb0-61162f04a96b"
-            ],
-            "shaping": [
-                "4cd52582-0d4d-4a10-9b9c-f5337c579ff0"
-            ],
-            "nat": [
-                    "033612ad-775e-45ee-9867-e9a9ff0059ca"
+            "rules": [
+                "c2428365-65be-4901-bfc0-bde2b310fedf",
+                "3a07e387-4dd9-460d-a77a-d28aeee42aaf",
+                "d97f9f09-9adf-4a99-9851-e5086f848e82",
+                "202d3c19-9308-4cd3-981d-b5176a99b1f3",
+                "c561b522-87e9-45d9-8a2c-eb5a53e45336",
+                "458e86e8-6032-4902-9e03-2895c007f122",
+                "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830",
+                "e8298f9c-d3b3-4b48-b250-f3f321592846",
+                "eb2e370e-e9fc-4cd7-8a69-f7a5eb1794ba",
+                "eeb33f34-65fb-4b17-8f87-9cc65fe7d4fd",
+                "9bf4e93f-db08-4baa-be70-601b971b38d0",
+                "0d21f4af-6e59-4d16-9cb0-61162f04a96b",
+                "4cd52582-0d4d-4a10-9b9c-f5337c579ff0",
+                "033612ad-775e-45ee-9867-e9a9ff0059ca"
                 ]
             }
-        }
         ]
     }
 }

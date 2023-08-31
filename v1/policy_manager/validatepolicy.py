@@ -115,7 +115,7 @@ class TestPolicyManager(unittest.TestCase):
                     self.warning_dict[key]["orphans"] = []
                 self.warning_dict[key]["orphans"] += [possible_orphan]
                 
-    def get_ids_in_policies(self, child_objs):
+    def get_condition_ids_in_policies(self):
         """
         Grab child object ids from policies either under services/child_obj or just child_objs (note, that the trailing
         's' does matter here!)
@@ -128,21 +128,32 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_policies = []
         for policy in self.json_policies:
-            if "services" in policy:
-                child_obj = child_objs[:-1] # strip 's' from end of string to follow services format
-                ids_in_policies += [service[child_obj] for service in policy["services"] if child_obj in service]
-            if child_objs in policy:
-                ids_in_policies += policy[child_objs]
+            for condition in policy["conditions"]:
+                ids_in_policies.append(condition)
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_policies))
                 
-    def get_ids_in_rules(self, child_objs):
+    def get_rule_ids_in_policies(self):
         """
         Grab child object ids from policies either under services/child_obj or just child_objs (note, that the trailing
         's' does matter here!)
 
         Args:
             child_objs (string): either "configurations" or "condition_objects"
+
+        Returns:
+            list: unique list of id's under policies/child_obj
+        """
+        ids_in_policies = []
+        for policy in self.json_policies:
+            for rule in policy["rules"]:
+                ids_in_policies.append(rule)
+        # we're only looking for matches, so strip duplicates and to make the comparison work
+        return list(set(ids_in_policies))
+
+    def get_configuration_ids_in_rules(self):
+        """
+        Grab child object ids from rules either under actions or policies)
 
         Returns:
             list: unique list of id's under policies/child_obj
@@ -154,6 +165,20 @@ class TestPolicyManager(unittest.TestCase):
                 ids_in_rules.append(action["configuration_id"])
             elif "policy" in action:
                 ids_in_rules.append(action["policy"])
+    
+        # we're only looking for matches, so strip duplicates and to make the comparison work
+        return list(set(ids_in_rules))
+                
+    def get_condition_ids_in_rules(self):
+        """
+        Grab child object ids from rules either under actions or policies)
+
+        Returns:
+            list: unique list of id's under policies/child_obj
+        """
+        ids_in_rules = []
+        for rule in self.json_rules:
+            ids_in_rules.extend(rule["conditions"])
     
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_rules))
@@ -198,11 +223,47 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_rules = [rule["id"] for rule in self.json_rules]
         self.assertEqual(len(ids_in_rules), len(set(ids_in_rules)))
 
+    def test_condition_ids_in_policies(self):
+        """
+        Tests that any condition id's under policies exist in conditions (but not the other way around)
+        """
+        ids_in_policies_and_rules = self.get_condition_ids_in_policies()
+        ids_in_policies_and_rules += self.get_condition_ids_in_rules()
+        ids_in_policies_and_rules = list(set(ids_in_policies_and_rules))
+            
+        # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
+        ids_in_conditions = [condition["id"] for condition in self.json_condition_objs]
+        ids_in_conditions += [condition["id"] for condition in self.json_condition_groups]
+        ids_in_conditions = list(set(ids_in_conditions))
+
+        # check that all id's under policies are also under configurations
+        ids_contained = all(i in ids_in_conditions for i in ids_in_policies_and_rules)
+        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between policies/rules and conditions.")
+        
+        # orphans the other way around are stored as warnings and printed later
+        self.warnings_add_orphan(ids_in_conditions, ids_in_policies_and_rules, "condition_objects")
+        
+    def test_rule_ids_in_policies(self):
+        """
+        Tests that any rule  id's under policies exist in rules (but not the other way around)
+        """
+        ids_in_policies = self.get_rule_ids_in_policies()
+            
+        ids_in_rules = [rule["id"] for rule in self.json_rules]
+        
+        # check that all id's under policies are also under condition objects
+        ids_contained = all(i in ids_in_rules for i in ids_in_policies)
+        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between policies and condition objects.")
+        
+        # orphans the other way around are stored as warnings and printed later
+        self.warnings_add_orphan(ids_in_rules, ids_in_policies, "condition_objects")
+        
+
     def test_configuration_ids_in_rules(self):
         """
-        Tests that any configuration id's under policies exist in configurations (but not the other way around)
+        Tests that any configuration id's under rules exist in configurations (but not the other way around)
         """
-        ids_in_rules = self.get_ids_in_rules("configuration_id")
+        ids_in_rules = self.get_configuration_ids_in_rules()
             
         # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
         ids_in_configurations = [configuration["id"] for configuration in self.json_configurations]
@@ -215,24 +276,9 @@ class TestPolicyManager(unittest.TestCase):
         # orphans the other way around are stored as warnings and printed later
         self.warnings_add_orphan(ids_in_configurations, ids_in_rules, "configurations")
         
-    def test_condition_obj_ids_in_policies(self):
-        """
-        Tests that any condition object id's under policies exist in configuration objects (but not the other way around)
-        """
-        ids_in_policies = self.get_ids_in_policies("condition_objs")
-            
-        ids_in_condition_objs = self.get_ids_in_condition_objs()
-        
-        # check that all id's under policies are also under condition objects
-        ids_contained = all(i in ids_in_condition_objs for i in ids_in_policies)
-        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between policies and condition objects.")
-        
-        # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_condition_objs, ids_in_policies, "condition_objects")
-        
     def test_object_ids_in_condition_objs(self):
         """
-        Tests that any group id's under condition objects exist in groups (but not the other way around)
+        Tests that any object id's under condition objects exist in groups (but not the other way around)
         """
         # grab group ids from condition objs, which are individually nested within conditions
         ids_in_condition_objs = []
@@ -375,25 +421,40 @@ class PolicyManagerStringBuilder():
         """
         policy_arr = [' '.join([prefix, "Policy:", policy["id"], "\tName:", policy["name"], "\tDesc:", policy["description"], "\tEnabled:", str(policy["enabled"])])]
         if getNestedInfo:
-            if "services" in policy:
-                for service in policy["services"]:
-                    policy_arr.append("\tService:")
-                    if "configuration" in service:
-                        for configuration in self.configurations:
-                            if configuration["id"] == service["configuration"]:
-                                policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
-                    if "condition_object" in service:
-                        for condition_obj in self.condition_objs:
-                            if condition_obj["id"] == service["condition_object"]:
-                                policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
-            if "configurations" in policy:
-                for configuration in self.configurations:
-                    if configuration["id"] in policy["configurations"]:
-                        policy_arr.append(self.buildConfigurationString(configuration, prefix='\t'))
-            if "condition_objects" in policy:
-                for condition_obj in self.condition_objs:
-                    if condition_obj["id"] in policy["condition_objects"]:
-                        policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
+            if "rules" in policy:
+                for rule_id in policy["rules"]:
+                    policy_arr.append("\Rule:")
+                    for rule in self.rules:
+                        if rule["id"] == rule_id:
+                            action = rule["action"]
+                            if "configuration_id" in action:
+                                for configuration in self.configurations:
+                                    if configuration["id"] == action["configuration_id"]:
+                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                        break
+                            if "policy" in action:
+                                for configuration in self.configurations:
+                                    if configuration["id"] == action["policy"]:
+                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                        break
+                            if "conditions" in rule:
+                                for condition_id in rule["conditions"]:
+                                    for condition_obj in self.condition_objs:
+                                        if condition_obj["id"] == condition_id:
+                                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
+                                            break
+                                    for condition_obj in self.condition_groups:
+                                        if condition_obj["id"] == condition_id:
+                                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
+                                            break
+            if "conditions" in policy:
+                for condition_id in policy["conditions"]:
+                    for condition_obj in self.condition_objs:
+                        if condition_obj["id"] in condition_id:
+                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
+                    for condition_obj in self.condition_groups:
+                        if condition_obj["id"] in condition_id:
+                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
         return '\n'.join(policy_arr)
                 
     def buildAllConfigurationsString(self, prefix=''):
@@ -457,15 +518,15 @@ class PolicyManagerStringBuilder():
             string: A string representation of a condition object and its properties
         """
         condition_obj_arr = [' '.join([prefix, "Condition Object:", condition_obj["id"], "\tName:,", condition_obj["name"], "\tDescriptions:", condition_obj["description"]])]
-        for condition in condition_obj["conditions"]:
+        for condition in condition_obj["items"]:
             if "value" in condition:
                 condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
             else:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tGroup:", condition["object"]]))
-                if getNestedInfo:
-                    for group in self.groups:
-                        if group["id"] == condition["object"]:
-                            condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
+                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tObjects:", str(condition["object"])]))
+                #if getNestedInfo:
+                #    for group in self.groups:
+                #        if group["id"] == condition["object"]:
+                #            condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
         return '\n'.join(condition_obj_arr)
                 
     def buildAllGroupsString(self, prefix=''):
