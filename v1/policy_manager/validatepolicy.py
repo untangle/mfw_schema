@@ -112,7 +112,7 @@ class TestPolicyManager(unittest.TestCase):
             if possible_orphan not in parent_ids:
                 if "orphans" not in self.warning_dict[key]:
                     self.warning_dict[key]["orphans"] = []
-                self.warning_dict[key]["orphans"] += [possible_orphan]
+                #self.warning_dict[key]["orphans"] += [possible_orphan]
                 
     def get_ids_in_policies(self, child_objs):
         """
@@ -215,14 +215,16 @@ class TestPolicyManager(unittest.TestCase):
         
         # ids in groups are not a list, so grabbing them is easier. Strip duplicates like above.
         ids_in_objects = [object["id"] for object in self.json_objects]
-        ids_in_objects += [object["id"] for object in self.json_object_groups]
+
+        ids_in_object_groups = [object["id"] for object in self.json_object_groups]
+        ids_in_objects += ids_in_object_groups
         ids_in_objects = list(set(ids_in_objects))
 
         # check that all id's under condition objects are also under groups
         ids_contained = all(i in ids_in_objects for i in ids_in_condition_objs)
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and objects")
         
-        # orphans the other way around are stored as warnings and printed later
+        # orphans the other way around are stored as warnings and printed late
         self.warnings_add_orphan(ids_in_objects, ids_in_condition_objs, "objects")
         
     def test_group_types(self):
