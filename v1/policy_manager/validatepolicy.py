@@ -22,13 +22,17 @@ class TestPolicyManager(unittest.TestCase):
     json_data           = ""
     json_policy_manager = ""
     json_configurations = ""
-    json_groups         = ""
+    json_objects        = ""
+    json_object_groups  = ""
     json_condition_objs = ""
+    json_condition_groups = ""
     json_policies       = ""
     warning_dict = {
         "configurations":    {},
         "condition_objects": {},
-        "groups":            {},
+        "condition_groups":  {},
+        "objects":           {},
+        "object_groups":     {},
         "policies":          {}
     }
     
@@ -153,8 +157,8 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_configurations = [configuration["id"] for configuration in self.json_configurations]
         self.assertEqual(len(ids_in_configurations), len(set(ids_in_configurations)))
         
-        ids_in_groups = [group["id"] for group in self.json_groups]
-        self.assertEqual(len(ids_in_groups), len(set(ids_in_groups)))
+        ids_in_objects = [object["id"] for object in self.json_objects]
+        self.assertEqual(len(ids_in_objects), len(set(ids_in_objects)))
         
         ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
         self.assertEqual(len(ids_in_condition_objs), len(set(ids_in_condition_objs)))
@@ -201,26 +205,31 @@ class TestPolicyManager(unittest.TestCase):
         # grab group ids from condition objs, which are individually nested within conditions
         ids_in_condition_objs = []
         for condition_obj in self.json_condition_objs:
-            ids_in_condition_objs += [condition["object"] for condition in condition_obj["conditions"] if "object" in condition]
+            if "items" in condition_obj:
+                for condition in condition_obj["items"]:
+                    if "object" in condition:
+                        ids_in_condition_objs += condition["object"]
+#            ids_in_condition_objs += [condition["object"] for condition in condition_obj["conditions"] if "object" in condition]
         # we're only looking for matches, so strip duplicates to make the comparison work
         ids_in_condition_objs = list(set(ids_in_condition_objs))
         
         # ids in groups are not a list, so grabbing them is easier. Strip duplicates like above.
-        ids_in_groups = [group["id"] for group in self.json_groups]
-        ids_in_groups = list(set(ids_in_groups))
-        
+        ids_in_objects = [object["id"] for object in self.json_objects]
+        ids_in_objects += [object["id"] for object in self.json_object_groups]
+        ids_in_objects = list(set(ids_in_objects))
+
         # check that all id's under condition objects are also under groups
-        ids_contained = all(i in ids_in_groups for i in ids_in_condition_objs)
-        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and groups")
+        ids_contained = all(i in ids_in_objects for i in ids_in_condition_objs)
+        self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and objects")
         
         # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_groups, ids_in_condition_objs, "groups")
+        self.warnings_add_orphan(ids_in_objects, ids_in_condition_objs, "objects")
         
     def test_group_types(self):
         """
         Tests the types of each group to make sure that they are the correct format
         """
-        for group in self.json_groups:
+        for group in self.json_object_groups:
             group_items = group["items"]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
@@ -247,7 +256,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         try:
             print(cls.warning_dict)
-            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, cls.json_groups, cls.warning_dict)
+            printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, cls.json_objects, cls.warning_dict)
             print("--- Printing validated schema details ---")
             print(printer.buildAllPoliciesString())
         except KeyError as e:
