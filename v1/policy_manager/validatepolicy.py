@@ -278,32 +278,39 @@ class TestPolicyManager(unittest.TestCase):
         
     def test_object_ids_in_condition_objs(self):
         """
-        Tests that any object id's under condition objects exist in groups (but not the other way around)
+        Tests that any object id's under condition objects exist in objects or object groups
+        (but not the other way around)
         """
         # grab group ids from condition objs, which are individually nested within conditions
-        ids_in_condition_objs = []
+        ids_referenced = []
         for condition_obj in self.json_condition_objs:
             if "items" in condition_obj:
                 for condition in condition_obj["items"]:
                     if "object" in condition:
-                        ids_in_condition_objs += condition["object"]
-#            ids_in_condition_objs += [condition["object"] for condition in condition_obj["conditions"] if "object" in condition]
+                        ids_referenced += condition["object"]
+
+        # ojects can also be referenced by object groups so this is needed to prevent orphans
+        ids_refed_in_object_groups = []
+        for object_group in self.json_object_groups:
+            ids_refed_in_object_groups.extend(object_group["items"])
+
+        ids_referenced.extend(ids_refed_in_object_groups)
+
         # we're only looking for matches, so strip duplicates to make the comparison work
-        ids_in_condition_objs = list(set(ids_in_condition_objs))
+        ids_referenced = list(set(ids_referenced))
         
         # ids in groups are not a list, so grabbing them is easier. Strip duplicates like above.
         ids_in_objects = [object["id"] for object in self.json_objects]
+        ids_in_objects += [ogroup["id"] for ogroup in self.json_object_groups]
 
-        ids_in_object_groups = [object["id"] for object in self.json_object_groups]
-        ids_in_objects += ids_in_object_groups
         ids_in_objects = list(set(ids_in_objects))
 
         # check that all id's under condition objects are also under groups
-        ids_contained = all(i in ids_in_objects for i in ids_in_condition_objs)
+        ids_contained = all(i in ids_in_objects for i in ids_referenced)
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and objects")
         
         # orphans the other way around are stored as warnings and printed late
-        self.warnings_add_orphan(ids_in_objects, ids_in_condition_objs, "objects")
+        self.warnings_add_orphan(ids_in_objects, ids_referenced, "objects")
         
     def test_group_types(self):
         """
