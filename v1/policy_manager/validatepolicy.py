@@ -115,7 +115,7 @@ class TestPolicyManager(unittest.TestCase):
                     self.warning_dict[key]["orphans"] = []
                 self.warning_dict[key]["orphans"] += [possible_orphan]
                 
-    def get_condition_ids_in_policies(self):
+    def get_condition_ids_referenced_in_policies(self):
         """
         Grab child object ids from policies either under services/child_obj or just child_objs (note, that the trailing
         's' does matter here!)
@@ -169,7 +169,7 @@ class TestPolicyManager(unittest.TestCase):
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_rules))
                 
-    def get_condition_ids_in_rules(self):
+    def get_condition_ids_referenced_in_rules(self):
         """
         Grab child object ids from rules either under actions or policies)
 
@@ -192,6 +192,16 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
         return list(set(ids_in_condition_objs))
+    
+    def get_condition_ids_referenced_in_condition_groups(self):
+        """
+        Grabs all of the condition ids referenced in conditions_groups which might not otherwise be referenced
+        """
+        ids_referenced = []
+        for condition_group in self.json_condition_groups:
+            ids_referenced.extend(condition_group["items"])
+        return ids_referenced
+
     
     # ~~~ TEST METHODS
         
@@ -223,13 +233,14 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_rules = [rule["id"] for rule in self.json_rules]
         self.assertEqual(len(ids_in_rules), len(set(ids_in_rules)))
 
-    def test_condition_ids_in_policies(self):
+    def test_condition_ids_in_policies_rules_condition_groups(self):
         """
-        Tests that any condition id's under policies exist in conditions (but not the other way around)
+        Tests that any condition id's under policies, rules or conditiongroups exist in conditions (but not the other way around)
         """
-        ids_in_policies_and_rules = self.get_condition_ids_in_policies()
-        ids_in_policies_and_rules += self.get_condition_ids_in_rules()
-        ids_in_policies_and_rules = list(set(ids_in_policies_and_rules))
+        ids_referenced = self.get_condition_ids_referenced_in_policies()
+        ids_referenced += self.get_condition_ids_referenced_in_rules()
+        ids_referenced += self.get_condition_ids_referenced_in_condition_groups()
+        ids_referenced = list(set(ids_referenced))
             
         # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
         ids_in_conditions = [condition["id"] for condition in self.json_condition_objs]
@@ -237,11 +248,11 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_conditions = list(set(ids_in_conditions))
 
         # check that all id's under policies are also under configurations
-        ids_contained = all(i in ids_in_conditions for i in ids_in_policies_and_rules)
+        ids_contained = all(i in ids_in_conditions for i in ids_referenced)
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between policies/rules and conditions.")
         
         # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_conditions, ids_in_policies_and_rules, "condition_objects")
+        self.warnings_add_orphan(ids_in_conditions, ids_referenced, "condition_objects")
         
     def test_rule_ids_in_policies(self):
         """
@@ -276,7 +287,7 @@ class TestPolicyManager(unittest.TestCase):
         # orphans the other way around are stored as warnings and printed later
         self.warnings_add_orphan(ids_in_configurations, ids_in_rules, "configurations")
         
-    def test_object_ids_in_condition_objs(self):
+    def test_object_ids_in_condition_objs_or_groups(self):
         """
         Tests that any object id's under condition objects exist in objects or object groups
         (but not the other way around)
@@ -317,24 +328,38 @@ class TestPolicyManager(unittest.TestCase):
         Tests the types of each group to make sure that they are the correct format
         """
         for group in self.json_object_groups:
+            idlen = len(group["id"])
             group_items = group["items"]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
             group_type = group["type"]
+            isValid = False
             if group_type == "ConditionGroup":
+                isValid = True
+            elif group_type == "GeoipObjectGroup":
+                isValid = True
+            elif group_type == "IpAddressObjectGroup":
+                isValid = True
+            elif group_type == "ServiceEndpointObjectGroup":
+                isValid = True
+                        
+            self.assertTrue(isValid, "Failed because Object Group had unexpected type: " + group_type)
+            if isValid:
                 for item in group_items:
-                    ids_in_condition_objs = self.get_ids_in_condition_objs()
-                    self.assertIn(item, ids_in_condition_objs, "Failed because a ConditionGroup: " + item + 
-                                  "is not in any condition object")
-            elif group_type == "GeoIPLocation":
-                for item in group_items:
-                    self.assertEquals(len(item), 2, "Failed because GeoIPLocation has a weird format: " + item + 
-                                      " in group's items: " +  str(group_items))
-            elif group_type == "ServiceEndpoint":
-                for item in group_items:
-                    for key, value in item.items():
-                        self.assertTrue(key == "protocol" or key == "port", "Failed because ServiceEndPoint had " +
-                                        "unexpected pair: " + str({key:value}) + " in group's item: " + str(item))
+                    # Validate that the items are object IDs
+                    self.assertEquals(len(item), idlen, "Failed because Object Group has a weird format: " + item + 
+                                    " in group's items: " +  str(group_items))
+                    
+        for group in self.json_condition_groups:
+            idlen = len(group["id"])
+            group_items = group["items"]
+            self.assertIsNotNone(group_items, "Failed because a group has a null item list")
+            self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
+            for item in group_items:
+                # Validate that the items are object IDs
+                self.assertEquals(len(item), idlen, "Failed because Condition Group has a weird format: " + item + 
+                                " in group's items: " +  str(group_items))
+
 
     @classmethod
     def tearDownClass(cls):
@@ -452,7 +477,7 @@ class PolicyManagerStringBuilder():
                                             break
                                     for condition_obj in self.condition_groups:
                                         if condition_obj["id"] == condition_id:
-                                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
+                                            policy_arr.append(self.buildConditionGroupString(condition_obj, prefix="\t\t"))
                                             break
             if "conditions" in policy:
                 for condition_id in policy["conditions"]:
@@ -535,6 +560,24 @@ class PolicyManagerStringBuilder():
                 #        if group["id"] == condition["object"]:
                 #            condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
         return '\n'.join(condition_obj_arr)
+
+    def buildConditionGroupString(self, condition_obj, prefix='', getNestedInfo=True):
+        """
+        Builds and returns a string that represents a condition group and its properties. 
+
+        Args:
+            condition group (dict): A dict of a condition object grabbed from the .json
+            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
+            getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
+                                            True.
+
+        Returns:
+            string: A string representation of a condition object and its properties
+        """
+        condition_group_array = [' '.join([prefix, "Condition Group:", condition_obj["id"], "\tName:,", condition_obj["name"], "\tDescriptions:", condition_obj["description"]])]
+        for condition in condition_obj["items"]:
+            condition_group_array.append(' '.join([prefix + '\t', "ConditionID:", condition]))
+        return '\n'.join(condition_group_array)
                 
     def buildAllGroupsString(self, prefix=''):
         """

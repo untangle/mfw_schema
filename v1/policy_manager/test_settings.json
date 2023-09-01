@@ -650,7 +650,17 @@
             ]
             }
         ],
-        "condition_groups": [],
+        "condition_groups": [
+            {
+                "id": "8d09ef73-8e5d-4f8b-a4e8-30af1f685273",
+                "name": "Sample condition group",
+                "description": "",
+                "type": "ConditionGroup",
+                "items": [
+                    "1458dc12-a9c2-4d0c-8203-1340c61c2c3b"                
+                ]
+            }
+        ],
         "rules": [
             {
                 "id": "c2428365-65be-4901-bfc0-bde2b310fedf",
@@ -673,7 +683,8 @@
                 "enabled": true,
                 "type": "GeoipFilterRuleObject",
                 "conditions": [
-                    "8671fc36-2298-4475-b928-6e046862e58a"
+                    "8671fc36-2298-4475-b928-6e046862e58a",
+                    "8d09ef73-8e5d-4f8b-a4e8-30af1f685273"
                 ],
                 "action": {
                     "type": "SET_CONFIGURATION",

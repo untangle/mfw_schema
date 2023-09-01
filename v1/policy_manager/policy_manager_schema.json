@@ -97,7 +97,7 @@
         },
         "policy_manager_object_group": {
             "type": "object",
-            "required": ["id"],
+            "required": ["id", "items"],
             "properties": {
                 "id": {
                     "$ref": "#/definitions/policy_manager_object_group_id"
@@ -192,12 +192,25 @@
             }
         },
         "policy_manager_condition_group": {
-            "id": {
-                "$ref": "#/definitions/policy_manager_condition_group_id"
-            },
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/policy_manager_condition_id"
+            "type": "object",
+            "required": ["id", "items"],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/policy_manager_condition_group_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "items": 
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/policy_manager_condition_id"
+                    }
+                }
             }
         },
         "policy_manager_condition_group_id": {
