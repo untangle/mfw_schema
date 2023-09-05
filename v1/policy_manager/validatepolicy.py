@@ -333,16 +333,8 @@ class TestPolicyManager(unittest.TestCase):
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
             group_type = group["type"]
-            isValid = False
-            if group_type == "ConditionGroup":
-                isValid = True
-            elif group_type == "GeoipObjectGroup":
-                isValid = True
-            elif group_type == "IpAddressObjectGroup":
-                isValid = True
-            elif group_type == "ServiceEndpointObjectGroup":
-                isValid = True
-                        
+            valid_groups = ["ConditionGroup", "GeoipObjectGroup", "IpAddressObjectGroup", "ServiceEndpointObjectGroup"]
+            isValid = group_type in valid_groups,
             self.assertTrue(isValid, "Failed because Object Group had unexpected type: " + group_type)
             if isValid:
                 for item in group_items:
@@ -554,11 +546,7 @@ class PolicyManagerStringBuilder():
             if "value" in condition:
                 condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
             else:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tObjects:", str(condition["object"])]))
-                #if getNestedInfo:
-                #    for group in self.groups:
-                #        if group["id"] == condition["object"]:
-                #            condition_obj_arr.append(self.buildGroupString(group, prefix=prefix+"\t\t"))
+                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tObjects:", str(condition["object"])]))       
         return '\n'.join(condition_obj_arr)
 
     def buildConditionGroupString(self, condition_obj, prefix='', getNestedInfo=True):
