@@ -5,7 +5,8 @@ import os
 import unittest
 import sys
 
-import  v1.policy_manager.validatepolicy as validatepolicy
+import v1.policy_manager.validatepolicy as validatepolicy
+import v1.dynamic_lists.validate_dynamic_lists as validate_dynamic_lists
 
 def main():
     """
@@ -28,6 +29,11 @@ def main():
     unittest.TextTestRunner(verbosity=2).run(suite)
     os.environ.pop("SCHEMA_FILE", None)
     os.environ.pop("JSON_FILE", None)
+    
+    # NOTE: this runs, but will throw a warning. Just a quick fix, but in the future the agrument variable structure
+    # will need to accomodate more than just policy_manager
+    suite = unittest.TestLoader().loadTestsFromModule(validate_dynamic_lists)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
 if __name__ == '__main__':
     main()

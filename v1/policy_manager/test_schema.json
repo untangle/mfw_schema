@@ -6,8 +6,8 @@
         "policy_manager"
     ],
     "properties": {
-    "policy_manager": {
-           "$ref": "file:./policy_manager_schema.json#/definitions/policy_manager_settings"
-    }
+        "policy_manager": {
+            "$ref": "file:./policy_manager_schema.json#/definitions/policy_manager_settings"
+        }
     }
 }

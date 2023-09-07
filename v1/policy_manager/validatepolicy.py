@@ -42,7 +42,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         setUpClass runs before all tests. Grabs file information, using some defaults if the environment variables 
         fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
-        out, so the follow-up tests won't run
+        out, so any follow-up tests won't run
         """
         current_directory = os.path.dirname(os.path.realpath(__file__))
         try:
@@ -51,7 +51,7 @@ class TestPolicyManager(unittest.TestCase):
         except KeyError:
             json_filename   = os.path.join(current_directory, cls.JSON_FILENAME_DEFAULT)
             schema_filename = os.path.join(current_directory, cls.SCHEMA_FILENAME_DEFAULT)
-            print("ERROR: Failed to get filenames from environment variables. Using default filenames:")
+            print("WARNING: Failed to get filenames from environment variables. Using default filenames:")
             print("\tjson=" + str(json_filename))
             print("\tschema=" + str(schema_filename))
 

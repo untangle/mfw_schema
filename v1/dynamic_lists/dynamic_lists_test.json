@@ -1,24 +1,27 @@
 {
-    "dynamic_lists":  [
-      { 
-        "name": "region blocklist ",
-        "id": "0909wer-1234-4de5-7897-3f426fb32b99",
-        "type": "IPList",
-        "enabled": true,
-        "source": "https://opendbl.net/lists/etknown.list",
-        "pullingUnit" : "Months",
-        "pullingTime" : 2,
-        "regexType" : "CSV"
-      },
-      { 
-        "name": "Internal blocklist",
-        "id": "0909wer-3968-4de5-9385-3f426df3m11",
-        "type": "IPList",
-        "enabled": false,
-        "source": "https://opendbl.net/lists/etknown.list",
-        "pullingUnit" : "Days",
-        "pullingTime" : 3,
-        "regexType" : "TXT"
-      }
-    ]
+    "dynamic_lists":  {
+      "enabled": true,
+      "configurations": [
+        { 
+          "name": "region blocklist ",
+          "id": "0909wer-1234-4de5-7897-3f426fb32b99",
+          "type": "IPList",
+          "enabled": true,
+          "source": "https://opendbl.net/lists/etknown.list",
+          "pullingUnit" : "Months",
+          "pullingTime" : 2,
+          "regexType" : "CSV"
+        },
+        { 
+          "name": "Internal blocklist",
+          "id": "0909wer-3968-4de5-9385-3f426df3m11",
+          "type": "IPList",
+          "enabled": false,
+          "source": "https://opendbl.net/lists/etknown.list",
+          "pullingUnit" : "Days",
+          "pullingTime" : 3,
+          "regexType" : "TXT"
+        }
+      ]
+    }
 }

@@ -1,9 +1,25 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-
         "dynamic_lists_settings": {
-            "type": "array",
+            "type": "object",
+            "description": "Dynamic block list feature",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "enables or disables the entire dynamic blocklist feature"
+                },
+                "configurations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dynamic_lists_configuration"
+                    }
+                }
+            }
+        },
+        "dynamic_lists_configuration": {
+            "type": "object",
             "description": "Dynamic block list configurations",
             "additionalProperties": false,
             "properties": {
@@ -14,6 +30,10 @@
                 "name": {
                     "type": "string",
                     "description": "Name of the block list from source"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "ID of the block list from source"
                 },
                 "source": {
                     "type": "string",
