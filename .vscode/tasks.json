@@ -6,7 +6,7 @@
         {
             "label": "Validate",
             "type": "shell",
-            "command": "./validate.py ${input:schema} ${input:json}",
+            "command": "./validate.py ${input:directory} ${input:schema} ${input:json}",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -15,7 +15,16 @@
         {
             "label": "Test policy_manager",
             "type": "shell",
-            "command": "./validate.py v1/policy_manager/test_schema.json v1/policy_manager/test_settings.json",
+            "command": "./validate.py policy_manager v1/policy_manager/test_schema.json v1/policy_manager/test_settings.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Test dynamic_lists",
+            "type": "shell",
+            "command": "./validate.py dynamic_lists v1/dynamic_lists/test_schema.json v1/dynamic_lists/dynamic_lists_test.json",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -24,10 +33,17 @@
     ],
     "inputs": [
         {
+            "id": "directory",
+            "type": "promptString",
+            "description": "Enter directory names whose schemas you want to test, separated by commas. Leave blank to run all tests",
+            "default": ""
+        },
+        {
             "id": "schema",
             "type": "pickString",
-            "description": "pick one of the schemas to validate against",
+            "description": "pick a schema or leave blank for default in directory",
             "options": [
+                "",
                 "./v1/schema.json",
                 "./v1/accounts/accounts_schema.json",
                 "./v1/application_control/application_control_schema.json",
@@ -57,13 +73,18 @@
                 "./v1/wan/wan_schema.json",
                 "./v1/webfilter/webfilter_schema.json"
             ],
-            "default": "./v1/schema.json"
+            "default": ""
         },
         {
             "id": "json",
-            "type": "promptString",
-            "description": "pick a json file to validate",
-            "default": "./v1/policy_manager/test_settings.json"
+            "type": "pickString",
+            "description": "pick a json to validate or leave blank for default in directory",
+            "options": [
+                "",
+                "./v1/dynamic_lists/dynamic_lists_test.json",
+                "./v1/policy_manager/test_settings.json"
+            ],
+            "default": ""
         }
     ]
 }
