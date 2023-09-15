@@ -12,7 +12,7 @@ import v1.captiveportal.validate_captiveportal as validate_captiveportal
 validate_dict = {
     "dynamic_lists": validate_dynamic_lists,
     "policy_manager": validatepolicy,
-    "captive_portal": validate_captiveportal
+    "captiveportal": validate_captiveportal
 }
 
 def main():
