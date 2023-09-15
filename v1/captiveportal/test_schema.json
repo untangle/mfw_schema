@@ -6,7 +6,7 @@
         "captiveportal"
     ],
     "properties": {
-        "policy_manager": {
+        "captiveportal": {
             "$ref": "file:./captiveportal_schema.json#/definitions/captiveportal_settings"
         }
     }

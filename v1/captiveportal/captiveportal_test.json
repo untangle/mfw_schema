@@ -1,57 +1,59 @@
 {
-    "acceptButtonText": "Continue",
-    "acceptText": "I agree",
-    "enabled": true,
-    "logo": {
-        "imageData": "",
-        "imageName": ""
-    },
-    "messageHeading": "Guest Access Notice",
-    "messageText": "Click Continue to access the Internet",
-    "pageTitle": "Guest access",
-    "rules": [
-        {
-            "action": {
-                "type": "DISABLE"
-            },
-            "conditions": [
-                {
-                    "op": "==",
-                    "type": "IP_PROTOCOL",
-                    "value": "1"
-                }
-            ],
-            "description": "testRule1",
-            "enabled": true,
-            "ruleId": "feb9dff7-44f1-4d5f-8fe6-9496771c53eb"
+    "captiveportal": {
+        "acceptButtonText": "Continue",
+        "acceptText": "I agree",
+        "enabled": true,
+        "logo": {
+            "imageData": "",
+            "imageName": ""
         },
-        {
-            "action": {
-                "type": "ENABLE"
+        "messageHeading": "Guest Access Notice",
+        "messageText": "Click Continue to access the Internet",
+        "pageTitle": "Guest access",
+        "rules": [
+            {
+                "action": {
+                    "type": "DISABLE"
+                },
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "IP_PROTOCOL",
+                        "value": "1"
+                    }
+                ],
+                "description": "testRule1",
+                "enabled": true,
+                "ruleId": "feb9dff7-44f1-4d5f-8fe6-9496771c53eb"
             },
-            "conditions": [
-                {
-                    "op": "==",
-                    "type": "SOURCE_ADDRESS",
-                    "value": "192.168.56.88"
+            {
+                "action": {
+                    "type": "ENABLE"
                 },
-                {
-                    "op": "==",
-                    "type": "DESTINATION_ADDRESS",
-                    "value": "8.8.8.8"
-                },
-                {
-                    "op": "==",
-                    "type": "IP_PROTOCOL",
-                    "value": "3,1,2"
-                }
-            ],
-            "description": "testRule2",
-            "enabled": true,
-            "ruleId": "b07ebcb9-c6da-49b4-929f-c2b355748f42"
-        }
-    ],
-    "timeoutPeriod": "d",
-    "timeoutValue": 1,
-    "welcomeText": "Welcome to guest access"
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "SOURCE_ADDRESS",
+                        "value": "192.168.56.88"
+                    },
+                    {
+                        "op": "==",
+                        "type": "DESTINATION_ADDRESS",
+                        "value": "8.8.8.8"
+                    },
+                    {
+                        "op": "==",
+                        "type": "IP_PROTOCOL",
+                        "value": "3,1,2"
+                    }
+                ],
+                "description": "testRule2",
+                "enabled": true,
+                "ruleId": "b07ebcb9-c6da-49b4-929f-c2b355748f42"
+            }
+        ],
+        "timeoutPeriod": "d",
+        "timeoutValue": 1,
+        "welcomeText": "Welcome to guest access"
+    }
 }
