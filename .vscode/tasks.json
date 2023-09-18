@@ -29,6 +29,15 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Test captiveportal",
+            "type": "shell",
+            "command": "./validate.py captiveportal v1/captiveportal/test_schema.json v1/captiveportal/captiveportal_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ],
     "inputs": [
@@ -71,7 +80,8 @@
                 "./v1/threatprevention/threatprevention_schema.json",
                 "./v1/uris/uris_schema.json",
                 "./v1/wan/wan_schema.json",
-                "./v1/webfilter/webfilter_schema.json"
+                "./v1/webfilter/webfilter_schema.json",
+                "./v1/captiveportal/captiveportal_schema.json"
             ],
             "default": ""
         },
@@ -82,7 +92,8 @@
             "options": [
                 "",
                 "./v1/dynamic_lists/dynamic_lists_test.json",
-                "./v1/policy_manager/test_settings.json"
+                "./v1/policy_manager/test_settings.json",
+                "./v1/captiveportal/captiveportal_test.json"
             ],
             "default": ""
         }

@@ -74,6 +74,9 @@
         },
         "dynamic_lists": {
             "$ref": "file:dynamic_lists/dynamic_lists_schema.json#/definitions/dynamic_lists_settings"
+        },
+        "captive_portal": {
+            "$ref": "file:captiveportal/captiveportal_schema.json#/definitions/captiveportal_settings"
         }
     },
     "definitions": {}

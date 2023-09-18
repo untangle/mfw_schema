@@ -1,0 +1,118 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "captiveportal_settings": {
+            "type": "object",
+            "description": "Captiveportal settings",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "acceptText": {
+                    "type": "string"
+                },
+                "acceptButtonText": {
+                    "type": "string"
+                },
+                "messageHeading": {
+                    "type": "string"
+                },
+                "messageText": {
+                    "type": "string"
+                },
+                "welcomeText": {
+                    "type": "string"
+                },
+                "logo": {
+                    "type": "object",
+                    "properties": {
+                        "imageName": {
+                            "type": "string"
+                        },
+                        "imageData": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "timeoutValue": {
+                    "type": "number"
+                },
+                "timeoutPeriod": {
+                    "type": "string"
+                },
+                "pageTitle": {
+                    "type": "string"
+                },
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/captiveportal_rules"
+                    }
+                }
+            }
+        },
+        "captiveportal_rules": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "ruleId": {
+                    "type": "string"
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/captiveportal_rules_conditions"
+                    }
+                },
+                "action": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "ENABLE",
+                                "DISABLE"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "captiveportal_rules_conditions": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "DESTINATION_ADDRESS",
+                        "DESTINATION_ADDRESS_V6",
+                        "DESTINATION_INTERFACE_TYPE",
+                        "DESTINATION_INTERFACE_ZONE",
+                        "DESTINATION_PORT",
+                        "SOURCE_ADDRESS",
+                        "SOURCE_ADDRESS_V6",
+                        "SOURCE_INTERFACE_TYPE",
+                        "SOURCE_INTERFACE_ZONE",
+                        "SOURCE_PORT",
+                        "IP_PROTOCOL"
+                    ]
+                },
+                "value": {
+                    "type": "string"
+                },
+                "op": {
+                    "type": "string",
+                    "enum": [
+                        "==",
+                        "!="
+                    ]
+                }
+            }
+        }
+    }
+}
