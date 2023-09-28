@@ -68,22 +68,6 @@
                 }
             },
             {
-                "id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220",
-                "name": "DNS template",
-                "description": "Some DNS entries",
-                "type": "DnsConfiguration",
-                "settings": {
-                    "staticEntries": [
-                    {
-                        "name": "google",
-                        "description": "google dns",
-                        "address": "8.8.8.8"
-                    }
-                    ],
-                    "localServers": []
-                }
-            },
-                {
                 "id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3",
                 "name": "Moderate prevention",
                 "description": "Block moderate to high risk",
@@ -99,8 +83,8 @@
                     "redirect": false,
                     "sensitivity": 60
                 }
-                },
-                {
+            },
+            {
                 "id": "b0981068-a0fa-483e-baa5-945762dd4933",
                 "name": "Suspicious prevention",
                 "description": "Block suspicious",
@@ -743,20 +727,6 @@
                 ],
                 "action": {
                     "type": "ACCEPT"
-                }
-            },
-            {
-                "id": "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830",
-                "name": "DNS Rule",
-                "description": "",
-                "enabled": true,
-                "type": "DnsRuleObject",
-                "conditions": [
-                    "7d22052e-02aa-4e4d-a9a4-13f38e6730f5"
-                ],
-                "action": {
-                    "type": "SET_CONFIGURATION",
-                    "configuration_id": "5c2a741b-ac23-4c75-b7c6-0ab6ddfd0220"
                 }
             },
             {
