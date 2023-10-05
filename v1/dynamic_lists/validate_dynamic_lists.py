@@ -4,6 +4,7 @@ import json
 import jsonschema
 import os
 import unittest
+from uuid import UUID
 
 """
 TestDynamicLists validates the dynamic_lists schema
@@ -14,6 +15,8 @@ class TestDynamicLists(unittest.TestCase):
     # consts
     JSON_FILENAME_DEFAULT   = "dynamic_lists_test.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
+    # class vars, begin uninitialized
+    json_data = ""
     
     @classmethod
     def setUpClass(cls):
@@ -53,12 +56,16 @@ class TestDynamicLists(unittest.TestCase):
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
         
-    def test_dummy(self):
+    def test_valid_ids(self):
         """
-        Dummy test, just enabling validation.
-        
-        TODO delete me if testing goes beyond validation
+        Testing that each dynamic lists configuration's id is a valid uuid
         """
+        for configuration in self.json_data["dynamic_lists"]["configurations"]:
+            id_val = configuration["id"]
+            try:
+                uuid_obj = UUID(id_val)
+            except ValueError:
+                self.fail("Failed due to an invalid ID in dynamic lists: " + id_val)
         self.assertTrue(True)
 
 if __name__ == '__main__':
