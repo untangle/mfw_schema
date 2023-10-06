@@ -22,7 +22,7 @@
             "description": "System Logging",
             "properties": {
                 "type": {
-                    "description": "",
+                    "description": "Type of log file",
                     "type": "string"
                 },
                 "file": {
