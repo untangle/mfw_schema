@@ -13,7 +13,38 @@
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
                 "autoUpgrade": { "$ref": "#/definitions/auto_settings" },
-                "autoBackup": { "$ref": "#/definitions/auto_settings" }
+                "autoBackup": { "$ref": "#/definitions/auto_settings" },
+                "logging": { "$ref": "#/definitions/logging" }
+            }
+        },
+        "logging": {
+            "type": "object",
+            "description": "System Logging",
+            "properties": {
+                "type": {
+                    "description": "",
+                    "type": "string"
+                },
+                "file": {
+                    "description": "Path to log file",
+                    "type": "string"
+                },
+                "size": {
+                    "description": "Size of log file in Kib",
+                    "type": "integer"
+                },
+                "remote": {
+                    "description": "Is log file located remotely",
+                    "type": "boolean"
+                },
+                "ip": {
+                    "description": "IP of remote log",
+                    "type": "string"
+                },
+                "port": {
+                    "description": "Port of remote log",
+                    "type": "integer"
+                }
             }
         },
         "setup_wizard_settings": {
