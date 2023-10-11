@@ -6,7 +6,7 @@
                 "id": "1202b42e-2f21-49e9-b42c-5614e04d0031",
                 "name": "GeoIp",
                 "description": "some geoip filter",
-                "type": "GeoipFilterConfiguration",
+                "type": "mfw-template-geoipfilter",
                 "settings": {
                     "blockedCountries": [],
                     "enabled": true,
@@ -18,7 +18,7 @@
                 "id": "47a8d05d-525a-4284-99a7-5dea4beb1676",
                 "name": "Another GeoIp",
                 "description": "test",
-                "type": "GeoipFilterConfiguration",
+                "type": "mfw-template-geoipfilter",
                 "settings": {
                     "blockedCountries": [
                     "RU",
@@ -33,7 +33,7 @@
                 "id": "f9df9aa5-4244-4344-9e62-4729fcfd3e31",
                 "name": "My AC2",
                 "description": "app control 2",
-                "type": "ApplicationControlConfiguration",
+                "type": "mfw-template-applicationcontrol",
                 "settings": {
                     "blockedCountries": [
                     "RU",
@@ -48,7 +48,7 @@
                 "id": "2194a104-dc13-43a9-aaf2-d4a0a196e121",
                 "name": "My Policy",
                 "description": "Some description",
-                "type": "WanPolicyConfiguration",
+                "type": "mfw-template-wanpolicy",
                 "settings": {
                     "criteria": [
                     {
@@ -71,7 +71,7 @@
                 "id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3",
                 "name": "Moderate prevention",
                 "description": "Block moderate to high risk",
-                "type": "ThreatPreventionConfiguration",
+                "type": "mfw-template-threatprevention",
                 "settings": {
                     "enabled": true,
                     "passList": [
@@ -88,7 +88,7 @@
                 "id": "b0981068-a0fa-483e-baa5-945762dd4933",
                 "name": "Suspicious prevention",
                 "description": "Block suspicious",
-                "type": "ThreatPreventionConfiguration",
+                "type": "mfw-template-threatprevention",
                 "settings": {
                     "enabled": true,
                     "passList": [],
@@ -100,7 +100,7 @@
                 "id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9",
                 "name": "Default WF",
                 "description": "Default Web Filter settings",
-                "type": "WebFilterConfiguration",
+                "type": "mfw-template-webfilter",
                 "settings": {
                     "blockList": [],
                     "categories": [
@@ -153,7 +153,7 @@
                 "id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50",
                 "name": "Captive Portal default",
                 "description": "Some CP settings",
-                "type": "CaptivePortalConfiguration",
+                "type": "mfw-template-captiveportal",
                 "settings": {
                     "enabled": true,
                     "acceptText": "I accept the Terms of Service",
@@ -175,7 +175,7 @@
             "id": "cbee1455-1777-48ef-9e54-c4d4ee81632a",
             "name": "HR",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.167.10.23"
             ]
@@ -184,7 +184,7 @@
             "id": "6ce29b65-c102-4f98-bd9f-0d8a7e11117c",
             "name": "Admins",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.168.3.10"
             ]
@@ -193,7 +193,7 @@
             "id": "f430ddac-d1e8-4c1e-827e-8ec2aa47af9f",
             "name": "Students",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.178.3.5",
                 "192.178.3.10"
@@ -203,13 +203,11 @@
             "id": "527576e6-60b1-4a86-be57-de9f719eeef7",
             "name": "HTTP",
             "description": "",
-            "type": "ServiceEndpointObject",
+            "type": "mfw-object-service",
             "items": [
                 {
-                "port": "80",
-                "protocol": [
-                    "6"
-                ]
+                "port": 80,
+                "protocol": 6
                 }
             ]
             },
@@ -217,28 +215,19 @@
             "id": "8105f355-cb98-43eb-9ac7-74542a524abb",
             "name": "Dummy endpoint",
             "description": "Some endpoint",
-            "type": "ServiceEndpointObject",
+            "type": "mfw-object-service",
             "items": [
                 {
-                "port": "88",
-                "protocol": [
-                    "6",
-                    "17"
-                ]
+                "port": 88,
+                "protocol": 17
                 },
                 {
-                "port": "123",
-                "protocol": [
-                    "51",
-                    "107"
-                ]
+                "port": 123,
+                "protocol":107
                 },
                 {
-                "port": "",
-                "protocol": [
-                    "37",
-                    "8"
-                ]
+                "port": 1234,
+                "protocol": 37
                 }
             ]
             },
@@ -246,7 +235,7 @@
             "id": "080b107d-d88a-4a36-bef4-749459a3c185",
             "name": "Teachers",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.168.5.6-192.168.5.20"
             ]
@@ -255,7 +244,7 @@
             "id": "99eae585-f68c-451b-ab9f-ebb97836f880",
             "name": "DB Servers",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.168.10.10"
             ]
@@ -264,7 +253,7 @@
             "id": "5d171f2e-c5b2-48e0-8540-a5cac80714ee",
             "name": "Web Servers",
             "description": "",
-            "type": "IpAddressObject",
+            "type": "mfw-object-ipaddress",
             "items": [
                 "192.168.40.40"
             ]
@@ -273,19 +262,15 @@
             "id": "9168567b-a664-4e3a-a344-379eb4f14fee",
             "name": "MS SQL",
             "description": "",
-            "type": "ServiceEndpointObject",
+            "type": "mfw-object-service",
             "items": [
                 {
-                "port": "1433, 4022, 135, 1434",
-                "protocol": [
-                    "6"
-                ]
+                "port": 1433,
+                "protocol": 6
                 },
                 {
-                "port": "1434",
-                "protocol": [
-                    "17"
-                ]
+                "port": 1434,
+                "protocol": 17
                 }
             ]
             },
@@ -293,13 +278,11 @@
             "id": "e1d79a65-3c43-4493-a6e6-6cc886eb7085",
             "name": "MySQL",
             "description": "",
-            "type": "ServiceEndpointObject",
+            "type": "mfw-object-service",
             "items": [
                 {
-                "port": "3306",
-                "protocol": [
-                    "6"
-                ]
+                "port": 3306,
+                "protocol": 61
                 }
             ]
             },
@@ -307,7 +290,7 @@
             "id": "15e01135-5e6a-41cb-9e8f-243eae4d9815",
             "name": "Banned countries",
             "description": "",
-            "type": "GeoipObject",
+            "type": "mfw-object-geoip",
             "items": [
                 "PF",
                 "GE",
@@ -318,7 +301,7 @@
             "id": "b821864e-18ef-409c-a7bc-defc2d049d96",
             "name": "Europe 1",
             "description": "",
-            "type": "GeoipObject",
+            "type": "mfw-object-geoip",
             "items": [
                 "DZ",
                 "BE",
@@ -330,7 +313,7 @@
             "id": "3c5856f1-f182-40d0-ac2a-e586c7413f4f",
             "name": "Europe 2",
             "description": "",
-            "type": "GeoipObject",
+            "type": "mfw-object-geoip",
             "items": [
                 "HN",
                 "HU",
@@ -345,7 +328,7 @@
             "id": "7d09ef73-8e5d-4f8b-a4e8-30af1f685273",
             "name": "Campus",
             "description": "",
-            "type": "GeoipObjectGroup",
+            "type": "mfw-object-geoip-group",
             "items": [
                 "080b107d-d88a-4a36-bef4-749459a3c185",
                 "f430ddac-d1e8-4c1e-827e-8ec2aa47af9f",
@@ -356,7 +339,7 @@
             "id": "c8a92afc-c666-4261-8bf7-99adde197934",
             "name": "DB-Web group",
             "description": "",
-            "type": "IpAddressObjectGroup",
+            "type": "mfw-object-ipaddress-group",
             "items": [
                 "99eae585-f68c-451b-ab9f-ebb97836f880",
                 "5d171f2e-c5b2-48e0-8540-a5cac80714ee"
@@ -366,7 +349,7 @@
             "id": "315a3089-2c5a-4bb2-baea-073f0f66ec00",
             "name": "SQL Services",
             "description": "",
-            "type": "ServiceEndpointObjectGroup",
+            "type": "mfw-object-service-group",
             "items": [
                 "9168567b-a664-4e3a-a344-379eb4f14fee",
                 "e1d79a65-3c43-4493-a6e6-6cc886eb7085"
@@ -376,7 +359,7 @@
             "id": "0893af13-3ed9-45c3-9301-a70a2cc8ffd2",
             "name": "Europe",
             "description": "",
-            "type": "GeoipObjectGroup",
+            "type": "mfw-object-geoip-group",
             "items": [
                 "b821864e-18ef-409c-a7bc-defc2d049d96",
                 "3c5856f1-f182-40d0-ac2a-e586c7413f4f"
@@ -388,12 +371,12 @@
             "id": "59bf280a-cb71-4a3e-97dd-af7e9f4c174c",
             "name": "Policy Cond 1",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "DESTINATION_ADDRESS",
                 "op": "==",
-                "value": "192.10.2.20"
+                "value": ["192.10.2.20"]
                 }
             ]
             },
@@ -401,7 +384,7 @@
             "id": "0abba9c5-67a3-419a-9b91-6a876b84765a",
             "name": "Policy Cond 2",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "GEOIP",
@@ -416,7 +399,7 @@
             "id": "1458dc12-a9c2-4d0c-8203-1340c61c2c3b",
             "name": "Policy 8/28/2023 8:10:48 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SOURCE_ADDRESS",
@@ -428,7 +411,7 @@
                 {
                 "type": "DESTINATION_ADDRESS",
                 "op": "==",
-                "value": "192.20.3.10"
+                "value": ["192.20.3.10"]
                 }
             ]
             },
@@ -436,7 +419,7 @@
             "id": "8671fc36-2298-4475-b928-6e046862e58a",
             "name": "Policy 8/28/2023 8:11:22 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "GEOIP",
@@ -451,7 +434,7 @@
             "id": "32b8ecbe-aceb-4be3-807d-8cb3e82be2ee",
             "name": "Policy 8/28/2023 3:11:36 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "DESTINATION_ADDRESS",
@@ -466,7 +449,7 @@
             "id": "85678956-b696-4766-bda9-1379146c512e",
             "name": "Policy 8/28/2023 11:14:28 AM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SERVICE",
@@ -481,12 +464,12 @@
             "id": "b424729c-0e44-4190-802c-56dc155b9a4b",
             "name": "Policy 8/28/2023 8:02:00 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "DESTINATION_ADDRESS",
                 "op": "==",
-                "value": "192.168.2.10-192.168.2.30"
+                "value": ["192.168.2.0/24"]
                 }
             ]
             },
@@ -494,7 +477,7 @@
             "id": "c519f2ce-7ca8-4d76-be21-5fb87f176181",
             "name": "Policy 8/28/2023 8:02:30 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SOURCE_ADDRESS",
@@ -510,7 +493,7 @@
             "id": "4c6c51ca-02a0-4cb0-92a9-9d90a569b9f5",
             "name": "Policy 8/28/2023 8:04:15 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SERVICE",
@@ -525,12 +508,12 @@
             "id": "7d22052e-02aa-4e4d-a9a4-13f38e6730f5",
             "name": "aaa",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "APPLICATION_CATEGORY",
                 "op": "==",
-                "value": "Messaging"
+                "value": ["Messaging"]
                 }
             ]
             },
@@ -538,7 +521,7 @@
             "id": "7d6ca543-1106-4df7-86b1-26bc6c7c949c",
             "name": "Policy 8/28/2023 8:09:15 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SERVICE",
@@ -553,7 +536,7 @@
             "id": "a8181213-3836-47e5-a0dc-111b2e56a16c",
             "name": "Policy 8/28/2023 8:16:31 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "DESTINATION_ADDRESS",
@@ -568,7 +551,7 @@
             "id": "4d5e23fa-ee6c-4b82-9b35-247825d50326",
             "name": "Policy 8/28/2023 8:17:16 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "DESTINATION_ADDRESS",
@@ -583,7 +566,7 @@
             "id": "ef062718-ecb5-4592-9502-9b61482ea6a6",
             "name": "Policy 8/28/2023 8:20:44 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SERVER_ADDRESS",
@@ -598,12 +581,12 @@
             "id": "612f51d7-7175-4c9b-8307-353785d33a7b",
             "name": "Policy 8/28/2023 8:22:05 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "SERVER_ADDRESS",
                 "op": "==",
-                "value": "192.70.20.5"
+                "value": ["192.70.20.5"]
                 }
             ]
             },
@@ -611,12 +594,12 @@
             "id": "7ec81b28-9073-44fb-a32d-3c401b02c928",
             "name": "Policy 8/28/2023 8:23:02 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "APPLICATION_CATEGORY",
                 "op": "==",
-                "value": "Streaming Media"
+                "value": ["Streaming Media"]
                 }
             ]
             },
@@ -624,12 +607,12 @@
             "id": "000fbb3c-afe2-4e59-9846-991232115fef",
             "name": "Policy 8/28/2023 8:23:59 PM",
             "description": "",
-            "type": "ConditionObject",
+            "type": "mfw-object-condition",
             "items": [
                 {
                 "type": "CLIENT_PORT",
                 "op": "==",
-                "value": 21
+                "value": ["21"]
                 }
             ]
             }
@@ -639,7 +622,7 @@
                 "id": "8d09ef73-8e5d-4f8b-a4e8-30af1f685273",
                 "name": "Sample condition group",
                 "description": "",
-                "type": "ConditionGroup",
+                "type": "mfw-object-condition-group",
                 "items": [
                     "1458dc12-a9c2-4d0c-8203-1340c61c2c3b"                
                 ]
@@ -651,7 +634,7 @@
                 "name": "GeoIP rule",
                 "description": "",
                 "enabled": true,
-                "type": "GeoipFilterRuleObject",
+                "type": "mfw-rule-geoip",
                 "conditions": [
                     "1458dc12-a9c2-4d0c-8203-1340c61c2c3b"
                 ],
@@ -665,7 +648,7 @@
                 "name": "Europe GeoIP Conf",
                 "description": "",
                 "enabled": true,
-                "type": "GeoipFilterRuleObject",
+                "type": "mfw-rule-geoip",
                 "conditions": [
                     "8671fc36-2298-4475-b928-6e046862e58a",
                     "8d09ef73-8e5d-4f8b-a4e8-30af1f685273"
@@ -680,7 +663,7 @@
                 "name": "Rule",
                 "description": "",
                 "enabled": true,
-                "type": "ApplicationControlRuleObject",
+                "type": "mfw-rule-applicationcontrol",
                 "conditions": [],
                 "action": {
                     "type": "SET_CONFIGURATION",
@@ -692,7 +675,7 @@
                 "name": "My WP",
                 "description": "",
                 "enabled": true,
-                "type": "WanPolicyRuleObject",
+                "type": "mfw-rule-wanpolicy",
                 "conditions": [
                     "32b8ecbe-aceb-4be3-807d-8cb3e82be2ee"
                 ],
@@ -706,7 +689,7 @@
                 "name": "Security Rule 1",
                 "description": "",
                 "enabled": true,
-                "type": "SecurityRuleObject",
+                "type": "mfw-rule-security",
                 "conditions": [
                     "85678956-b696-4766-bda9-1379146c512e"
                 ],
@@ -719,7 +702,7 @@
                 "name": "Security Rule 2",
                 "description": "",
                 "enabled": true,
-                "type": "SecurityRuleObject",
+                "type": "mfw-rule-security",
                 "conditions": [
                     "b424729c-0e44-4190-802c-56dc155b9a4b",
                     "c519f2ce-7ca8-4d76-be21-5fb87f176181",
@@ -734,7 +717,7 @@
                 "name": "Forward HTTP",
                 "description": "",
                 "enabled": true,
-                "type": "PortForwardRuleObject",
+                "type": "mfw-rule-portforward",
                 "conditions": [
                     "7d6ca543-1106-4df7-86b1-26bc6c7c949c"
                 ],
@@ -749,7 +732,7 @@
                 "name": "Campus moderate TP",
                 "description": "",
                 "enabled": true,
-                "type": "ThreatPreventionRuleObject",
+                "type": "mfw-rule-threatprevention",
                 "conditions": [
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],
@@ -763,7 +746,7 @@
                 "name": "Admin TP",
                 "description": "",
                 "enabled": true,
-                "type": "ThreatPreventionRuleObject",
+                "type": "mfw-rule-threatprevention",
                 "conditions": [
                     "4d5e23fa-ee6c-4b82-9b35-247825d50326"
                 ],
@@ -777,7 +760,6 @@
                 "name": "Default WF",
                 "description": "",
                 "enabled": true,
-                "type": "WebFilterRuleObject",
                 "conditions": [
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],
@@ -791,7 +773,7 @@
                 "name": "Default CP",
                 "description": "",
                 "enabled": true,
-                "type": "CaptivePortalRuleObject",
+                "type": "mfw-rule-captiveportal",
                 "conditions": [
                     "ef062718-ecb5-4592-9502-9b61482ea6a6"
                 ],
@@ -805,7 +787,7 @@
                 "name": "Apply low priority",
                 "description": "",
                 "enabled": true,
-                "type": "ShapingRuleObject",
+                "type": "mfw-rule-shaping",
                 "conditions": [
                     "612f51d7-7175-4c9b-8307-353785d33a7b",
                     "7ec81b28-9073-44fb-a32d-3c401b02c928"
@@ -820,7 +802,7 @@
                 "name": "New FTP source",
                 "description": "",
                 "enabled": true,
-                "type": "NatRuleObject",
+                "type": "mfw-rule-nat",
                 "conditions": [
                     "000fbb3c-afe2-4e59-9846-991232115fef"
                 ],
