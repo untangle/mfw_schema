@@ -193,7 +193,8 @@
                              "CERT_ISSUER_SA",
                              "CERT_ISSUER_PC",
                              "CT_STATE",
-                             "LIMIT_RATE"
+                             "LIMIT_RATE",
+                             "BURST_SIZE"
                             ]
                 },
                 "value": {
@@ -206,6 +207,10 @@
                 "rate_unit": {
                     "type": "string",
                     "enum": ["PACKETS_PER_SECOND","PACKETS_PER_MINUTE","PACKETS_PER_HOUR","PACKETS_PER_DAY","PACKETS_PER_WEEK","BYTES_PER_SECOND","KBYTES_PER_SECOND","MBYTES_PER_SECOND"]
+                },
+                "burst_unit": {
+                    "type": "string",
+                    "enum": ["PACKETS","BYTES","KBYTES","MBYTES"]
                 },
                 "group_selector": {
                     "type": "string",
@@ -221,6 +226,7 @@
             },
             "allOf": [
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["LIMIT_RATE"] } } } }, { "required": ["group_selector","rate_unit"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["BURST_SIZE"] } } } }, { "required": ["group_selector","burst_unit"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["IP_PROTOCOL"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SOURCE_ADDRESS_TYPE"] } } } }, { "properties": { "op": { "enum": ["==","!="] }, "value": { "enum": ["unspec", "unicast", "local", "broadcast", "anycast", "multicast", "blackhole", "unreachable", "prohibit"] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["DESTINATION_ADDRESS_TYPE"] } } } }, { "properties": { "op": { "enum": ["==","!="] }, "value": { "enum": ["unspec", "unicast", "local", "broadcast", "anycast", "multicast", "blackhole", "unreachable", "prohibit"] } } } ] },
@@ -262,6 +268,9 @@
                 },
                 "policy": {
                     "type": "integer"
+                },
+                "nft_rule_action": {
+                    "type": "string"
                 },
                 "return_action": {
                     "type": "boolean",
