@@ -206,8 +206,8 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": 80,
-                "protocol": 6
+                "port": [80, 443],
+                "protocol": [6]
                 }
             ]
             },
@@ -218,16 +218,22 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": 88,
-                "protocol": 17
+                "port": [88],
+                "protocol": [17, 6]
                 },
                 {
                 "port": 123,
-                "protocol":107
+                "protocol":[
+                    "51",
+                    "107"
+                ]
                 },
                 {
                 "port": 1234,
-                "protocol": 37
+                "protocol": [
+                    "37",
+                    "8"
+                ]
                 }
             ]
             },
@@ -265,12 +271,12 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": 1433,
-                "protocol": 6
+                "port": [1433],
+                "protocol": [6]
                 },
                 {
-                "port": 1434,
-                "protocol": 17
+                "port": [1434],
+                "protocol": [17]
                 }
             ]
             },
@@ -281,8 +287,8 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": 3306,
-                "protocol": 61
+                "port": [3306],
+                "protocol": [6]
                 }
             ]
             },
@@ -639,6 +645,7 @@
                     "1458dc12-a9c2-4d0c-8203-1340c61c2c3b"
                 ],
                 "action": {
+                    "key": "mfw-template-geoipfilter",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "1202b42e-2f21-49e9-b42c-5614e04d0031"
                 }
@@ -654,6 +661,7 @@
                     "8d09ef73-8e5d-4f8b-a4e8-30af1f685273"
                 ],
                 "action": {
+                    "key": "mfw-template-geoipfilter",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "47a8d05d-525a-4284-99a7-5dea4beb1676"
                 }
@@ -680,6 +688,7 @@
                     "32b8ecbe-aceb-4be3-807d-8cb3e82be2ee"
                 ],
                 "action": {
+                    "key": "mfw-template-applicationcontrol",
                     "type": "WAN_POLICY",
                     "policy": "2194a104-dc13-43a9-aaf2-d4a0a196e121"
                 }
@@ -737,6 +746,7 @@
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],
                 "action": {
+                    "key": "mfw-tempalte-threatprevention",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "97c8fc3d-6c3a-4d1d-95e9-1a692e39aee3"
                 }
@@ -751,6 +761,7 @@
                     "4d5e23fa-ee6c-4b82-9b35-247825d50326"
                 ],
                 "action": {
+                    "key": "mfw-tempalte-threatprevention",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "b0981068-a0fa-483e-baa5-945762dd4933"
                 }
@@ -764,6 +775,7 @@
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],
                 "action": {
+                    "key": "mfw-template-webfilter",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "61e6a9f2-8dfb-4e99-823e-5f010f68d3a9"
                 }
@@ -778,6 +790,7 @@
                     "ef062718-ecb5-4592-9502-9b61482ea6a6"
                 ],
                 "action": {
+                    "key": "mfw-template-captiveportal",
                     "type": "SET_CONFIGURATION",
                     "configuration_id": "3e2eaab0-0ccd-4d72-9c61-714e94f68a50"
                 }
