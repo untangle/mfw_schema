@@ -715,8 +715,20 @@
         "policy_manager_service_endpoint": {
             "type": "array",
             "items": {
-                "protocol": "int",
-                "port": "int"
+                "protocol": {
+                    "type": "array",
+                    "items": {
+                        "type": "int",
+                        "description": "protocol number"
+                    }   
+                },
+               "port": {
+                    "type": "array",
+                    "items": {
+                        "type": "int",
+                        "description": "port number"
+                    }   
+                }
             }
         },
         "policy_manager_ipspecifier": {

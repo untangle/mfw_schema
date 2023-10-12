@@ -206,10 +206,10 @@
             "type": "ServiceEndpointObject",
             "items": [
                 {
-                "port": "80",
-                "protocol": [
-                    "6"
-                ]
+                    "port": [80],
+                    "protocol": [
+                        6
+                    ]
                 }
             ]
             },
@@ -220,24 +220,24 @@
             "type": "ServiceEndpointObject",
             "items": [
                 {
-                "port": "88",
+                "port": [88],
                 "protocol": [
-                    "6",
-                    "17"
+                    6,
+                    17
                 ]
                 },
                 {
-                "port": "123",
+                "port": [123],
                 "protocol": [
-                    "51",
-                    "107"
+                    51,
+                    107
                 ]
                 },
                 {
-                "port": "",
+                "port": [],
                 "protocol": [
-                    "37",
-                    "8"
+                    37,
+                    8
                 ]
                 }
             ]
