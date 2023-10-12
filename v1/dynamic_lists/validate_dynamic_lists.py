@@ -5,9 +5,8 @@ import jsonschema
 import os
 import unittest
 from uuid import UUID
-import pathlib
 import referencing
-from urllib.parse import urlsplit
+from v1.schema_utils.util import retrieve_data
 
 """
 TestDynamicLists validates the dynamic_lists schema
@@ -46,27 +45,8 @@ class TestDynamicLists(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        def retrieve_data(uri):
-            """
-            Retrieve data from a specified URI and return it as a referencing.Resource object.
-            This function processes the URI and retrieves data from it.
-            It handleslocal file ('file' scheme) URIs.
-
-            Args:
-            uri: The URI specifying the location of the data to retrieve.
-
-            Returns:
-            referencing.Resource: A Resource object representing the retrieved data.
-            """
-            parsed = urlsplit(uri)
-            if parsed.scheme == "file":
-                parsedpath = current_directory + parsed.path[1::]
-                path = pathlib.Path(parsedpath)
-            contents = json.loads(path.read_text())
-            return referencing.Resource.from_contents(contents)
-
         registry = referencing.Registry(retrieve=retrieve_data)
- 
+
         try:
             validator = jsonschema.Draft6Validator(schema_data, registry=registry)
             validator.validate(cls.json_data)
