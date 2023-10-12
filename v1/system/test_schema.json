@@ -6,7 +6,7 @@
         "system"
     ],
     "properties": {
-        "captiveportal": {
+        "system_settings": {
             "$ref": "file:./system_schema.json#/definitions/system_settings"
         }
     }
