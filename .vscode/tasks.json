@@ -38,6 +38,15 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Test System Schema",
+            "type": "shell",
+            "command": "./validate.py system_schema v1/system/test_schema.json v1/system/test_system_schema.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ],
     "inputs": [
