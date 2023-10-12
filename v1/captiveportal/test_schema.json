@@ -7,7 +7,7 @@
     ],
     "properties": {
         "captiveportal": {
-            "$ref": "file:./captiveportal_schema.json#/definitions/captiveportal_settings"
+            "$ref": "file:./captiveportal_schema.json"
         }
     }
 }

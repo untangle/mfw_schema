@@ -5,6 +5,9 @@ import jsonschema
 import os
 import unittest
 from uuid import UUID
+import pathlib
+import referencing
+from urllib.parse import urlsplit
 
 """
 TestDynamicLists validates the dynamic_lists schema
@@ -43,19 +46,34 @@ class TestDynamicLists(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        # NOTE RefResolver is deprecated, needs to be replaced soon
-        # It also creates a pretty confusing error on jsonschema.validate when you use the wrong schema file, for 
-        # example mfw_schema/v1/schema.json:
-        # <urlopen error [Errno 2] No such file or directory: 
-        # '{code location}/mfw_schema/v1/policy_manager/policy_manager/policy_manager_schema.json'>
-        resolver = jsonschema.RefResolver('file://' + current_directory + '/', None)
+        def retrieve_data(uri):
+            """
+            Retrieve data from a specified URI and return it as a referencing.Resource object.
+            This function processes the URI and retrieves data from it.
+            It handleslocal file ('file' scheme) URIs.
 
+            Args:
+            uri: The URI specifying the location of the data to retrieve.
+
+            Returns:
+            referencing.Resource: A Resource object representing the retrieved data.
+            """
+            parsed = urlsplit(uri)
+            if parsed.scheme == "file":
+                parsedpath = current_directory + parsed.path[1::]
+                path = pathlib.Path(parsedpath)
+            contents = json.loads(path.read_text())
+            return referencing.Resource.from_contents(contents)
+
+        registry = referencing.Registry(retrieve=retrieve_data)
+ 
         try:
-            jsonschema.validate(cls.json_data, schema_data, resolver=resolver)
+            validator = jsonschema.Draft6Validator(schema_data, registry=registry)
+            validator.validate(cls.json_data)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
+
     def test_valid_ids(self):
         """
         Testing that each dynamic lists configuration's id is a valid uuid

@@ -7,7 +7,7 @@
     ],
     "properties": {
         "policy_manager": {
-            "$ref": "file:./policy_manager_schema.json#/definitions/policy_manager_settings"
+            "$ref": "file:./policy_manager_schema.json"
         }
     }
 }
