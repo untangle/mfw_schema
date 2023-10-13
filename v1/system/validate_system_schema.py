@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 
 import json
-import jsonschema
 import os
 import unittest
+from jsonschema.validators import Draft6Validator
+from referencing import Registry
+
+from v1.schema_utils.util import retrieve_data
 
 
 class TestSystemSchema(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT   = "test_system_schema.json"
+    JSON_FILENAME_DEFAULT = "test_system_schema.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
     json_data = {}
     
@@ -37,15 +40,11 @@ class TestSystemSchema(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        # NOTE RefResolver is deprecated, needs to be replaced soon
-        # It also creates a pretty confusing error on jsonschema.validate when you use the wrong schema file, for 
-        # example mfw_schema/v1/schema.json:
-        # <urlopen error [Errno 2] No such file or directory: 
-        # '{code location}/mfw_schema/v1/policy_manager/policy_manager/policy_manager_schema.json'>
-        resolver = jsonschema.RefResolver('file://' + current_directory + '/', None)
+        new_registry = Registry(retrieve=retrieve_data)
 
         try:
-            jsonschema.validate(cls.json_data, schema_data, resolver=resolver)
+            validator = Draft6Validator(schema_data, registry=new_registry)
+            validator.validate(cls.json_data)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
@@ -55,10 +54,19 @@ class TestSystemSchema(unittest.TestCase):
         validates system logging
         """
         system_logging = self.json_data["system"]["logging"]
-        self.assertTrue(system_logging["type"] in ["file", "circular"])
-        if (system_logging["remote"]):
-            self.assertTrue(system_logging.get("ip", False))
-            self.assertTrue(system_logging.get("port", False))
+        self.assertTrue(system_logging["type"] in ["file", "circular"], "Failed due to the invalid logging type")
+        if system_logging["remote"]:
+            self.assertTrue(system_logging.get("ip", False), "Failed due to the absence of a 'ip' field value")
+            self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
+
+    def test_system(self):
+        """
+        validates system
+        """
+        system = self.json_data["system"]
+        self.assertTrue(system.get("hostName", False),  "Failed due to the absence of a 'hostName' field value")
+        self.assertTrue(system.get("domainName", False), "Failed due to the absence of a 'domainName' field value")
+
 
 if __name__ == '__main__':
     unittest.main()
