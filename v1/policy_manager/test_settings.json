@@ -507,7 +507,7 @@
             "type": "mfw-object-condition",
             "items": [
                 {
-                "type": "SERVICE",
+                "type": "SERVICE_ENDPOINT",
                 "op": "in",
                 "object": [
                     "315a3089-2c5a-4bb2-baea-073f0f66ec00"
