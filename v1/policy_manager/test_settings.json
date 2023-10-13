@@ -206,8 +206,10 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": [80, 443],
-                "protocol": [6]
+                    "port": [80],
+                    "protocol": [
+                        6
+                    ]
                 }
             ]
             },
@@ -219,17 +221,20 @@
             "items": [
                 {
                 "port": [88],
-                "protocol": [17, 6]
+                "protocol": [
+                    6,
+                    17
+                ]
                 },
                 {
                 "port": [123],
-                "protocol":[
+                "protocol": [
                     51,
                     107
                 ]
                 },
                 {
-                "port": [1234],
+                "port": [],
                 "protocol": [
                     37,
                     8

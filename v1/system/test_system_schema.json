@@ -1,0 +1,41 @@
+{
+  "system": {
+      "autoBackup": {
+          "dayOfWeek": -1,
+          "enabled": true,
+          "hourOfDay": 2,
+          "minuteOfHour": 16
+      },
+      "autoUpgrade": {
+          "dayOfWeek": 4,
+          "enabled": true,
+          "hourOfDay": 0,
+          "minuteOfHour": 30
+      },
+      "cloud": {
+          "cloudServers": [
+              "cmd.untangle.com"
+          ],
+          "enabled": true,
+          "supportAccessEnabled": true
+      },
+      "domainName": "example.com",
+      "hostName": "mfw",
+      "httpPort": "80",
+      "httpsPort": "443",
+      "logging": {
+          "ip": "1.2.3.4",
+          "port": 123,
+          "remote": true,
+          "size": 456,
+          "type": "file"
+      },
+      "setupWizard": {
+          "completed": true
+      },
+      "timeZone": {
+          "displayName": "UTC",
+          "value": "UTC"
+      }
+  }
+}
