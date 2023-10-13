@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 import json
-import jsonschema
 import os
 import unittest
-import referencing
+from jsonschema.validators import Draft6Validator
+from referencing import Registry
+
 from v1.schema_utils.util import retrieve_data
 
 """
@@ -14,9 +15,11 @@ Unlike other tests like TestPolicyManager, this just validates the schema since 
 """
 class TestCaptiveportal(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT   = "captiveportal_test.json"
+    JSON_FILENAME_DEFAULT = "captiveportal_test.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
-    
+    # class vars, begin uninitialized
+    json_data = ""
+
     @classmethod
     def setUpClass(cls):
         """
@@ -42,10 +45,10 @@ class TestCaptiveportal(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        registry = referencing.Registry(retrieve=retrieve_data)
+        new_registry = Registry(retrieve=retrieve_data)
 
         try:
-            validator = jsonschema.Draft6Validator(schema_data, registry=registry)
+            validator = Draft6Validator(schema_data, registry=new_registry)
             validator.validate(cls.json_data)
         except Exception as e:
             print(e)
@@ -58,6 +61,7 @@ class TestCaptiveportal(unittest.TestCase):
         TODO delete me if testing goes beyond validation
         """
         self.assertTrue(True)
+
 
 if __name__ == '__main__':
     unittest.main()

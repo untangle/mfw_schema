@@ -2,10 +2,11 @@
 
 import copy
 import json
-import jsonschema
 import os
 import unittest
-import referencing
+from jsonschema.validators import Draft6Validator
+from referencing import Registry
+
 from v1.schema_utils.util import retrieve_data
 
 """
@@ -64,10 +65,10 @@ class TestPolicyManager(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        registry = referencing.Registry(retrieve=retrieve_data)
+        new_registry = Registry(retrieve=retrieve_data)
  
         try:
-            validator = jsonschema.Draft6Validator(schema_data, registry=registry)
+            validator = Draft6Validator(schema_data, registry=new_registry)
             validator.validate(cls.json_data)
         except Exception as e:
             print(e)
@@ -593,6 +594,7 @@ class PolicyManagerStringBuilder():
             string: A string representation of a group and its properties
         """
         return ' '.join([prefix, "Group:", group["id"], "\tName:", group["name"], "\tItems:", str(group["items"]), "\tType:", group["type"]])
+
 
 if __name__ == '__main__':
     unittest.main()
