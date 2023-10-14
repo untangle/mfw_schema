@@ -55,7 +55,7 @@
                     "type": "number",
                     "description": "The respective value based on the selection of the PullingUnit"
                 },
-                "ignoreCertCheck": {
+                "skipCertCheck": {
                     "type": "boolean",
                     "description": "Flag to ignore certificate verification of HTTPS requests"
                 }

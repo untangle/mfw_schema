@@ -11,7 +11,7 @@
           "pullingUnit" : "Months",
           "pullingTime" : 2,
           "regexType" : "CSV",
-          "ignoreCertCheck": false
+          "skipCertCheck": false
         },
         { 
           "name": "Internal blocklist",
@@ -22,7 +22,7 @@
           "pullingUnit" : "Days",
           "pullingTime" : 3,
           "regexType" : "TXT",
-          "ignoreCertCheck": false
+          "skipCertCheck": false
         }
       ]
     }
