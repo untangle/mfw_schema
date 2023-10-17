@@ -9,8 +9,7 @@
           "enabled": true,
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
-          "pullingTime" : 2,
-          "regexType" : "CSV"
+          "pullingTime" : 2
         },
         { 
           "name": "Internal blocklist",
@@ -19,8 +18,7 @@
           "enabled": false,
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
-          "pullingTime" : 3,
-          "regexType" : "TXT"
+          "pullingTime" : 3
         }
       ]
     }
