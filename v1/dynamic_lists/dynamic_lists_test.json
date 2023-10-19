@@ -10,7 +10,6 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
           "pullingTime" : 2,
-          "regexType" : "CSV",
           "skipCertCheck": false
         },
         { 
@@ -21,7 +20,6 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
           "pullingTime" : 3,
-          "regexType" : "TXT",
           "skipCertCheck": false
         }
       ]

@@ -43,10 +43,6 @@
                     "type": "string",
                     "description": "Either IP or URL block list type from source"
                 },
-                "regexType": {
-                    "type": "string",
-                    "description": "Tells us type of source block-list input as TXT, CSV or custom regex to parse in list"
-                },
                 "pullingUnit": {
                     "type": "string",
                     "description": "Tells us the interval of fetching whether its Minutes, Hours, Days or Months as a unit"
