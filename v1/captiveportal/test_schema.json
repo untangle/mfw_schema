@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
     "description": "schema for the JSON settings",
     "type": "object",
     "required": [
@@ -7,7 +8,7 @@
     ],
     "properties": {
         "captiveportal": {
-            "$ref": "file:./captiveportal_schema.json"
+            "$ref": "captiveportal_schema.json#/definitions/captiveportal_settings"
         }
     }
 }

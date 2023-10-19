@@ -1,10 +1,9 @@
 {
   "system": {
       "autoBackup": {
-          "dayOfWeek": -1,
           "enabled": true,
           "hourOfDay": 2,
-          "minuteOfHour": 16
+          "minuteOfHour": 120
       },
       "autoUpgrade": {
           "dayOfWeek": 4,
@@ -26,9 +25,8 @@
       "logging": {
           "ip": "1.2.3.4",
           "port": 123,
-          "remote": true,
           "size": 456,
-          "type": "file"
+          "type": "any"
       },
       "setupWizard": {
           "completed": true

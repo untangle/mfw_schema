@@ -3,10 +3,11 @@
 import json
 import os
 import unittest
-from jsonschema.validators import Draft6Validator
-from referencing import Registry
+from pathlib import Path
+import referencing
+import jsonschema
 
-from v1.schema_utils.util import retrieve_data
+from v1.schema_utils.util import ReferenceRetriever
 
 """
 TestCaptiveportal validates the captiveportal schema
@@ -45,11 +46,14 @@ class TestCaptiveportal(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        new_registry = Registry(retrieve=retrieve_data)
+        print("schema_filename ==> ", schema_filename)
+        schema_file = Path(schema_filename)
+        retriever = ReferenceRetriever(schema_file.parent.resolve())
+        resource = referencing.Resource.from_contents(schema_data)
 
         try:
-            validator = Draft6Validator(schema_data, registry=new_registry)
-            validator.validate(cls.json_data)
+            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)  # Add the resource to a new registry
+            jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")

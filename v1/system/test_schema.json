@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
     "description": "schema for the JSON settings",
     "type": "object",
     "required": [
@@ -7,7 +8,7 @@
     ],
     "properties": {
         "system_settings": {
-            "$ref": "file:./system_schema.json"
+            "$ref": "system_schema.json#/definitions/logging"
         }
     }
 }

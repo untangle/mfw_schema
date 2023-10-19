@@ -4,7 +4,7 @@ import json
 import os
 import pathlib
 import referencing
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlparse
 
 
 def retrieve_data(uri):
@@ -30,3 +30,15 @@ def retrieve_data(uri):
         absolute_schema_path = pathlib.Path(parsedpath)
     contents = json.loads(absolute_schema_path.read_text())
     return referencing.Resource.from_contents(contents)
+
+
+class ReferenceRetriever:
+
+    def __init__(self, root_path):
+        self.root_path = root_path
+
+    def retrieve(self, uri):
+        parsed_uri = urlparse(uri)
+        p = pathlib.Path(parsed_uri.path).relative_to("/")
+        with open(self.root_path / p) as f:
+            return referencing.Resource.from_contents(json.load(f))
