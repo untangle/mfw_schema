@@ -71,6 +71,5 @@ class TestDynamicLists(unittest.TestCase):
                 self.fail("Failed due to an invalid ID in dynamic lists: " + id_val)
         self.assertTrue(True)
 
-
 if __name__ == '__main__':
     unittest.main()

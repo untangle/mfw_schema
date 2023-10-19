@@ -599,6 +599,5 @@ class PolicyManagerStringBuilder():
         """
         return ' '.join([prefix, "Group:", group["id"], "\tName:", group["name"], "\tItems:", str(group["items"]), "\tType:", group["type"]])
 
-
 if __name__ == '__main__':
     unittest.main()

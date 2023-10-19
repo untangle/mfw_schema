@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 
 import json
-import os
 import pathlib
 import referencing
-from urllib.parse import urlsplit, urlparse
-
+from urllib.parse import urlparse
 
 class ReferenceRetriever:
-
     def __init__(self, root_path):
         self.root_path = root_path
 

@@ -71,6 +71,5 @@ class TestSystemSchema(unittest.TestCase):
         self.assertTrue(system.get("hostName", False),  "Failed due to the absence of a 'hostName' field value")
         self.assertTrue(system.get("domainName", False), "Failed due to the absence of a 'domainName' field value")
 
-
 if __name__ == '__main__':
     unittest.main()
