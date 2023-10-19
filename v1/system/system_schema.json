@@ -10,6 +10,8 @@
             "properties": {
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
+                "httpPort": {"type": "string"},
+                "httpsPort": {"type": "string"},
                 "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
