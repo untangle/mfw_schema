@@ -10,7 +10,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
           "pullingTime" : 2,
-          "regexType" : "CSV"
+          "regexType" : "CSV",
+          "skipCertCheck": false
         },
         { 
           "name": "Internal blocklist",
@@ -20,7 +21,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
           "pullingTime" : 3,
-          "regexType" : "TXT"
+          "regexType" : "TXT",
+          "skipCertCheck": false
         }
       ]
     }
