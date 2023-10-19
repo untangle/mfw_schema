@@ -9,7 +9,8 @@
           "enabled": true,
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
-          "pullingTime" : 2
+          "pullingTime" : 2,
+          "skipCertCheck": false
         },
         { 
           "name": "Internal blocklist",
@@ -18,7 +19,8 @@
           "enabled": false,
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
-          "pullingTime" : 3
+          "pullingTime" : 3,
+          "skipCertCheck": false
         }
       ]
     }
