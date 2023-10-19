@@ -22,9 +22,6 @@
         "dynamic_lists_configuration": {
             "type": "object",
             "description": "Dynamic block list configurations",
-            "required": [
-                "id", "enabled"
-            ],
             "additionalProperties": false,
             "properties": {
                 "enabled": {

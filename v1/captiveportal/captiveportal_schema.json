@@ -5,9 +5,6 @@
         "captiveportal_settings": {
             "type": "object",
             "description": "Captiveportal settings",
-                "required": [
-                    "enabled", "acceptText"
-                ],
             "properties": {
                 "enabled": {
                     "type": "boolean"
@@ -57,9 +54,6 @@
         },
         "captiveportal_rules": {
             "type": "object",
-            "required": [
-                    "description"
-                ],
             "properties": {
                 "description": {
                     "type": "string"

@@ -7,8 +7,8 @@
         "system"
     ],
     "properties": {
-        "system_settings": {
-            "$ref": "system_schema.json#/definitions/logging"
+        "system": {
+            "$ref": "system_schema.json#/definitions/system_settings"
         }
     }
 }

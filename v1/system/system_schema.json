@@ -8,22 +8,19 @@
             "required": ["hostName","domainName"],
             "additionalProperties": false,
             "properties": {
-                "logging": { "$ref": "#/definitions/logging" },
                 "hostName": {"type": "string"},
                 "domainName": {"type": "string"},
                 "cloud": { "$ref": "#/definitions/cloud_settings" },
                 "timeZone": { "$ref": "#/definitions/time_zone_settings" },
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
                 "autoUpgrade": { "$ref": "#/definitions/auto_settings" },
-                "autoBackup": { "$ref": "#/definitions/auto_settings" }
+                "autoBackup": { "$ref": "#/definitions/auto_settings" },
+                "logging": { "$ref": "#/definitions/logging" }
             }
         },
         "logging": {
             "type": "object",
             "description": "System Logging",
-            "required": [
-               "remote"
-            ],
             "properties": {
                 "type": {
                     "description": "Type of log file",
@@ -103,7 +100,6 @@
         "auto_settings": {
             "type": "object",
             "description": "The timezone settings",
-            "required": ["minuteOfHour"],
             "properties": {
                 "enabled": {
                     "description": "Enable auto schedule",

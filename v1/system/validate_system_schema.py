@@ -41,35 +41,35 @@ class TestSystemSchema(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        print("schema_filename ==> ", schema_filename)
         schema_file = Path(schema_filename)
         retriever = ReferenceRetriever(schema_file.parent.resolve())
         resource = referencing.Resource.from_contents(schema_data)
 
         try:
-            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)  # Add the resource to a new registry
+            # Add the resource to a new registry
+            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)
             jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
+
     def test_system_logging(self):
         """
         validates system logging
         """
-        # system_logging = self.json_data["system"]["logging"]
-        # self.assertTrue(system_logging["type"] in ["file", "circular"], "Failed due to the invalid logging type")
-        # if system_logging["remote"]:
-        #     self.assertTrue(system_logging.get("ip", False), "Failed due to the absence of a 'ip' field value")
-        #     self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
+        system_logging = self.json_data["system"]["logging"]
+        self.assertTrue(system_logging["type"] in ["file", "circular"], "Failed due to the invalid logging type")
+        if system_logging["remote"]:
+            self.assertTrue(system_logging.get("ip", False), "Failed due to the absence of a 'ip' field value")
+            self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
 
-    # def test_system(self):
-    #     """
-    #     validates system
-    #     """
-    #     system = self.json_data["system"]
-    #     self.assertTrue(system.get("hostName", False),  "Failed due to the absence of a 'hostName' field value")
-    #     self.assertTrue(system.get("domainName", False), "Failed due to the absence of a 'domainName' field value")
+    def test_system(self):
+        """
+        validates system
+        """
+        system = self.json_data["system"]
+        self.assertTrue(system.get("hostName", False),  "Failed due to the absence of a 'hostName' field value")
+        self.assertTrue(system.get("domainName", False), "Failed due to the absence of a 'domainName' field value")
 
 
 if __name__ == '__main__':

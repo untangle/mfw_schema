@@ -46,13 +46,13 @@ class TestCaptiveportal(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        print("schema_filename ==> ", schema_filename)
         schema_file = Path(schema_filename)
         retriever = ReferenceRetriever(schema_file.parent.resolve())
         resource = referencing.Resource.from_contents(schema_data)
 
         try:
-            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)  # Add the resource to a new registry
+            # Add the resource to a new registry
+            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)
             jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
         except Exception as e:
             print(e)

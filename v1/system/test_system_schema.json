@@ -3,7 +3,7 @@
       "autoBackup": {
           "enabled": true,
           "hourOfDay": 2,
-          "minuteOfHour": 120
+          "minuteOfHour": 16
       },
       "autoUpgrade": {
           "dayOfWeek": 4,
@@ -20,13 +20,12 @@
       },
       "domainName": "example.com",
       "hostName": "mfw",
-      "httpPort": "80",
-      "httpsPort": "443",
       "logging": {
           "ip": "1.2.3.4",
           "port": 123,
           "size": 456,
-          "type": "any"
+          "remote": true,
+          "type": "file"
       },
       "setupWizard": {
           "completed": true
