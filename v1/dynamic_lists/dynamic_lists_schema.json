@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:dynamic_lists_schema.json",
     "definitions": {
         "dynamic_lists_settings": {
             "type": "object",

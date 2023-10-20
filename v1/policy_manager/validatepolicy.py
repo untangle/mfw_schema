@@ -2,9 +2,13 @@
 
 import copy
 import json
-import jsonschema
 import os
 import unittest
+from pathlib import Path
+import referencing
+import jsonschema
+
+from v1.schema_utils.util import ReferenceRetriever
 
 """
 TestPolicyManager tests all parts of the policy manager schema
@@ -62,15 +66,14 @@ class TestPolicyManager(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        # NOTE RefResolver is deprecated, needs to be replaced soon
-        # It also creates a pretty confusing error on jsonschema.validate when you use the wrong schema file, for 
-        # example mfw_schema/v1/schema.json:
-        # <urlopen error [Errno 2] No such file or directory: 
-        # '{code location}/mfw_schema/v1/policy_manager/policy_manager/policy_manager_schema.json'>
-        resolver = jsonschema.RefResolver('file://' + current_directory + '/', None)
+        schema_file = Path(schema_filename)
+        retriever = ReferenceRetriever(schema_file.parent.resolve())
+        resource = referencing.Resource.from_contents(schema_data)
 
         try:
-            jsonschema.validate(cls.json_data, schema_data, resolver=resolver)
+            # Add the resource to a new registry
+            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)  
+            jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")

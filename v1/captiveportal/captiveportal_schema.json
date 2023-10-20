@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:captiveportal_schema.json",
     "definitions": {
         "captiveportal_settings": {
             "type": "object",

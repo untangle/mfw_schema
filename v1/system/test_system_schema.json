@@ -1,7 +1,7 @@
 {
   "system": {
       "autoBackup": {
-          "dayOfWeek": -1,
+          "dayOfWeek": 1,
           "enabled": true,
           "hourOfDay": 2,
           "minuteOfHour": 16

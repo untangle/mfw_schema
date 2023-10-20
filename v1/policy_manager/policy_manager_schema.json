@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+     "$id": "file:policy_manager_schema.json",
     "definitions": {
         "policy_manager_settings": {
             "required": ["configurations", "objects", "object_groups", "conditions", "rules", "policies"],
