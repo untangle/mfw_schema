@@ -236,7 +236,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["GeoipFilterRuleObject"]
+                            "enum": ["mfw-rule-geoip"]
                         },
                         "conditions": {
                             "type": "array",
@@ -266,7 +266,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["ApplicationControlRuleObject"]
+                            "enum": ["mfw-rule-applicationcontrol"]
                         },
                         "conditions": {
                             "type": "array",
@@ -296,7 +296,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["WanPolicyRuleObject"]
+                            "enum": ["mfw-rule-wanpolicy"]
                         },
                         "conditions": {
                             "type": "array",
@@ -326,7 +326,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["SecurityRuleObject"]
+                            "enum": ["mfw-rule-security"]
                         },
                         "conditions": {
                             "type": "array",
@@ -383,7 +383,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["PortForwardRuleObject"]
+                            "enum": ["mfw-rule-portforward"]
                         },
                         "conditions": {
                             "type": "array",
@@ -416,7 +416,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["ThreatPreventionRuleObject"]
+                            "enum": ["mfw-rule-threatprevention"]
                         },
                         "conditions": {
                             "type": "array",
@@ -446,7 +446,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["WebFilterRuleObject"]
+                            "enum": ["mfw-rule-webfilter"]
                         },
                         "conditions": {
                             "type": "array",
@@ -476,7 +476,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["CaptivePortalRuleObject"]
+                            "enum": ["mfw-rule-captiveportal"]
                         },
                         "conditions": {
                             "type": "array",
@@ -506,7 +506,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["ShapingRuleObject"]
+                            "enum": ["mfw-rule-shaping"]
                         },
                         "conditions": {
                             "type": "array",
@@ -536,7 +536,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["NatRuleObject"]
+                            "enum": ["mfw-rule-nat"]
                         },
                         "conditions": {
                             "type": "array",
