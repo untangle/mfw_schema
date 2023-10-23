@@ -63,6 +63,7 @@ class TestSystemSchema(unittest.TestCase):
         if (system_logging["remote"]):
             self.assertTrue(system_logging.get("ip", False))
             self.assertTrue(system_logging.get("port", False))
+
     def test_system(self):
         """
         validates system
