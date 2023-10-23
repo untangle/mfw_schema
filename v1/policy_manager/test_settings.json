@@ -776,6 +776,7 @@
                 "name": "Default WF",
                 "description": "",
                 "enabled": true,
+                "type": "mfw-rule-webfilter",
                 "conditions": [
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],
@@ -847,7 +848,6 @@
                 "202d3c19-9308-4cd3-981d-b5176a99b1f3",
                 "c561b522-87e9-45d9-8a2c-eb5a53e45336",
                 "458e86e8-6032-4902-9e03-2895c007f122",
-                "6cd7a34d-b8b5-46b4-83e0-3d2a3e718830",
                 "e8298f9c-d3b3-4b48-b250-f3f321592846",
                 "eb2e370e-e9fc-4cd7-8a69-f7a5eb1794ba",
                 "eeb33f34-65fb-4b17-8f87-9cc65fe7d4fd",

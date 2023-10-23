@@ -1,14 +1,18 @@
 #!/usr/bin/python3
 
 import json
-import jsonschema
 import os
 import unittest
+from pathlib import Path
+import referencing
+import jsonschema
+
+from v1.schema_utils.util import ReferenceRetriever
 
 
 class TestSystemSchema(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT   = "test_system_schema.json"
+    JSON_FILENAME_DEFAULT = "test_system_schema.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
     json_data = {}
     
@@ -37,19 +41,18 @@ class TestSystemSchema(unittest.TestCase):
         with open(schema_filename, "r") as schema_fp:
             schema_data = json.load(schema_fp)
 
-        # NOTE RefResolver is deprecated, needs to be replaced soon
-        # It also creates a pretty confusing error on jsonschema.validate when you use the wrong schema file, for 
-        # example mfw_schema/v1/schema.json:
-        # <urlopen error [Errno 2] No such file or directory: 
-        # '{code location}/mfw_schema/v1/policy_manager/policy_manager/policy_manager_schema.json'>
-        resolver = jsonschema.RefResolver('file://' + current_directory + '/', None)
+        schema_file = Path(schema_filename)
+        retriever = ReferenceRetriever(schema_file.parent.resolve())
+        resource = referencing.Resource.from_contents(schema_data)
 
         try:
-            jsonschema.validate(cls.json_data, schema_data, resolver=resolver)
+            # Add the resource to a new registry
+            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)
+            jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
         except Exception as e:
             print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
+
     def test_system_logging(self):
         """
         validates system logging
@@ -60,6 +63,14 @@ class TestSystemSchema(unittest.TestCase):
         if (system_logging["remote"]):
             self.assertTrue(system_logging.get("ip", False))
             self.assertTrue(system_logging.get("port", False))
+    def test_system(self):
+        """
+        validates system
+        """
+        system = self.json_data["system"]
+        self.assertTrue(system.get("hostName", False),  "Failed due to the absence of a 'hostName' field value")
+        self.assertTrue(system.get("domainName", False), "Failed due to the absence of a 'domainName' field value")
+
 
 if __name__ == '__main__':
     unittest.main()
