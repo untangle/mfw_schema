@@ -63,6 +63,7 @@ class TestSystemSchema(unittest.TestCase):
         if system_logging["remote"]:
             self.assertTrue(system_logging.get("ip", False), "Failed due to the absence of a 'ip' field value")
             self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
+
     def test_system(self):
         """
         validates system
