@@ -56,6 +56,7 @@ class TestSystemSchema(unittest.TestCase):
         """
         system_logging = self.json_data["system"]["logging"]
         self.assertTrue(system_logging["type"] in ["file", "circular"])
+        self.assertTrue(system_logging["protocol"] in ["tcp", "udp"])
         if (system_logging["remote"]):
             self.assertTrue(system_logging.get("ip", False))
             self.assertTrue(system_logging.get("port", False))

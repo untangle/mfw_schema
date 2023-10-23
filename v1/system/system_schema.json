@@ -44,6 +44,14 @@
                 "port": {
                     "description": "Port of remote log",
                     "type": "integer"
+                },
+                "protocol": {
+                    "description": "Protocol for remote logging (either tcp/udp)",
+                    "type": "string"
+                },
+                "prefix": {
+                    "description": "Logging Prefix",
+                    "type": "string"
                 }
             }
         },
