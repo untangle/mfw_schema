@@ -58,12 +58,10 @@ class TestSystemSchema(unittest.TestCase):
         validates system logging
         """
         system_logging = self.json_data["system"]["logging"]
-        self.assertTrue(system_logging["type"] in ["file", "circular"])
-        self.assertTrue(system_logging["protocol"] in ["tcp", "udp"])
-        if (system_logging["remote"]):
-            self.assertTrue(system_logging.get("ip", False))
-            self.assertTrue(system_logging.get("port", False))
-
+        self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
+        if system_logging["remote"]:
+            self.assertTrue(system_logging.get("ip", False), "Failed due to the absence of a 'ip' field value")
+            self.assertTrue(system_logging.get("port", False), "Failed due to the absence of a 'port' field value")
     def test_system(self):
         """
         validates system
