@@ -206,7 +206,7 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                    "port": [80],
+                    "port": ["80"],
                     "protocol": [
                         6
                     ]
@@ -220,14 +220,14 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": [88],
+                "port": ["88"],
                 "protocol": [
                     6,
                     17
                 ]
                 },
                 {
-                "port": [123],
+                "port": ["123-321"],
                 "protocol": [
                     51,
                     107
@@ -276,11 +276,11 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": [1433],
+                "port": ["1433"],
                 "protocol": [6]
                 },
                 {
-                "port": [1434],
+                "port": ["1434"],
                 "protocol": [17]
                 }
             ]
@@ -292,7 +292,7 @@
             "type": "mfw-object-service",
             "items": [
                 {
-                "port": [3306],
+                "port": ["3306"],
                 "protocol": [6]
                 }
             ]
