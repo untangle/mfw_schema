@@ -167,6 +167,8 @@
                         "SERVER_ADDRESS", 
                         "SERVER_PORT", 
                         "SERVICE_ENDPOINT",
+                        "SERVICE_ENDPOINT_CLIENT",
+                        "SERVICE_ENDPOINT_SERVER",
                         "SOURCE_ADDRESS", 
                         "PROTOCOL_TYPE",
                         "TIME_OF_DAY",
