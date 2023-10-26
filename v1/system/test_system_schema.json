@@ -28,7 +28,9 @@
           "port": 123,
           "remote": true,
           "size": 456,
-          "type": "file"
+          "type": "file",
+          "prefix": "logPrefix-",
+          "protocol": "tcp"
       },
       "setupWizard": {
           "completed": true
