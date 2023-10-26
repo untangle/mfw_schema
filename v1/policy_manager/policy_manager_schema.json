@@ -444,10 +444,6 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "type": {
-                            "type": "string",
-                            "enum": ["policy_manager"]
-                        },
                         "conditions": {
                             "type": "array",
                             "items": {
