@@ -776,7 +776,7 @@
                 "name": "Default WF",
                 "description": "",
                 "enabled": true,
-                "type": "mfw-rule-webfilter",
+                "type": "policy_manager",
                 "conditions": [
                     "a8181213-3836-47e5-a0dc-111b2e56a16c"
                 ],

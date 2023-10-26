@@ -446,7 +446,7 @@
                         },
                         "type": {
                             "type": "string",
-                            "enum": ["mfw-rule-webfilter"]
+                            "enum": ["policy_manager"]
                         },
                         "conditions": {
                             "type": "array",
