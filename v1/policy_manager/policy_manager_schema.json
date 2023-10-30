@@ -726,8 +726,9 @@
                "port": {
                     "type": "array",
                     "items": {
-                        "type": "int",
-                        "description": "port number"
+                        "portspecifier": {
+                            "$ref": "#/definitions/policy_manager_portspecifier"
+                            }
                     }   
                 }
             }
@@ -737,6 +738,12 @@
                 "ip",
                 "cidr",
                 "iprange"
+            ]
+        },
+        "policy_manager_portspecifier": {
+            "anyof": [
+                "port",
+                "portrange"
             ]
         }
     }
