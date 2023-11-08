@@ -172,7 +172,10 @@
                         "SOURCE_ADDRESS", 
                         "PROTOCOL_TYPE",
                         "TIME_OF_DAY",
-                        "VLAN_ID"
+                        "VLAN_ID",
+                        "APPLICATION",
+                        "CLIENT_APPLICATION",
+                        "SERVER_APPLICATION"
                     ]
                 },
                 "op": {
