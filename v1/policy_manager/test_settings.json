@@ -162,8 +162,7 @@
                     "tosText": "Some terms",
                     "welcomeText": "Captive Portal",
                     "logo": {
-                    "imageName": "logo.jpg",
-                    "imageData": "data:image/jpeg;base64... (15415 total length)"
+                    "imageName": "logo.jpg"
                     },
                     "timeoutValue": "12",
                     "timeoutPeriod": "h"
