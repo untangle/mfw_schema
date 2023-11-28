@@ -10,7 +10,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
           "pullingTime" : 2,
-          "skipCertCheck": false
+          "skipCertCheck": false,
+          "parsingMethod": "FIRST_IP"
         },
         { 
           "name": "Internal blocklist",
@@ -20,7 +21,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
           "pullingTime" : 3,
-          "skipCertCheck": false
+          "skipCertCheck": false,
+          "parsingMethod": "EVERY_IP"
         }
       ]
     }
