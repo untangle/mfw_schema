@@ -29,9 +29,6 @@
                     "properties": {
                         "imageName": {
                             "type": "string"
-                        },
-                        "imageData": {
-                            "type": "string"
                         }
                     }
                 },

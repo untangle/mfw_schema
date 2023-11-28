@@ -4,7 +4,6 @@
         "acceptText": "I agree",
         "enabled": true,
         "logo": {
-            "imageData": "",
             "imageName": ""
         },
         "messageHeading": "Guest Access Notice",
