@@ -59,10 +59,10 @@ class TestTrackSchema(unittest.TestCase):
 		"""
 		track_objects = self.json_data["track"]
 
-	for track_object in track_objects:
-		self.assertTrue(track_object["name"] in ["LAN0", "WAN0"], "Failed due to an invalid track object name")
-		self.assertTrue(track_object["description"], "Failed due to an empty description")
-		self.assertTrue(track_object["interfaceId"], "Failed due to an empty interfaceId")
+		for track_object in track_objects:
+			self.assertTrue(track_object["name"] in ["LAN0", "WAN0"], "Failed due to an invalid track object name")
+			self.assertTrue(track_object["description"], "Failed due to an empty description")
+			self.assertTrue(track_object["interfaceId"], "Failed due to an empty interfaceId")
 
 if __name__ == '__main__':
 	unittest.main()
