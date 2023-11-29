@@ -58,8 +58,7 @@
                 },
                 "parsingMethod": {
                     "type": "string",
-                    "enum": ["FIRST_IP", "EVERY_IP"],
-                    "description": "The parsing method for a passed IP list"
+                    "description": "The parsing method for a passed IP list. Stored as a regular expression."
                 }
             }
         }
