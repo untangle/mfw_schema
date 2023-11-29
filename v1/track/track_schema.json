@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:track_schema.json",
+    "definitions": {
+        "track_settings": {
+            "description": "Track entries",
+            "type": "array",
+            "items": { "$ref": "#/definitions/track_item" }
+        },
+        "track_item": {
+            "type": "object",
+            "description": "Track definition object",
+            "required": ["name", "interfaceId"],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Tracked object name"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the Tracking object"
+                },
+                "interfaceId": {
+                    "type": "number",
+                    "description": "The interface ID to add the track to"
+                }
+            }
+        }
+    }
+}
