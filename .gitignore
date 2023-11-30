@@ -2,3 +2,4 @@ v1/policy_manager/__pycache__/validatepolicy.cpython-310.pyc
 v1/captiveportal/__pycache__/validate_captiveportal.cpython-310.pyc
 v1/dynamic_lists/__pycache__/validate_dynamic_lists.cpython-310.pyc
 v1/system/__pycache__/validate_system_schema.cpython-310.pyc
+v1/schema_utils/__pycache__/util.cpython-310.pyc
