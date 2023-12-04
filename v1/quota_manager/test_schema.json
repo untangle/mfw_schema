@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "quota_manager"
+    ],
+    "properties": {
+        "quota_manager": {
+            "$ref": "quota_manager_schema.json#/definitions/quota_manager_settings"
+        }
+    }
+}
+
