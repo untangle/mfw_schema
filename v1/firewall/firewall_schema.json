@@ -194,6 +194,7 @@
                              "CERT_ISSUER_PC",
                              "CT_STATE",
                              "LIMIT_RATE",
+                             "LIMIT_EXCEED_ACTION",
                              "BURST_SIZE"
                             ]
                 },
@@ -226,6 +227,7 @@
             },
             "allOf": [
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["LIMIT_RATE"] } } } }, { "required": ["group_selector","rate_unit"] } ] },
+                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["LIMIT_EXCEED_ACTION"] } } } }, { "required": ["group_selector","rate_unit"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["BURST_SIZE"] } } } }, { "required": ["group_selector","burst_unit"] } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["IP_PROTOCOL"] } } } }, { "properties": { "op": { "enum": ["==","!="] } } } ] },
                 { "anyOf": [ { "not": { "properties": { "type": { "enum": ["SOURCE_ADDRESS_TYPE"] } } } }, { "properties": { "op": { "enum": ["==","!="] }, "value": { "enum": ["unspec", "unicast", "local", "broadcast", "anycast", "multicast", "blackhole", "unreachable", "prohibit"] } } } ] },
@@ -244,7 +246,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_POLICY"]
+                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","LIMIT_EXCEED_ACTION","WAN_POLICY"]
                 },
                 "chain": {
                     "type": "string"
@@ -261,7 +263,7 @@
                 "priority": {
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 4
+                    "maximum": 21
                 },
                 "destination": {
                     "type": "integer"
@@ -269,7 +271,7 @@
                 "policy": {
                     "type": "integer"
                 },
-                "nft_rule_action": {
+                "limit_exceed_action": {
                     "type": "string"
                 },
                 "return_action": {
