@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 
-import unittest
 import copy
 import json
 import os
+import unittest
 
 from pathlib import Path
-from v1.schema_utils.util import ReferenceRetriever
 
 import referencing
 import jsonschema
+
+from v1.schema_utils.util import ReferenceRetriever
 
 # The json schema policy fields
 ID_FIELD = "id"
@@ -22,7 +23,6 @@ ITEMS_FIELD = "items"
 NAME_FIELD = "name"
 OBJECT_FIELD = "object"
 OP_FIELD = "op"
-ORPHANS_FIELD = "orphans"
 POLICY_FIELD = "policy"
 RULES_FIELD = "rules"
 TYPE_FIELD = "type"
@@ -49,15 +49,8 @@ class TestPolicyManager(unittest.TestCase):
     json_condition_objs = ""
     json_condition_groups = ""
     json_policies       = ""
-    warning_dict = {
-        "configurations":    {},
-        "condition_objects": {},
-        "condition_groups":  {},
-        "objects":           {},
-        "object_groups":     {},
-        "policies":          {},
-        "rules":             {}
-    }
+    warning_dict = {}
+    
     
     @classmethod
     def setUpClass(cls):
@@ -133,9 +126,9 @@ class TestPolicyManager(unittest.TestCase):
         """
         for possible_orphan in child_ids:
             if possible_orphan not in parent_ids:
-                if ORPHANS_FIELD not in self.warning_dict[key]:
-                    self.warning_dict[key][ORPHANS_FIELD] = []
-                self.warning_dict[key][ORPHANS_FIELD] += [possible_orphan]
+                if key not in self.warning_dict:
+                    self.warning_dict[key] = []
+                self.warning_dict[key] += [possible_orphan]
                 
     def get_condition_ids_referenced_in_policies(self):
         """
@@ -407,7 +400,7 @@ Returns:
 
 
 class PolicyManagerStringBuilder():
-    def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, warnings_dict):
+    def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, orphan_warnings):
         """
         Initialize the object with the dictionaries to be printed, grabbed directly from the .json
         # NOTE spacing is done here with \t characters. However, the same can be done more cleanly with built-in Python
@@ -428,7 +421,7 @@ class PolicyManagerStringBuilder():
         self.objects = objects
         self.object_groups = object_groups
         self.rules = rules
-        self.warnings_dict = warnings_dict
+        self.orphans_warnings = orphan_warnings
         
     def buildAllPoliciesString(self, prefix='', getNestedInfo=True, getWarnings=True):
         """
@@ -448,9 +441,8 @@ class PolicyManagerStringBuilder():
         for policy in self.policies:
             policies_arr.append(self.buildPolicyString(policy, prefix=prefix, getNestedInfo=getNestedInfo))
         if getWarnings:
-            for obj, warnings in self.warnings_dict.items():
-                if ORPHANS_FIELD in warnings:
-                    policies_arr.append(' '.join(["WARNING: Orphans found in", obj, ":", str(warnings[ORPHANS_FIELD])]))
+            for obj, warnings in self.orphans_warnings.items():
+                    policies_arr.append(' '.join(["WARNING: Orphans found in", obj, ":", str(warnings)]))
         return '\n'.join(policies_arr)
             
     def buildPolicyString(self, policy, prefix='', getNestedInfo=True):
