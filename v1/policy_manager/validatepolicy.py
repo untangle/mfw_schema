@@ -16,17 +16,24 @@ from v1.schema_utils.util import ReferenceRetriever
 ID_FIELD = "id"
 ACTION_FIELD = "action"
 CONDITIONS_FIELD = "conditions"
+CONDITION_GROUPS_FIELD = "condition_groups"
+CONFIGURATIONS_FIELD = "configurations"
 CONFIGURATION_ID_FIELD = "configuration_id"
 DESCRIPTION_FIELD = "description"
 ENABLED_FIELD = "enabled"
 ITEMS_FIELD = "items"
 NAME_FIELD = "name"
+OBJECTS_FIELD = "objects"
+OBJECT_GROUPS_FIELD = "object_groups"
 OBJECT_FIELD = "object"
 OP_FIELD = "op"
+POLICY_MANAGER_FIELD = "policy_manager"
 POLICY_FIELD = "policy"
+POLICIES_FIELD = "policies"
 RULES_FIELD = "rules"
 TYPE_FIELD = "type"
 VALUE_FIELD = "value"
+
 
 """
 TestPolicyManager tests all parts of the policy manager schema
@@ -104,14 +111,14 @@ class TestPolicyManager(unittest.TestCase):
         Copies json_data into variables, both before each test and as an initialization
         """
         if cls.json_data:
-            cls.json_policy_manager = copy.deepcopy(cls.json_data["policy_manager"])
-            cls.json_configurations = copy.deepcopy(cls.json_policy_manager["configurations"])
-            cls.json_objects        = copy.deepcopy(cls.json_policy_manager["objects"])
-            cls.json_object_groups  = copy.deepcopy(cls.json_policy_manager["object_groups"])
-            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager["conditions"])
-            cls.json_condition_groups = copy.deepcopy(cls.json_policy_manager["condition_groups"])
-            cls.json_rules          = copy.deepcopy(cls.json_policy_manager["rules"])
-            cls.json_policies       = copy.deepcopy(cls.json_policy_manager["policies"])
+            cls.json_policy_manager = copy.deepcopy(cls.json_data[POLICY_MANAGER_FIELD])
+            cls.json_configurations = copy.deepcopy(cls.json_policy_manager[CONFIGURATIONS_FIELD])
+            cls.json_objects        = copy.deepcopy(cls.json_policy_manager[OBJECTS_FIELD])
+            cls.json_object_groups  = copy.deepcopy(cls.json_policy_manager[OBJECT_GROUPS_FIELD])
+            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager[CONDITIONS_FIELD])
+            cls.json_condition_groups = copy.deepcopy(cls.json_policy_manager[CONDITION_GROUPS_FIELD])
+            cls.json_rules          = copy.deepcopy(cls.json_policy_manager[RULES_FIELD])
+            cls.json_policies       = copy.deepcopy(cls.json_policy_manager[POLICIES_FIELD])
             
     # ~~~ HELPER METHODS
 
@@ -300,7 +307,7 @@ class TestPolicyManager(unittest.TestCase):
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between rulesand configurations.")
         
         # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_configurations, ids_in_rules, "configurations")
+        self.warnings_add_orphan(ids_in_configurations, ids_in_rules, CONFIGURATIONS_FIELD)
         
     def test_object_ids_in_condition_objs_or_groups(self):
         """
@@ -336,7 +343,7 @@ class TestPolicyManager(unittest.TestCase):
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and objects")
         
         # orphans the other way around are stored as warnings and printed late
-        self.warnings_add_orphan(ids_in_objects, ids_referenced, "objects")
+        self.warnings_add_orphan(ids_in_objects, ids_referenced, OBJECTS_FIELD)
         
     def test_group_types(self):
         """
