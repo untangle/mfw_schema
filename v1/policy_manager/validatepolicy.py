@@ -66,7 +66,7 @@ class TestPolicyManager(unittest.TestCase):
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
-            raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")            
+            raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
         
         # Sets class variables in case they need to be accessed after initialization, but before tests
         cls.refresh_jsons()
