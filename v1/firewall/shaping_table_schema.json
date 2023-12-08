@@ -24,7 +24,7 @@
                                                             { "properties": {
                                                                 "type": {
                                                                     "type": "string",
-                                                                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","DROP","SET_PRIORITY"]
+                                                                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","DROP","SET_PRIORITY","LIMIT_EXCEED_ACTION"]
                                                                 }
                                                             }}]
                                                     }
