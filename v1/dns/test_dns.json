@@ -1,0 +1,18 @@
+{
+   "dns": {
+      "localServers": [
+         {
+            "localServer": "192.168.1.1",
+            "description": "local",
+            "domain": "local"
+         }
+      ],
+      "staticEntries": [
+         {
+            "address": "192.168.1.2",
+            "description": "static",
+            "name": "static"
+         }
+      ]
+   }
+}

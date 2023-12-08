@@ -1,0 +1,8 @@
+{
+   "application_control": {
+      "enabled": true,
+      "actions": [],
+      "cloud_classification": true,
+      "custom_rules": []
+   }
+}

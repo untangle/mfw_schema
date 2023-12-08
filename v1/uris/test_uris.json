@@ -1,0 +1,14 @@
+{
+   "uris": {
+    "uriTranslations": [
+        {
+            "host": "example.com",
+            "uri": "/test"
+        },
+        {
+            "host": "test.com",
+            "uri": "/main"
+        }
+    ]
+   }
+}

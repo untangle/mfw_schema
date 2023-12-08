@@ -1,0 +1,12 @@
+{
+   "discovery": {
+      "enabled": true,
+      "plugins": [
+         {
+            "autoInterval": 1,
+            "enabled": true,
+            "type": "test"
+         }
+      ]
+   }
+}

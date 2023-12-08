@@ -1,0 +1,15 @@
+{
+   "accounts": {
+      "credentials": [
+         {
+            "authorizedKeys": "1",
+            "email": "test@test.com",
+            "passwordCleartext": "test",
+            "passwordHashMD5": "",
+            "passwordHashSHA256": "",
+            "passwordHashSHA512": "",
+            "username": "test"
+         }
+      ]
+   } 
+}

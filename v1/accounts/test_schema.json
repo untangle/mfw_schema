@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "accounts"
+    ],
+    "properties": {
+        "accounts": {
+            "$ref": "accounts_schema.json#/definitions/accounts_settings"
+        }
+    }
+}
