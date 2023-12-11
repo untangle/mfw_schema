@@ -22,6 +22,9 @@ class TestWanSchema(unittest.TestCase):
         current_directory = os.path.dirname(os.path.realpath(__file__))       
         schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
         
+        firewall_schema_path = os.path.abspath(os.path.join(current_directory, "../firewall/firewall_schema.json"))
+        schema_validator.addExternalRef(firewall_schema_path, "file:../firewall/firewall_schema.json")
+        
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
