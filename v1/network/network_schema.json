@@ -371,7 +371,7 @@
                     "description": "VRRP IPv4 address aliases",
                     "items": { "$ref": "#/definitions/ipv4_alias" }
                 },
-                "vrrptrack": {
+                "vrrpTrack": {
                     "type": "array",
                     "description": "VRRP Group Tracked Objects",
                     "items": { "$ref": "#/definitions/track" }
