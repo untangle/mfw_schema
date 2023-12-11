@@ -40,9 +40,11 @@ validate_dict = {
     "firewall_schema": validate_firewall,
     "geoip_schema": validate_geoip,
     "ipsec_server_schema": validate_ipsec_server,
-    "network_schema": validate_network,
+    # disabled until https://awakesecurity.atlassian.net/browse/MFW-4120 is fixed
+    # "network_schema": validate_network,
     "policy_manager": validatepolicy,
-    "reports_schema": validate_reports,
+    # disabled until https://awakesecurity.atlassian.net/browse/MFW-4121 is fixed
+    # "reports_schema": validate_reports,
     "routes_schema": validate_routes,
     "stats_schema": validate_stats,
     "system_schema": validate_system_schema,
