@@ -10,7 +10,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Months",
           "pullingTime" : 2,
-          "skipCertCheck": false
+          "skipCertCheck": false,
+          "parsingMethod": "^\\S{2,256}"
         },
         { 
           "name": "Internal blocklist",
@@ -20,7 +21,8 @@
           "source": "https://opendbl.net/lists/etknown.list",
           "pullingUnit" : "Days",
           "pullingTime" : 3,
-          "skipCertCheck": false
+          "skipCertCheck": false,
+          "parsingMethod": "((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)+|(?:[a-f0-9:]+:+)+(?:[a-f0-9](?:(::)?))+)(?:\\/{1}\\d+|-((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)+|(?:[a-f0-9:]+:+)+(?:[a-f0-9](?:(::)?))+))?"
         }
       ]
     }

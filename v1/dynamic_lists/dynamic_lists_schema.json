@@ -55,6 +55,10 @@
                 "skipCertCheck": {
                     "type": "boolean",
                     "description": "Flag to ignore certificate verification of HTTPS requests"
+                },
+                "parsingMethod": {
+                    "type": "string",
+                    "description": "The parsing method for a passed IP list. Stored as a regular expression."
                 }
             }
         }
