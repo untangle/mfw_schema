@@ -51,7 +51,7 @@
 	    {
             "label": "Test Quota Manager",
             "type": "shell",
-            "command": "./validate.py quota_manage v1/quota_manager/test_schema.json v1/quota_manager/quota_manager_test.json",
+            "command": "./validate.py quota_manager v1/quota_manager/test_schema.json v1/quota_manager/quota_manager_test.json",
             "group": {
                 "kind": "test",
                 "isDefault": true
