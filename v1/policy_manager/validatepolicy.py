@@ -473,17 +473,17 @@ class PolicyManagerStringBuilder():
                                             break
                     policy_json["Rules"].append({"Rule" : rule_json})
             if "conditions" in policy:
-                condition_json = []
+                conditions_json = []
                 for condition_id in policy["conditions"]:
                     for condition_obj in self.condition_objs:
                         if condition_obj["id"] in condition_id:
-                            condition_json.append(self.buildConditionObjString(condition_obj))
+                            conditions_json.append(self.buildConditionObjString(condition_obj))
                     for condition_obj in self.condition_groups:
                         if condition_obj["id"] in condition_id:
-                            condition_json.append(self.buildConditionObjString(condition_obj))
-                policy_json["Conditions"].append(condition_json)
+                            conditions_json.append(self.buildConditionObjString(condition_obj))
+                policy_json["Conditions"] = conditions_json
         
-        return self.custom_format(policy_json)                    
+        return self.convert_json_to_string(policy_json)                    
         
     def buildConfigurationString(self, configuration):
         """
@@ -555,15 +555,33 @@ class PolicyManagerStringBuilder():
                
         return condition_group
 
-    def custom_format(self, data, indent=0):
-        if isinstance(data, dict):
-            lines = [f"{k}:" + (f"\n{self.custom_format(v, indent + 2)}" if isinstance(v, (dict, list)) else f"{v}") for k, v in data.items()]
-            return "\n".join(" " * (indent + 2) + line for line in lines)
-        elif isinstance(data, list):
-            lines = [self.custom_format(i, indent + 1) for i in data]
+    def convert_json_to_string(self, input, indent=0):
+        """ 
+            Converts a json to string, but removes curly braces, brackets and quotes.
+            It recursively procces each field from json. If the field is dictionary or list, it displayes each member on sepparate line.
+            At each new function call, the indentation is increased.
+
+        Args:
+            input (json): The input object to format.
+            indent (int, optional): Number of spaces added before each line. Defaults to 0.
+
+        Returns:
+            string: The formated string
+        """
+        if isinstance(input, dict):  
+            lines = []                       
+            for k, v in input.items():
+                # If the value from dict is another dict or list, print key and start on another line
+                if isinstance(v, (dict, list)):
+                    lines.append(f"{k}:\n{self.convert_json_to_string(v, indent + 2)}")
+                else:
+                    lines.append(f"{k}:{v}") 
+            return "\n".join(" " * indent + line for line in lines)
+        elif isinstance(input, list):
+            lines = [self.convert_json_to_string(i, indent + 2) for i in input]
             return "\n".join(line for line in lines)
         else:
-            return str(data) 
+            return str(input) 
         
 if __name__ == '__main__':
     unittest.main()
