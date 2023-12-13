@@ -382,8 +382,6 @@ class PolicyManagerStringBuilder():
     def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, orphan_warnings):
         """
         Initialize the object with the dictionaries to be printed, grabbed directly from the .json
-        # NOTE spacing is done here with \t characters. However, the same can be done more cleanly with built-in Python
-        # str methods: https://docs.python.org/3/library/stdtypes.html#str.ljust
 
         Args:
             policies (dict): A policy, which has id, name, description, enabled, configurations, and condition objects
@@ -402,13 +400,12 @@ class PolicyManagerStringBuilder():
         self.rules = rules
         self.orphans_warnings = orphan_warnings
         
-    def buildAllPoliciesString(self, prefix='', getNestedInfo=True, getWarnings=True):
+    def buildAllPoliciesString(self, getNestedInfo=True, getWarnings=True):
         """
         Builds a string that represents all policies, in multiple lines. Call this to print the entirety of the policy 
         manager.
 
         Args:
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be 
                                             returned. Defaults to True.
 
@@ -418,177 +415,155 @@ class PolicyManagerStringBuilder():
         """
         policies_arr = []
         for policy in self.policies:
-            policies_arr.append(self.buildPolicyString(policy, prefix=prefix, getNestedInfo=getNestedInfo))
+            policies_arr.append(self.buildPolicyString(policy, getNestedInfo=getNestedInfo))
         if getWarnings:
             for obj, warnings in self.orphans_warnings.items():
                     policies_arr.append(' '.join(["WARNING: Orphans found in", obj, ":", str(warnings)]))
         return '\n'.join(policies_arr)
             
-    def buildPolicyString(self, policy, prefix='', getNestedInfo=True):
+    def buildPolicyString(self, policy, getNestedInfo=True):
         """
         Builds and returns a string that represents a policy and its propertie                                                                                          s. If getNestedInfo is included, will 
         print configurations and condition objects (and their nested info) linked to the "id" of the policy
 
         Args:
             policy (dict): The dict of a policy grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be 
                                             returned. Defaults to True.
 
         Returns:
             string: A string representation of a policy and its properties
         """
-        policy_arr = [' '.join([prefix, "Policy:", policy[ID_FIELD], "\tName:", policy[NAME_FIELD], "\tDesc:", policy[DESCRIPTION_FIELD], "\tEnabled:", str(policy[ENABLED_FIELD])])]
+        
+        policy_json = {
+            "Policy": policy["id"],
+            "Name": policy["name"],
+            "Desc": policy["description"],
+            "Enabled": str(policy["enabled"]),
+            "Rules": [],
+            "Conditions": []
+        }
+        
         if getNestedInfo:
-            if RULES_FIELD in policy:
-                for rule_id in policy[RULES_FIELD]:
-                    policy_arr.append("\Rule:")
+            if "rules" in policy:
+                for rule_id in policy["rules"]:
+                    rule_json=[]
                     for rule in self.rules:
                         if rule[ID_FIELD] == rule_id:
                             action = rule[ACTION_FIELD]
                             if CONFIGURATION_ID_FIELD in action:
                                 for configuration in self.configurations:
-                                    if configuration[ID_FIELD] == action[CONFIGURATION_ID_FIELD]:
-                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                    if configuration["id"] == action["configuration_id"]:
+                                        rule_json.append(self.buildConfigurationString(configuration))
                                         break
                             if POLICY_FIELD in action:
                                 for configuration in self.configurations:
-                                    if configuration[ID_FIELD] == action[POLICY_FIELD]:
-                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                    if configuration["id"] == action["policy"]:
+                                        rule_json.append(self.buildConfigurationString(configuration))
                                         break
                             if CONDITIONS_FIELD in rule:
                                 for condition_id in rule[CONDITIONS_FIELD]:
                                     for condition_obj in self.condition_objs:
-                                        if condition_obj[ID_FIELD] == condition_id:
-                                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
+                                        if condition_obj["id"] == condition_id:
+                                            rule_json.append(self.buildConditionObjString(condition_obj))
                                             break
                                     for condition_obj in self.condition_groups:
-                                        if condition_obj[ID_FIELD] == condition_id:
-                                            policy_arr.append(self.buildConditionGroupString(condition_obj, prefix="\t\t"))
+                                        if condition_obj["id"] == condition_id:
+                                            rule_json.append(self.buildConditionGroupString(condition_obj))
                                             break
-            if CONDITIONS_FIELD in policy:
-                for condition_id in policy[CONDITIONS_FIELD]:
+                    policy_json["Rules"].append({"Rule" : rule_json})
+            if "conditions" in policy:
+                condition_json = []
+                for condition_id in policy["conditions"]:
                     for condition_obj in self.condition_objs:
-                        if condition_obj[ID_FIELD] in condition_id:
-                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
+                        if condition_obj["id"] in condition_id:
+                            condition_json.append(self.buildConditionObjString(condition_obj))
                     for condition_obj in self.condition_groups:
-                        if condition_obj[ID_FIELD] in condition_id:
-                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
-        return '\n'.join(policy_arr)
-                
-    def buildAllConfigurationsString(self, prefix=''):
-        """
-        Builds a string that represents all configurations, in multiple lines
-
-        Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t Defaults to ''.
-
-        Returns:
-            string: A string representation of all configurations and their properties
-        """
-        configurations_arr = []
-        for configuration in self.configurations:
-            configurations_arr.append(self.buildConfigurationString(configuration, prefix=prefix))
-        return '\n'.join(configurations_arr)
+                        if condition_obj["id"] in condition_id:
+                            condition_json.append(self.buildConditionObjString(condition_obj))
+                policy_json["Conditions"].append(condition_json)
         
-    def buildConfigurationString(self, configuration, prefix=''):
+        return self.custom_format(policy_json)                    
+        
+    def buildConfigurationString(self, configuration):
         """
-        Builds and returns a string that represents a configuration and its properties
+        Builds and returns a object that represents a configuration and its properties
 
         Args:
             configuration (dict): The dict of a configuration grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
 
         Returns:
-            string: A string representation of a configuration and its properties
+            dict: A object representation of a configuration and its properties
         """
-        return ' '.join([prefix, "Config:", configuration[ID_FIELD], "\tName:", configuration[NAME_FIELD], "\tDesc:", configuration[DESCRIPTION_FIELD]])
-    
-    def buildAllConditionObjsString(self, prefix='', getNestedInfo=True):
+        
+        return {
+            "Config": {
+                "ID": configuration["id"], 
+                "Name" : configuration["name"], 
+                "Desc": configuration["description"]
+            }
+        }
+                
+    def buildConditionObjString(self, condition_obj):
         """
-        Builds and returns a string that represents all condition objects, in multiple lines
-
-        Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t. Defaults to ''.
-            getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
-                                            True.
-
-        Returns:
-            string: A string representation of all condition objects and their properties
-        """
-        condition_objs_arr = []
-        for condition_obj in self.condition_objs:
-            condition_objs_arr.append(self.buildConditionObjString(condition_obj, prefix=prefix, getNestedInfo=getNestedInfo))
-        return '\n'.join(condition_objs_arr)
-            
-    def buildConditionObjString(self, condition_obj, prefix='', getNestedInfo=True):
-        """
-        Builds and returns a string that represents a condition object and its properties. Prints more detailed 
+        Builds and returns a object that represents a condition object and its properties. Prints more detailed 
         information for the conditions in the condition object. If getNestedInfo is included, will print groups linked
         to the "groupid" of the conditions
 
         Args:
             condition object (dict): A dict of a condition object grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
                                             True.
 
         Returns:
-            string: A string representation of a condition object and its properties
+            dict: A object representation of a condition object and its properties
         """
-        condition_obj_arr = [' '.join([prefix, "Condition Object:", condition_obj[ID_FIELD], "\tName:,", condition_obj[NAME_FIELD], "\tDescriptions:", condition_obj[DESCRIPTION_FIELD]])]
-        for condition in condition_obj[ITEMS_FIELD]:
-            if VALUE_FIELD in condition:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition[TYPE_FIELD], condition[OP_FIELD], str(condition[VALUE_FIELD])]))
+        
+        condition_json = {
+            "ID": condition_obj["id"],
+            "Name": condition_obj["name"], 
+            "Descriptions": condition_obj["description"],
+            "Conditions" : []
+        }
+        
+        for condition in condition_obj["items"]:
+            if "value" in condition:
+                condition_json["Conditions"].append({"Condition" : ' '.join([condition["type"], condition["op"], str(condition["value"])])})
             else:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition[TYPE_FIELD], condition[OP_FIELD], "\tObjects:", str(condition[OBJECT_FIELD])]))       
-        return '\n'.join(condition_obj_arr)
+                condition_json["Conditions"].append({"Condition" : ' '.join([condition["type"], condition["op"] +",", "Objects :", str(condition["object"])])})
+        
+        return { "Condition Object" : condition_json}
 
-    def buildConditionGroupString(self, condition_obj, prefix='', getNestedInfo=True):
+    def buildConditionGroupString(self, condition_obj):
         """
-        Builds and returns a string that represents a condition group and its properties. 
+        Builds and returns a object that represents a condition group and its properties. 
 
         Args:
             condition group (dict): A dict of a condition object grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
                                             True.
 
         Returns:
             string: A string representation of a condition object and its properties
         """
-        condition_group_array = [' '.join([prefix, "Condition Group:", condition_obj[ID_FIELD], "\tName:,", condition_obj[NAME_FIELD], "\tDescriptions:", condition_obj[DESCRIPTION_FIELD]])]
-        for condition in condition_obj[ITEMS_FIELD]:
-            condition_group_array.append(' '.join([prefix + '\t', "ConditionID:", condition]))
-        return '\n'.join(condition_group_array)
-                
-    def buildAllGroupsString(self, prefix=''):
-        """
-        Builds and returns a string that represents all groups, in multiple lines
+        condition_group = {
+             "Condition Group": condition_obj["id"],
+             "Name": condition_obj["name"],
+             "Descriptions": condition_obj["description"],
+             "ConditionIDs": str(condition_obj["items"])
+        }
+               
+        return condition_group
 
-        Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t. Defaults to ''.
-
-        Returns:
-            string: A string representation of all groups and their properties
-        """
-        groups_arr = []
-        for group in self.groups:
-            groups_arr.append(self.buildGroupString(group, prefix=prefix))
-        return '\n'.join(groups_arr)
+    def custom_format(self, data, indent=0):
+        if isinstance(data, dict):
+            lines = [f"{k}:" + (f"\n{self.custom_format(v, indent + 2)}" if isinstance(v, (dict, list)) else f"{v}") for k, v in data.items()]
+            return "\n".join(" " * (indent + 2) + line for line in lines)
+        elif isinstance(data, list):
+            lines = [self.custom_format(i, indent + 1) for i in data]
+            return "\n".join(line for line in lines)
+        else:
+            return str(data) 
         
-    def buildGroupString(self, group, prefix=''):
-        """
-        Builds and returns a string that represents a group and its properties
-
-        Args:
-            group (dict): The dict of a group grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
-
-        Returns:
-            string: A string representation of a group and its properties
-        """
-        return ' '.join([prefix, "Group:", group[ID_FIELD], "\tName:", group[NAME_FIELD], "\tItems:", str(group[ITEMS_FIELD]), "\tType:", group[TYPE_FIELD]])
-
 if __name__ == '__main__':
     unittest.main()
