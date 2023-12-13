@@ -27,11 +27,9 @@ class TestDiscoverySchema(unittest.TestCase):
         else:
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
 
-    def test_dummy(self):
+    def test_validate_schema(self):
         """
-        Dummy test, just enabling validation.
-        
-        TODO delete me if testing goes beyond validation
+        Test used to enable setUpClass for schema validation test.
         """
         self.assertTrue(True)
 
