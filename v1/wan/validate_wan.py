@@ -5,18 +5,13 @@ import unittest
 
 from v1.schema_utils.util import SchemaValidator
 
-"""
-TestCaptiveportal validates the captiveportal schema
 
-Unlike other tests like TestPolicyManager, this just validates the schema since there are no further required tests.
-"""
-class TestCaptiveportal(unittest.TestCase):
+class TestWanSchema(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT = "captiveportal_test.json"
+    JSON_FILENAME_DEFAULT = "test_wan.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
-    # class vars, begin uninitialized
-    json_data = ""
-
+    json_data = {}
+    
     @classmethod
     def setUpClass(cls):
         """
@@ -24,14 +19,17 @@ class TestCaptiveportal(unittest.TestCase):
         fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
         out, so any follow-up tests won't run
         """
-        current_directory = os.path.dirname(os.path.realpath(__file__))
+        current_directory = os.path.dirname(os.path.realpath(__file__))       
         schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
+        
+        firewall_schema_path = os.path.abspath(os.path.join(current_directory, "../firewall/firewall_schema.json"))
+        schema_validator.addExternalRef(firewall_schema_path, "file:../firewall/firewall_schema.json")
         
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
+
     def test_validate_schema(self):
         """
         Test used to enable setUpClass for schema validation test.

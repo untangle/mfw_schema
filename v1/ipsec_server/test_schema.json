@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "ipsec_server"
+    ],
+    "properties": {
+        "ipsec_server": {
+            "$ref": "ipsec_server_schema.json#/definitions/ipsec_server_settings"
+        }
+    }
+}

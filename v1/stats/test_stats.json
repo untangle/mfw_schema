@@ -1,0 +1,13 @@
+{
+   "stats": {
+    "pingAnalyzers": [
+        {
+            "enabled": true,
+            "name": "analyzer 1",
+            "interfaceIds": [0, 1],
+            "ipv4Addresses": ["192.168.1.1", "192.168.1.2"],
+            "ipv6Addresses": ["efc8:7979:22f6:77e0:b912:6df0:3f95:dcdc", "5a3c:c458:9112:c53d:bc77:e1b2:ab8e:0d4d"]
+        }
+    ]
+   }
+}

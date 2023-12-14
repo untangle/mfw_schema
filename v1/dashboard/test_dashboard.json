@@ -1,0 +1,10 @@
+{
+   "dashboard": {
+      "widgets": [
+         {
+            "interval": 1,
+            "name": "test"
+         }
+      ]
+   }
+}

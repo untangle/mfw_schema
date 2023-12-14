@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "application_control"
+    ],
+    "properties": {
+        "application_control": {
+            "$ref": "application_control_schema.json#/definitions/application_control_settings"
+        }
+    }
+}

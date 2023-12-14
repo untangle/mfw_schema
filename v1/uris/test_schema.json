@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:test_schema.json",
+    "description": "schema for the JSON settings",
+    "type": "object",
+    "required": [
+        "uris"
+    ],
+    "properties": {
+        "uris": {
+            "$ref": "uris_schema.json#/definitions/uris"
+        }
+    }
+}

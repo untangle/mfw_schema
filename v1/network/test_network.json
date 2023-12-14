@@ -1,0 +1,51 @@
+{
+   "network": {
+    "devices": [
+      {
+
+      }
+    ],
+    "interfaces": [
+      {
+        "interfaceId": 1, 
+        "name": "eth1",
+        "device": "device 1", 
+        "type": "NIC",
+        "configType": "ADDRESSED",
+        "wan": true
+      }
+    ],
+    "switches": [
+      {
+        "name": "switch 1",
+        "ports": [
+          {
+            "cpu_port": false,
+            "id": "1",
+            "pvid": "1"
+          }
+        ],
+        "vlans": [
+          {
+            "id": "1"            
+          }
+        ]
+      },
+      {
+        "name": "switch 2",
+        "ports": [
+          {
+            "cpu_port": false,
+            "id": "2",
+            "pvid": "2"
+          }
+        ],
+        "vlans": [
+          {
+            "id": "2"            
+          }
+        ]
+      }
+    ]
+   }   
+}

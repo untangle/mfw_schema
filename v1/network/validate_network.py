@@ -5,18 +5,13 @@ import unittest
 
 from v1.schema_utils.util import SchemaValidator
 
-"""
-TestCaptiveportal validates the captiveportal schema
 
-Unlike other tests like TestPolicyManager, this just validates the schema since there are no further required tests.
-"""
-class TestCaptiveportal(unittest.TestCase):
+class TestNetworkSchema(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT = "captiveportal_test.json"
+    JSON_FILENAME_DEFAULT = "test_network.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
-    # class vars, begin uninitialized
-    json_data = ""
-
+    json_data = {}
+    
     @classmethod
     def setUpClass(cls):
         """
@@ -24,19 +19,26 @@ class TestCaptiveportal(unittest.TestCase):
         fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
         out, so any follow-up tests won't run
         """
-        current_directory = os.path.dirname(os.path.realpath(__file__))
+        current_directory = os.path.dirname(os.path.realpath(__file__))       
         schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
         
+        files_schema_path = os.path.abspath(os.path.join(current_directory, "../files/files_schema.json"))
+        schema_validator.addExternalRef(files_schema_path, "file:../files/files_schema.json")
+
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
-    def test_validate_schema(self):
+
+    def test_network(self):
         """
-        Test used to enable setUpClass for schema validation test.
+        validates network
         """
-        self.assertTrue(True)
+        network = self.json_data["network"]
+        self.assertEqual(len(network.get("devices")), 0,  "Invalid devices content")
+        self.assertEqual(len(network.get("interfaces")), 1,  "Invalid interfaces content")
+        self.assertEqual(len(network.get("switches")), 2,  "Invalid switches content")
 
 if __name__ == '__main__':
     unittest.main()
+    

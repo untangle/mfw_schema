@@ -1,0 +1,35 @@
+{
+   "firewall": {
+    "tables": {
+      "test" : {
+        "chain_type": "nat",
+        "description": "test",
+        "family": "arp",
+        "name": "test",
+        "chains": [
+          {
+            "name": "chain 1",
+            "base": true,
+            "description": "chain 1",
+            "editable": false,
+            "hook": "forward",
+            "priority": 1,
+            "rules": [
+              {
+                "readOnly": true,
+                "ruleId": 1,
+                "description": "",
+                "enabled": true,
+                "conditions": [],
+                "action": {
+                    "key": "mfw-template-geoipfilter",                    
+                    "configuration_id": "1202b42e-2f21-49e9-b42c-5614e04d0031"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+   }
+}

@@ -1,0 +1,13 @@
+{
+  "geoip": {
+    "enabled": true,
+    "blockedCountries": ["US"],
+    "enabledLog": true,
+    "passedNetworks": [
+      {
+        "address": "192.168.1.1",
+        "description": "test"
+      }
+    ]
+  }
+}

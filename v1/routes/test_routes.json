@@ -1,0 +1,19 @@
+{
+   "routes": [
+      {
+        "enabled": true,
+        "description": "route 1",
+        "interfaceId": 0,
+        "network": "vlan",
+        "nextHop": "192.168.1.1"
+      },
+      {
+        "enabled": true,
+        "description": "route 2",
+        "interfaceId": 1,
+        "network": "wlan",
+        "nextHop": "192.168.1.2"
+      }
+   ]
+
+}

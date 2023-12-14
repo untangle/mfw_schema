@@ -1,0 +1,17 @@
+{
+   "threatprevention": {
+    "enabled": true,
+    "passList": [
+        {
+            "host": "example.com",
+            "description": "example"
+        },
+        {
+            "host": "test.com",
+            "description": "test"
+        }
+    ],
+    "redirect": true,
+    "sensitivity": 1
+   }
+}

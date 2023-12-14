@@ -1,0 +1,73 @@
+{
+   "reports": {
+    "entries": [
+     {
+      "name": "report 1",
+      "category": "cat 1",
+      "type": "CATEGORIES",
+      "uniqueId": "7074edee-3087-4d67-bbd2-4ca7222fcd74",
+      "conditions": [
+        {
+          "column": "1",
+          "operator": "EQ",
+          "value": "test"
+        }
+      ],
+      "description": "report 1",
+      "displayOrder": 1,
+      "queryCategories": {
+        "limit": 1,
+        "groupColumn": "test",
+        "aggregationFunction": "x",
+        "aggregationValue": "y",
+        "orderAsc": true,
+        "orderByColumn": 1
+      },
+      "columnDisambiguation": [],
+      "readOnly": true,
+      "queryEvents": {
+        "orderAsc": true,
+        "orderByColumn": "1"
+      },
+      "querySeries": {
+        "columns": ["test"],
+        "timeIntervalSeconds": 1
+      },
+      "queryText": {
+        "columns": ["test"]
+      },
+      "rendering": {
+        "3dAlpha": 5,
+        "3dDepth": 10,
+        "3dEnabled": true,
+        "borderWidth": 1,
+        "bottomAreaOpacity": 1,
+        "colors": ["red"],
+        "columnRenames": {},
+        "dashStyle": "Dash",
+        "dataGroupingEnabled": true,
+        "dataGroupingFactor": 10,
+        "defaultColumns": ["test"],
+        "donutInnerSize": 20,
+        "slicesNumber": 3,
+        "lineWidth": 5,
+        "stacking": "none",
+        "textString": "text",
+        "topAreaOpacity": 1,
+        "type": "area",
+        "dataGroupingApproximation": "average",
+        "units": "1"
+      },
+      "table": "test",
+      "tables": ["test"],
+      "userConditions": [
+        {
+          "column": "1",
+          "operator": "EQ",
+          "value": "test"
+        }
+      ]
+     }
+    ]
+   }
+}

@@ -5,18 +5,13 @@ import unittest
 
 from v1.schema_utils.util import SchemaValidator
 
-"""
-TestCaptiveportal validates the captiveportal schema
 
-Unlike other tests like TestPolicyManager, this just validates the schema since there are no further required tests.
-"""
-class TestCaptiveportal(unittest.TestCase):
+class TestStatsSchema(unittest.TestCase):
     # consts
-    JSON_FILENAME_DEFAULT = "captiveportal_test.json"
+    JSON_FILENAME_DEFAULT = "test_stats.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
-    # class vars, begin uninitialized
-    json_data = ""
-
+    json_data = {}
+    
     @classmethod
     def setUpClass(cls):
         """
@@ -24,19 +19,22 @@ class TestCaptiveportal(unittest.TestCase):
         fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
         out, so any follow-up tests won't run
         """
-        current_directory = os.path.dirname(os.path.realpath(__file__))
+        current_directory = os.path.dirname(os.path.realpath(__file__))       
         schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
         
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
-        
-    def test_validate_schema(self):
+
+    def test_stats(self):
         """
-        Test used to enable setUpClass for schema validation test.
+        validates stats
         """
-        self.assertTrue(True)
+        pingAnalyzers = self.json_data["stats"]["pingAnalyzers"]
+        self.assertEqual(len(pingAnalyzers[0].get("interfaceIds")), 2,  "Invalid interfaceIds content")
+        self.assertEqual(len(pingAnalyzers[0].get("ipv4Addresses")), 2,  "Invalid ipv4Addresses content")
+        self.assertEqual(len(pingAnalyzers[0].get("ipv6Addresses")), 2,  "Invalid ipv6Addresses content")
 
 if __name__ == '__main__':
     unittest.main()
