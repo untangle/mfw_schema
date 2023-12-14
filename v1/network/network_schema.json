@@ -371,6 +371,11 @@
                     "description": "VRRP IPv4 address aliases",
                     "items": { "$ref": "#/definitions/ipv4_alias" }
                 },
+                "vrrpTrack": {
+                    "type": "array",
+                    "description": "VRRP Group Tracked Objects",
+                    "items": { "$ref": "#/definitions/track" }
+                },
                 "wirelessSsid": {
                     "type": "string",
                     "description": "The wireless SSID"
@@ -645,6 +650,19 @@
                     "type": "boolean",
                     "description": "True if packets from this wireguard peer should be routed"
                 }
+            }
+        },
+        "track": {
+            "type": "object",
+            "description": "VRRP Track Object",
+            "required": ["name","decrement"],
+            "name": {
+                "type": "string",
+                "description": "Tracked object name"
+            },
+            "decrement": {
+                "type": "integer",
+                "description": "Decrease VRRP priority level by amount"
             }
         }
     }

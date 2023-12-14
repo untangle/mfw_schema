@@ -1,0 +1,148 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:quota_manager_schema.json",
+    "definitions": {
+        "quota_manager_configuration_id": {
+            "type": "string"
+        },
+        "quota_manager_settings": {
+            "required": ["configurations", "exceed_actions", "rules"],
+            "type": "object",
+            "description": "Quota Manager settings",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "configurations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/quota_manager_configuration"
+                    }
+                },
+                "exceed_actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/quota_manager_exceed_action"
+                    }
+                },
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/quota_manager_rule"
+                    }
+                }
+             }
+         },
+
+        "quota_manager_configuration": {
+            "type": "object",
+            "required": ["id","data_size","period"],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/quota_manager_configuration_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "data_size": {
+                    "type": "string"
+                },
+                "period": {
+                    "type": "string"
+                }
+            }
+        },
+
+
+        "quota_manager_exceed_action": {
+            "type": "object",
+            "required": ["id","action"],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/quota_manager_configuration_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "default": {
+                    "type": "boolean"
+                },
+                "action": {
+                    "type": "string"
+                }
+            }
+        },
+
+        "quota_manager_rule": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/quota_manager_configuration_id"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "action": {
+                    "type": "object",
+                    "items": {
+                        "$ref": "#/definitions/quota_manager_rule_action"
+                    }
+                },
+                "conditions":{
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/quota_manager_rule_condition"
+                    }
+                }
+            }
+        },
+
+        "quota_manager_rule_action": {
+            "type": "object",
+            "required": ["exceed_action_id", "quota_id", "type"],
+            "properties": {
+                "exceed_action_id": {
+                    "$ref": "#/definitions/quota_manager_object_id"
+                },
+                "quota_id": {
+                    "$ref": "#/definitions/quota_manager_object_id"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "quota_manager_rule_condition": {
+            "type": "object",
+            "required": ["op", "type", "value"],
+            "properties": {
+                "op": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                },
+                "proto": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
+

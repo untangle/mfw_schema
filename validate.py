@@ -26,6 +26,7 @@ import v1.threatprevention.validate_threatprevention as validate_threatpreventio
 import v1.uris.validate_uris as validate_uris
 import v1.wan.validate_wan as validate_wan
 import v1.webfilter.validate_webfilter as validate_webfilter
+import v1.quota_manager.validate_quota_manager as validate_quota_manager
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -51,7 +52,9 @@ validate_dict = {
     "threatprevention_schema": validate_threatprevention,
     "uris_schema": validate_uris,
     "wan_schema": validate_wan,
-    "webfilter_schema": validate_webfilter
+    "webfilter_schema": validate_webfilter,
+    "system_schema": validate_system_schema,
+    "quota_manager": validate_quota_manager
 }
 
 def main():
@@ -64,7 +67,7 @@ def main():
     parser.add_argument("schema_file", type=str, nargs='?', default="", help="The schema to validate against. Blank uses directory default.")
     parser.add_argument("json_file", type=str, nargs='?', default="", help="The json file to validate. Blank uses directory default.")
     args = parser.parse_args()
-    
+
     os.environ["SCHEMA_FILE"] = args.schema_file
     os.environ["JSON_FILE"]   = args.json_file
     directories = args.directories.split(",") if len(args.directories) > 0 else list(validate_dict.keys())
@@ -72,7 +75,7 @@ def main():
         run_test_on_module(validate_dict[directory])
     os.environ.pop("SCHEMA_FILE", None)
     os.environ.pop("JSON_FILE", None)
-    
+
 def run_test_on_module(module):
     print("=== START OF MODULE TEST: " + str(module) + " ===\n")
     # Sets environment variables with the passed files, runs validation, then deletes as a teardown

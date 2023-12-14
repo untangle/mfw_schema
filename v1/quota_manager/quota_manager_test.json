@@ -1,0 +1,167 @@
+{
+	"quota_manager": {
+        "configurations": [
+            {
+                "data_size": "50 kbytes",
+                "description": "testd",
+                "id": "0719307e-919b-11ee-b9d1-0242ac120002",
+                "name": "test",
+                "period": "1m"
+            },
+            {
+                "data_size": "100 mbytes",
+                "description": "testd",
+                "id": "0c60f45e-919b-11ee-b9d1-0242ac120002",
+                "name": "test",
+                "period": "100m"
+            },
+            {
+                "data_size": "100 mbytes",
+                "description": "testd",
+                "id": "1c60f45e-919b-11ee-b9d1-0242ac120002",
+                "name": "test1",
+                "period": "100m"
+            }
+       ],
+        "enabled": true,
+        "exceed_actions": [
+            {
+                "action": "drop",
+                "default": true,
+                "description": "exceed-desc-1",
+                "id": "ea52982e-9198-11ee-b9d1-0242ac120002",
+                "name": "exceed-1-drop"
+            },
+            {
+                "action": "drop",
+                "description": "exceed-desc-3",
+                "id": "f37e4966-9198-11ee-b9d1-0242ac120002",
+                "name": "exceed-3"
+            },
+            {
+                "action": "SET_PRIORITY",
+                "description": "exceed-desc-2",
+                "id": "5a316ef8-919a-11ee-b9d1-0242ac120002",
+                "name": "exceed-2-pri5",
+                "priority": "5"
+            },
+            {
+                "action": "SET_PRIORITY",
+                "description": "exceed-desc-3",
+                "id": "6120fbfc-919a-11ee-b9d1-0242ac120002",
+                "name": "exceed-3-pri4",
+                "priority": "4"
+            },
+            {
+                "action": "SET_PRIORITY",
+                "description": "exceed-desc-4",
+                "id": "5120fbfc-919a-11ee-b9d1-0242ac120002",
+                "name": "exceed-4-pri4",
+                "priority": "4"
+            }
+        ],
+        "rules": [
+            {
+                "action": {
+                    "exceed_action_id": "ea52982e-9198-11ee-b9d1-0242ac120002",
+                    "quota_id": "0719307e-919b-11ee-b9d1-0242ac120002",
+                    "type": "apply_quota"
+                },
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "SOURCE_ADDRESS",
+                        "value": "1.1.1.2"
+                    }
+                ],
+                "description": "aristad",
+                "id": "2234",
+                "name": "arista",
+                "enabled": true
+            },
+            {
+                "action": {
+                    "exceed_action_id": "f37e4966-9198-11ee-b9d1-0242ac120002",
+                    "quota_id": "0c60f45e-919b-11ee-b9d1-0242ac120002",
+                    "type": "apply_quota"
+                },
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "SOURCE_ADDRESS",
+                        "value": "1.1.1.2,2.2.2.2-2.2.2.100,3.3.3.0/24"
+                    },
+                    {
+                        "op": "==",
+                        "proto": "udp",
+                        "type": "SOURCE_PORT",
+                        "value": "1111"
+                    }
+                ],
+                "description": "aristad",
+                "id": "1234",
+                "name": "arista",
+                "enabled": true
+            },
+            {
+                "action": {
+                    "exceed_action_id": "5a316ef8-919a-11ee-b9d1-0242ac120002",
+                    "quota_id": "0c60f45e-919b-11ee-b9d1-0242ac120002",
+                    "type": "apply_quota"
+                },
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "DESTINATION_ADDRESS",
+                        "value": "2.2.2.2"
+                    }
+                ],
+                "description": "aristad2",
+                "id": "2222",
+                "name": "arista2",
+                "enabled": true
+            },
+            {
+                "action": {
+                    "exceed_action_id": "6120fbfc-919a-11ee-b9d1-0242ac120002",
+                    "quota_id": "0c60f45e-919b-11ee-b9d1-0242ac120002",
+                    "type": "apply_quota"
+                },
+                "conditions": [
+                    {
+                        "op": "==",
+                        "type": "DESTINATION_ADDRESS_V6",
+                        "value": "1::1"
+                    }
+                ],
+                "description": "aristad4",
+                "id": "222332",
+                "name": "aristar42",
+                "enabled": true
+            },
+            {
+                "action": {
+                    "exceed_action_id": "",
+                    "quota_id": "0719307e-919b-11ee-b9d1-0242ac120002",
+                    "type": "apply_quota"
+                },
+                "conditions": [
+                    {
+                        "op": "!=",
+                        "type": "DESTINATION_ADDRESS",
+                        "value": "2.2.2.2"
+                    },
+                    {
+                        "op": "==",
+                        "type": "SOURCE_INTERFACE_ZONE",
+                        "value": "et1_1"
+                    }
+                ],
+                "description": "aristad3",
+                "id": "3333",
+                "name": "arista3",
+                "enabled": false
+            }
+        ]
+    }
+}
