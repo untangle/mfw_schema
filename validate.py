@@ -9,12 +9,14 @@ import v1.policy_manager.validatepolicy as validatepolicy
 import v1.dynamic_lists.validate_dynamic_lists as validate_dynamic_lists
 import v1.captiveportal.validate_captiveportal as validate_captiveportal
 import v1.system.validate_system_schema as validate_system_schema
+import v1.quota_manager.validate_quota_manager as validate_quota_manager
 
 validate_dict = {
     "dynamic_lists": validate_dynamic_lists,
     "policy_manager": validatepolicy,
     "captiveportal": validate_captiveportal,
-    "system_schema": validate_system_schema
+    "system_schema": validate_system_schema,
+    "quota_manager": validate_quota_manager
 }
 
 def main():
@@ -27,7 +29,7 @@ def main():
     parser.add_argument("schema_file", type=str, nargs='?', default="", help="The schema to validate against. Blank uses directory default.")
     parser.add_argument("json_file", type=str, nargs='?', default="", help="The json file to validate. Blank uses directory default.")
     args = parser.parse_args()
-    
+
     os.environ["SCHEMA_FILE"] = args.schema_file
     os.environ["JSON_FILE"]   = args.json_file
     directories = args.directories.split(",") if len(args.directories) > 0 else list(validate_dict.keys())
@@ -35,7 +37,7 @@ def main():
         run_test_on_module(validate_dict[directory])
     os.environ.pop("SCHEMA_FILE", None)
     os.environ.pop("JSON_FILE", None)
-    
+
 def run_test_on_module(module):
     print("=== START OF MODULE TEST: " + str(module) + " ===\n")
     # Sets environment variables with the passed files, runs validation, then deletes as a teardown
