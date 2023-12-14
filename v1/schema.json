@@ -77,6 +77,9 @@
         },
         "captive_portal": {
             "$ref": "file:captiveportal/captiveportal_schema.json#/definitions/captiveportal_settings"
+        },
+        "quota_manager": {
+            "$ref": "file:quota_manager/quota_manager_schema.json#/definitions/quota_manager_settings"
         }
     },
     "definitions": {}

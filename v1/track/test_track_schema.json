@@ -1,0 +1,14 @@
+{
+    "track": [
+        {
+            "name" : "LAN0",
+            "description" : "Tracking Object for LAN0",
+            "interfaceId" : "2"
+        },
+        {
+            "name" : "WAN0",
+            "description" : "Tracking Object for WAN0",
+            "interfaceId" : "3"
+        }
+    ]
+}
