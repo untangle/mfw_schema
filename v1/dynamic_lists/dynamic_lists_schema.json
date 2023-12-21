@@ -44,11 +44,11 @@
                     "type": "string",
                     "description": "Either IP or URL block list type from source"
                 },
-                "pullingUnit": {
+                "pollingUnit": {
                     "type": "string",
                     "description": "Tells us the interval of fetching whether its Minutes, Hours, Days or Months as a unit"
                 },
-                "pullingTime": {
+                "pollingTime": {
                     "type": "number",
                     "description": "The respective value based on the selection of the PullingUnit"
                 },
