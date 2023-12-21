@@ -244,7 +244,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","WAN_POLICY"]
+                    "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","LIMIT_EXCEED_ACTION","WAN_POLICY"]
                 },
                 "chain": {
                     "type": "string"
@@ -261,7 +261,7 @@
                 "priority": {
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": 4
+                    "maximum": 21
                 },
                 "destination": {
                     "type": "integer"
@@ -269,7 +269,7 @@
                 "policy": {
                     "type": "integer"
                 },
-                "nft_rule_action": {
+                "limit_exceed_action": {
                     "type": "string"
                 },
                 "return_action": {

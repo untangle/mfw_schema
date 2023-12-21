@@ -812,7 +812,7 @@
                 ],
                 "action": {
                     "type": "SET_PRIORITY",
-                    "priority": 4
+                    "priority": 21
                 }
             },
             {
