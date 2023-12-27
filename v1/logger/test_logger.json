@@ -1,0 +1,125 @@
+{
+    "loggers": {
+        "alertd": {
+            "alertd": {
+                "logname": "DEBUG"
+            },
+            "gin": {
+                "logname": "INFO"
+            },
+            "handler.(*AlertHandler).handleAlerts": {
+                "logname": "ALERT"
+            },
+            "main": {
+                "logname": "INFO"
+            }
+        },
+        "cls": {
+            "licensehandler": {
+                "logname": "INFO"
+            },
+            "utilities": {
+                "logname": "INFO"
+            }
+        },
+        "packetd": {
+            "alerts": {
+                "logname": "INFO"
+            },
+            "captiveportal": {
+                "logname": "INFO"
+            },
+            "captiveportalsvc": {
+                "logname": "INFO"
+            },
+            "certcache": {
+                "logname": "INFO"
+            },
+            "certfetch": {
+                "logname": "INFO"
+            },
+            "certmanager": {
+                "logname": "INFO"
+            },
+            "certsniff": {
+                "logname": "INFO"
+            },
+            "classify": {
+                "logname": "INFO"
+            },
+            "common": {
+                "logname": "INFO"
+            },
+            "conntrack": {
+                "logname": "INFO"
+            },
+            "device": {
+                "logname": "INFO"
+            },
+            "dict": {
+                "logname": "INFO"
+            },
+            "discovery": {
+                "logname": "INFO"
+            },
+            "dispatch": {
+                "logname": "INFO"
+            },
+            "dns": {
+                "logname": "INFO"
+            },
+            "dynamiclists": {
+                "logname": "INFO"
+            },
+            "example": {
+                "logname": "INFO"
+            }
+        },
+        "reportd": {
+            "alerts": {
+                "logname": "INFO"
+            },
+            "cloudreporting": {
+                "logname": "INFO"
+            },
+            "credentialsmanager": {
+                "logname": "INFO"
+            },
+            "discovery": {
+                "logname": "INFO"
+            },
+            "gin": {
+                "logname": "INFO"
+            },
+            "gind": {
+                "logname": "INFO"
+            },
+            "localreporting": {
+                "logname": "INFO"
+            },
+            "messenger": {
+                "logname": "INFO"
+            },
+            "monitor": {
+                "logname": "INFO"
+            }
+        },
+        "restd": {
+            "alerts": {
+                "logname": "INFO"
+            },
+            "captiveportal": {
+                "logname": "INFO"
+            },
+            "certmanager": {
+                "logname": "INFO"
+            },
+            "gin": {
+                "logname": "INFO"
+            },
+            "gind": {
+                "logname": "INFO"
+            }
+        }
+    }
+}
