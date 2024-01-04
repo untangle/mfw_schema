@@ -1,5 +1,5 @@
 {
-    "loggers": {
+    "logger": {
         "alertd": {
             "alertd": {
                 "logname": "DEBUG"
@@ -19,6 +19,23 @@
                 "logname": "INFO"
             },
             "utilities": {
+                "logname": "INFO"
+            }
+        },
+        "discoverd" : {
+            "example": {
+                "logname": "INFO"
+            },
+            "discovery": {
+                "logname": "INFO"
+            },
+            "neighbour": {
+                "logname": "INFO"
+            },
+            "lldp": {
+                "logname": "INFO"
+            },
+            "nmap": {
                 "logname": "INFO"
             }
         },

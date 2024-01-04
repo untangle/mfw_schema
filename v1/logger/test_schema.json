@@ -4,11 +4,11 @@
     "description": "schema for the JSON settings",
     "type": "object",
     "required": [
-        "loggers"
+        "logger"
     ],
     "properties": {
-        "loggers": {
-            "$ref": "logger_schema.json#/definitions/loggers"
+        "logger": {
+            "$ref": "logger_schema.json#/definitions/logger"
         }
     }
 }

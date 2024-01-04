@@ -1,15 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-        "loggers": {
+        "logger": {
             "type":"object",
-            "description": "All logging settings",
+            "description": "Logger settings",
             "additionalProperties": false,
             "properties": {
                 "alertd" :{
                     "$ref": "#/definitions/logger_setting" 
                 },
                 "cls" :{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "discoverd" :{
                     "$ref": "#/definitions/logger_setting" 
                 },
                 "packetd":{
@@ -25,6 +28,7 @@
             "required": [
                 "alertd",
                 "cls",
+                "discoverd",
                 "packetd",
                 "reportd",
                 "restd"
