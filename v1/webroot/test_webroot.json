@@ -1,5 +1,6 @@
 {
   "webroot": {
-   "cacheEnabled": true
+   "cacheEnabled": true,
+   "cacheTtlSeconds": 30
   }
 }

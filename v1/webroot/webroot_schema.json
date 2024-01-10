@@ -9,6 +9,10 @@
                 "cacheEnabled": {
                     "type": "boolean",
                     "description": "Determine weather or not to use caching for webroot lookup results"
+                },
+                "cacheTtlSeconds": {
+                    "type": "integer",
+                    "description": "The cahe entries TTL"
                 }
             }
         }
