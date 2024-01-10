@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "webroot": {
+            "type": "object",
+            "description": "Webroot settings",
+            "additionalProperties": false,
+            "properties": {
+                "cacheEnabled": {
+                    "type": "boolean",
+                    "description": "Determine weather or not to use caching for webroot lookup results"
+                }
+            }
+        }
+    }
+}
