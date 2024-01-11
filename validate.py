@@ -9,12 +9,14 @@ import v1.policy_manager.validatepolicy as validatepolicy
 import v1.dynamic_lists.validate_dynamic_lists as validate_dynamic_lists
 import v1.captiveportal.validate_captiveportal as validate_captiveportal
 import v1.system.validate_system_schema as validate_system_schema
+import v1.webroot.validate_webroot_schema as webroot_system_schema
 
 validate_dict = {
     "dynamic_lists": validate_dynamic_lists,
     "policy_manager": validatepolicy,
     "captiveportal": validate_captiveportal,
-    "system_schema": validate_system_schema
+    "system_schema": validate_system_schema,
+    "webroot_schema": webroot_system_schema
 }
 
 def main():
