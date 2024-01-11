@@ -7,7 +7,7 @@
         "webroot"
     ],
     "properties": {
-        "dhcp": {
+        "webroot": {
             "$ref": "webroot_schema.json#/definitions/webroot"
         }
     }
