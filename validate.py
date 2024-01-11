@@ -16,6 +16,7 @@ import v1.files.validate_files as validate_files
 import v1.firewall.validate_firewall as validate_firewall
 import v1.geoip.validate_geoip as validate_geoip
 import v1.ipsec_server.validate_ipsec_server as validate_ipsec_server
+import v1.logger.validate_logger as validate_logger
 import v1.network.validate_network as validate_network
 import v1.policy_manager.validatepolicy as validatepolicy
 import v1.reports.validate_reports as validate_reports
@@ -41,6 +42,7 @@ validate_dict = {
     "firewall_schema": validate_firewall,
     "geoip_schema": validate_geoip,
     "ipsec_server_schema": validate_ipsec_server,
+    "logger_schema" : validate_logger,
     # disabled until https://awakesecurity.atlassian.net/browse/MFW-4120 is fixed
     # "network_schema": validate_network,
     "policy_manager": validatepolicy,

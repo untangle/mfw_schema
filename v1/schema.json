@@ -80,6 +80,9 @@
         },
         "quota_manager": {
             "$ref": "file:quota_manager/quota_manager_schema.json#/definitions/quota_manager_settings"
+        },
+        "logger":{
+            "$ref": "file:logger/logger_schema.json#/definitions/logger"
         }
     },
     "definitions": {}

@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "logger": {
+            "type":"object",
+            "description": "Logger settings",
+            "additionalProperties": false,
+            "properties": {
+                "alertd" :{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "cls" :{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "discoverd" :{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "packetd":{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "reportd" :{
+                    "$ref": "#/definitions/logger_setting" 
+                },
+                "restd": {
+                    "$ref": "#/definitions/logger_setting" 
+                }
+            },
+            "required": [
+                "alertd",
+                "cls",
+                "discoverd",
+                "packetd",
+                "reportd",
+                "restd"
+            ]
+        },
+        "logger_setting" :{
+            "type":"object",
+            "additionalProperties": {
+                "type":"object",
+                "description": "The logger settings for a package or function",
+                "additionalProperties": false,
+                "properties": {
+                    "logname" : {
+                        "type": "string",
+                        "description": "The logging level",
+                        "enum": [
+                            "EMERG", 
+                            "ALERT", 
+                            "CRIT", 
+                            "ERROR", 
+                            "WARN", 
+                            "NOTICE", 
+                            "INFO", 
+                            "DEBUG", 
+                            "TRACE"
+                        ]
+                    }
+                },
+                "required": ["logname"]
+            }
+        }
+    }
+}
