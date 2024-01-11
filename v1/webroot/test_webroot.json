@@ -1,0 +1,6 @@
+{
+  "webroot": {
+   "cacheEnabled": true,
+   "cacheTtlSeconds": 30
+  }
+}
