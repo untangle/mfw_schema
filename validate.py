@@ -28,6 +28,7 @@ import v1.uris.validate_uris as validate_uris
 import v1.wan.validate_wan as validate_wan
 import v1.webfilter.validate_webfilter as validate_webfilter
 import v1.quota_manager.validate_quota_manager as validate_quota_manager
+import v1.webroot.validate_webroot_schema as webroot_system_schema
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -37,7 +38,7 @@ validate_dict = {
     "dhcp_schema": validate_dhcp,
     "discovery_schema": validate_discovery,
     "dns_schema": validate_dns,
-    "dynamic_lists": validate_dynamic_lists,  
+    "dynamic_lists": validate_dynamic_lists,
     "files_schema": validate_files,
     "firewall_schema": validate_firewall,
     "geoip_schema": validate_geoip,
@@ -55,8 +56,8 @@ validate_dict = {
     "uris_schema": validate_uris,
     "wan_schema": validate_wan,
     "webfilter_schema": validate_webfilter,
-    "system_schema": validate_system_schema,
-    "quota_manager": validate_quota_manager
+    "quota_manager": validate_quota_manager,
+    "webroot_schema": webroot_system_schema
 }
 
 def main():
