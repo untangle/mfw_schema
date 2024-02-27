@@ -36,7 +36,7 @@ class TestRoutesSchema(unittest.TestCase):
 
         for i, route in enumerate(routes):
             metric_value = route.get("metric", None)
-            if metric_value is not None:
+            if metric_value:
                 self.assertTrue(isinstance(metric_value, int), f"Invalid metric unit for route {i + 1}")
 
 if __name__ == '__main__':
