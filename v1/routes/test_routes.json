@@ -5,14 +5,16 @@
         "description": "route 1",
         "interfaceId": 0,
         "network": "vlan",
-        "nextHop": "192.168.1.1"
+        "nextHop": "192.168.1.1",
+        "metric": 0
       },
       {
         "enabled": true,
         "description": "route 2",
         "interfaceId": 1,
         "network": "wlan",
-        "nextHop": "192.168.1.2"
+        "nextHop": "192.168.1.2",
+         "metric": 0
       }
    ]
 

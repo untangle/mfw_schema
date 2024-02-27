@@ -34,5 +34,10 @@ class TestRoutesSchema(unittest.TestCase):
         routes = self.json_data["routes"]
         self.assertEqual(len(routes), 2,  "Invalid routes content")
 
+        for i, route in enumerate(routes):
+            metric_value = route.get("metric", None)
+            if metric_value is not None:
+                self.assertTrue(isinstance(metric_value, int), f"Invalid metric unit for route {i + 1}")
+
 if __name__ == '__main__':
     unittest.main()
