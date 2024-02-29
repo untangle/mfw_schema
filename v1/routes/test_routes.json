@@ -14,7 +14,7 @@
          "interfaceId": 1,
          "network": "wlan",
          "nextHop": "192.168.1.2",
-          "metric": 0
+         "metric": 0
        }
     ]
  
