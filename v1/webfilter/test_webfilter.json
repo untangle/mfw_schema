@@ -1,0 +1,50 @@
+{
+    "webfilter": {
+        "enabled": true,
+        "categories": [
+            {
+                "enabled": true,
+                "flagged": true,
+                "id": 1
+            },
+            {
+                "enabled": false,
+                "flagged": false,
+                "id": 2
+            }
+        ],
+        "blockList": [
+            {
+                "enabled": true,
+                "description": "block 1",
+                "exact": true,
+                "flagged": false,
+                "name": "1"
+            },
+            {
+                "enabled": false,
+                "description": "block 2",
+                "exact": false,
+                "flagged": false,
+                "name": "2"
+            }
+        ],
+        "passList": [
+            {
+                "enabled": true,
+                "name": "1",
+                "description": "pass 1",
+                "exact": true,
+                "flagged": false
+            },
+            {
+                "enabled": true,
+                "name": "2",
+                "description": "pass 2",
+                "exact": false,
+                "flagged": true
+            }
+        ]
+
+    }
+}

@@ -1,0 +1,46 @@
+{
+   "ipsec_server": {
+    "authentication": {
+      "shared_secret": "1234",
+      "type": "key"
+    },
+    "debug": 1,
+    "enabled": true,
+    "local": [
+      {
+        "gateway": "192.168.1.0",
+        "networks": [
+          {
+            "network": "example",
+            "prefix": 1
+          }
+        ]
+      }
+    ],
+    "phase1": [
+      {
+        "encryption": "RSA",
+        "group": "1",
+        "hash": "xyz"
+      }
+    ],
+    "phase2": [
+      {
+        "encryption": "RSA",
+        "group": "2",
+        "hash": "abc"
+      }
+    ],
+    "remote": [
+      {
+        "gateway": "182.168.3.3",
+        "networks": [
+          {
+            "network": "test",
+            "prefix": 1
+          }
+        ]
+      }
+    ]
+   }
+}

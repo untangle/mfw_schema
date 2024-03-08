@@ -1,0 +1,67 @@
+{
+   "wan": {
+    "policies": [
+        {
+            "enabled": true,
+            "type": "BALANCE",
+            "balance_algorithm": "AVAILABLE_BANDWIDTH",
+            "best_of_metric": "HIGHEST_AVAILABLE_BANDWIDTH",
+            "criteria": [],
+            "description": "policy 1",
+            "interfaces": [
+               {
+                 "interfaceId" : 0
+               }
+            ],
+            "policyId": 1,
+            "readOnly": true
+        },
+        {
+            "enabled": true,
+            "type": "BEST_OF",
+            "balance_algorithm": "BANDWIDTH",
+            "best_of_metric": "LOWEST_LATENCY",
+            "criteria": [],
+            "description": "policy 2",
+            "interfaces": [
+                {
+                    "interfaceId" : 0
+                }   
+            ],
+            "policyId": 2,
+            "readOnly": false
+        }
+    ],
+    "policy_chains": [
+        {
+            "base": false,
+            "name": "1",
+            "description": "chain 1",
+            "editable": true,
+            "hook": "forward",
+            "priority": 1,
+            "rules": [
+                {
+                    "action": {
+                        "chain": "1",
+                        "destination": 0,
+                        "dnat_address": "192.168.1.1",
+                        "dnat_port": 3000,
+                        "nft_rule_action": "action",
+                        "policy": 1,
+                        "priority": 1,
+                        "return_action": false,
+                        "snat_address": "192.168.1.2",
+                        "type": "ACCEPT"
+                    },
+                    "conditions": [],
+                    "description": "rule 1",
+                    "enabled": true,
+                    "readOnly": true,
+                    "ruleId": 1
+                }
+            ]
+        }
+    ]
+   }
+}

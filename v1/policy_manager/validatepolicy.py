@@ -1,14 +1,33 @@
 #!/usr/bin/python3
 
 import copy
-import json
 import os
 import unittest
-from pathlib import Path
-import referencing
-import jsonschema
 
-from v1.schema_utils.util import ReferenceRetriever
+from v1.schema_utils.util import SchemaValidator
+
+# The json schema policy fields
+ID_FIELD = "id"
+ACTION_FIELD = "action"
+CONDITIONS_FIELD = "conditions"
+CONDITION_GROUPS_FIELD = "condition_groups"
+CONFIGURATIONS_FIELD = "configurations"
+CONFIGURATION_ID_FIELD = "configuration_id"
+DESCRIPTION_FIELD = "description"
+ENABLED_FIELD = "enabled"
+ITEMS_FIELD = "items"
+NAME_FIELD = "name"
+OBJECTS_FIELD = "objects"
+OBJECT_GROUPS_FIELD = "object_groups"
+OBJECT_FIELD = "object"
+OP_FIELD = "op"
+POLICY_MANAGER_FIELD = "policy_manager"
+POLICY_FIELD = "policy"
+POLICIES_FIELD = "policies"
+RULES_FIELD = "rules"
+TYPE_FIELD = "type"
+VALUE_FIELD = "value"
+
 
 """
 TestPolicyManager tests all parts of the policy manager schema
@@ -31,16 +50,8 @@ class TestPolicyManager(unittest.TestCase):
     json_condition_objs = ""
     json_condition_groups = ""
     json_policies       = ""
-    warning_dict = {
-        "configurations":    {},
-        "condition_objects": {},
-        "condition_groups":  {},
-        "objects":           {},
-        "object_groups":     {},
-        "policies":          {},
-        "rules":             {}
-    }
-    
+    warning_dict = {}
+       
     @classmethod
     def setUpClass(cls):
         """
@@ -48,34 +59,13 @@ class TestPolicyManager(unittest.TestCase):
         fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
         out, so any follow-up tests won't run
         """
+
         current_directory = os.path.dirname(os.path.realpath(__file__))
+        schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
         
-        if "JSON_FILE" in os.environ and os.environ["JSON_FILE"] != "":
-            json_filename = os.environ["JSON_FILE"]
+        if schema_validator.isValid():
+            cls.json_data = schema_validator.getJsonData()
         else:
-            json_filename = os.path.join(current_directory, cls.JSON_FILENAME_DEFAULT)
-            print("WARNING: Using default json filename:" + str(json_filename))
-        with open(json_filename, "r") as json_fp:
-            cls.json_data = json.load(json_fp)
-            
-        if "SCHEMA_FILE" in os.environ and os.environ["SCHEMA_FILE"] != "":
-            schema_filename = os.environ["SCHEMA_FILE"]
-        else:
-            schema_filename = os.path.join(current_directory, cls.SCHEMA_FILENAME_DEFAULT)
-            print("WARNING: Using default schema filename:" + str(schema_filename))
-        with open(schema_filename, "r") as schema_fp:
-            schema_data = json.load(schema_fp)
-
-        schema_file = Path(schema_filename)
-        retriever = ReferenceRetriever(schema_file.parent.resolve())
-        resource = referencing.Resource.from_contents(schema_data)
-
-        try:
-            # Add the resource to a new registry
-            registry = resource @ referencing.Registry(retrieve=retriever.retrieve)  
-            jsonschema.validate(instance=cls.json_data, schema=resource.contents, registry=registry)
-        except Exception as e:
-            print(e)
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
         
         # Sets class variables in case they need to be accessed after initialization, but before tests
@@ -93,14 +83,14 @@ class TestPolicyManager(unittest.TestCase):
         Copies json_data into variables, both before each test and as an initialization
         """
         if cls.json_data:
-            cls.json_policy_manager = copy.deepcopy(cls.json_data["policy_manager"])
-            cls.json_configurations = copy.deepcopy(cls.json_policy_manager["configurations"])
-            cls.json_objects        = copy.deepcopy(cls.json_policy_manager["objects"])
-            cls.json_object_groups  = copy.deepcopy(cls.json_policy_manager["object_groups"])
-            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager["conditions"])
-            cls.json_condition_groups = copy.deepcopy(cls.json_policy_manager["condition_groups"])
-            cls.json_rules          = copy.deepcopy(cls.json_policy_manager["rules"])
-            cls.json_policies       = copy.deepcopy(cls.json_policy_manager["policies"])
+            cls.json_policy_manager = copy.deepcopy(cls.json_data[POLICY_MANAGER_FIELD])
+            cls.json_configurations = copy.deepcopy(cls.json_policy_manager[CONFIGURATIONS_FIELD])
+            cls.json_objects        = copy.deepcopy(cls.json_policy_manager[OBJECTS_FIELD])
+            cls.json_object_groups  = copy.deepcopy(cls.json_policy_manager[OBJECT_GROUPS_FIELD])
+            cls.json_condition_objs = copy.deepcopy(cls.json_policy_manager[CONDITIONS_FIELD])
+            cls.json_condition_groups = copy.deepcopy(cls.json_policy_manager[CONDITION_GROUPS_FIELD])
+            cls.json_rules          = copy.deepcopy(cls.json_policy_manager[RULES_FIELD])
+            cls.json_policies       = copy.deepcopy(cls.json_policy_manager[POLICIES_FIELD])
             
     # ~~~ HELPER METHODS
 
@@ -115,9 +105,9 @@ class TestPolicyManager(unittest.TestCase):
         """
         for possible_orphan in child_ids:
             if possible_orphan not in parent_ids:
-                if "orphans" not in self.warning_dict[key]:
-                    self.warning_dict[key]["orphans"] = []
-                self.warning_dict[key]["orphans"] += [possible_orphan]
+                if key not in self.warning_dict:
+                    self.warning_dict[key] = []
+                self.warning_dict[key] += [possible_orphan]
                 
     def get_condition_ids_referenced_in_policies(self):
         """
@@ -132,7 +122,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_policies = []
         for policy in self.json_policies:
-            for condition in policy["conditions"]:
+            for condition in policy[CONDITIONS_FIELD]:
                 ids_in_policies.append(condition)
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_policies))
@@ -150,7 +140,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_policies = []
         for policy in self.json_policies:
-            for rule in policy["rules"]:
+            for rule in policy[RULES_FIELD]:
                 ids_in_policies.append(rule)
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_policies))
@@ -164,11 +154,11 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_rules = []
         for rule in self.json_rules:
-            action = rule["action"]
-            if "configuration_id" in action:
-                ids_in_rules.append(action["configuration_id"])
-            elif "policy" in action:
-                ids_in_rules.append(action["policy"])
+            action = rule[ACTION_FIELD]
+            if CONFIGURATION_ID_FIELD in action:
+                ids_in_rules.append(action[CONFIGURATION_ID_FIELD])
+            elif POLICY_FIELD in action:
+                ids_in_rules.append(action[POLICY_FIELD])
     
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_rules))
@@ -182,7 +172,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_rules = []
         for rule in self.json_rules:
-            ids_in_rules.extend(rule["conditions"])
+            ids_in_rules.extend(rule[CONDITIONS_FIELD])
     
         # we're only looking for matches, so strip duplicates and to make the comparison work
         return list(set(ids_in_rules))
@@ -194,7 +184,7 @@ class TestPolicyManager(unittest.TestCase):
         Returns:
             list: unique list of id's under condition objects
         """
-        ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
+        ids_in_condition_objs = [condition_obj[ID_FIELD] for condition_obj in self.json_condition_objs]
         return list(set(ids_in_condition_objs))
     
     def get_condition_ids_referenced_in_condition_groups(self):
@@ -203,7 +193,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_referenced = []
         for condition_group in self.json_condition_groups:
-            ids_referenced.extend(condition_group["items"])
+            ids_referenced.extend(condition_group[ITEMS_FIELD])
         return ids_referenced
 
     
@@ -216,25 +206,25 @@ class TestPolicyManager(unittest.TestCase):
         and that's enforced by other tests)
         """
         # Test by checking length of list against a set generated by the list (all of whose elements are unique)
-        ids_in_configurations = [configuration["id"] for configuration in self.json_configurations]
+        ids_in_configurations = [configuration[ID_FIELD] for configuration in self.json_configurations]
         self.assertEqual(len(ids_in_configurations), len(set(ids_in_configurations)))
         
-        ids_in_objects = [object["id"] for object in self.json_objects]
+        ids_in_objects = [object[ID_FIELD] for object in self.json_objects]
         self.assertEqual(len(ids_in_objects), len(set(ids_in_objects)))
         
-        ids_in_object_groups = [object_group["id"] for object_group in self.json_object_groups]
+        ids_in_object_groups = [object_group[ID_FIELD] for object_group in self.json_object_groups]
         self.assertEqual(len(ids_in_object_groups), len(set(ids_in_object_groups)))
         
-        ids_in_condition_objs = [condition_obj["id"] for condition_obj in self.json_condition_objs]
+        ids_in_condition_objs = [condition_obj[ID_FIELD] for condition_obj in self.json_condition_objs]
         self.assertEqual(len(ids_in_condition_objs), len(set(ids_in_condition_objs)))
         
-        ids_in_condition_groups = [condition_group["id"] for condition_group in self.json_condition_groups]
+        ids_in_condition_groups = [condition_group[ID_FIELD] for condition_group in self.json_condition_groups]
         self.assertEqual(len(ids_in_condition_groups), len(set(ids_in_condition_groups)))
         
-        ids_in_policies = [policy["id"] for policy in self.json_policies]
+        ids_in_policies = [policy[ID_FIELD] for policy in self.json_policies]
         self.assertEqual(len(ids_in_policies), len(set(ids_in_policies)))
 
-        ids_in_rules = [rule["id"] for rule in self.json_rules]
+        ids_in_rules = [rule[ID_FIELD] for rule in self.json_rules]
         self.assertEqual(len(ids_in_rules), len(set(ids_in_rules)))
 
     def test_condition_ids_in_policies_rules_condition_groups(self):
@@ -247,8 +237,8 @@ class TestPolicyManager(unittest.TestCase):
         ids_referenced = list(set(ids_referenced))
             
         # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
-        ids_in_conditions = [condition["id"] for condition in self.json_condition_objs]
-        ids_in_conditions += [condition["id"] for condition in self.json_condition_groups]
+        ids_in_conditions = [condition[ID_FIELD] for condition in self.json_condition_objs]
+        ids_in_conditions += [condition[ID_FIELD] for condition in self.json_condition_groups]
         ids_in_conditions = list(set(ids_in_conditions))
 
         # check that all id's under policies are also under configurations
@@ -264,7 +254,7 @@ class TestPolicyManager(unittest.TestCase):
         """
         ids_in_policies = self.get_rule_ids_in_policies()
             
-        ids_in_rules = [rule["id"] for rule in self.json_rules]
+        ids_in_rules = [rule[ID_FIELD] for rule in self.json_rules]
         
         # check that all id's under policies are also under condition objects
         ids_contained = all(i in ids_in_rules for i in ids_in_policies)
@@ -281,7 +271,7 @@ class TestPolicyManager(unittest.TestCase):
         ids_in_rules = self.get_configuration_ids_in_rules()
             
         # ids in configurations are not a list, so grabbing them is easier. Strip duplicates like above.
-        ids_in_configurations = [configuration["id"] for configuration in self.json_configurations]
+        ids_in_configurations = [configuration[ID_FIELD] for configuration in self.json_configurations]
         ids_in_configurations = list(set(ids_in_configurations))
         
         # check that all id's under policies are also under configurations
@@ -289,7 +279,7 @@ class TestPolicyManager(unittest.TestCase):
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between rulesand configurations.")
         
         # orphans the other way around are stored as warnings and printed later
-        self.warnings_add_orphan(ids_in_configurations, ids_in_rules, "configurations")
+        self.warnings_add_orphan(ids_in_configurations, ids_in_rules, CONFIGURATIONS_FIELD)
         
     def test_object_ids_in_condition_objs_or_groups(self):
         """
@@ -299,15 +289,15 @@ class TestPolicyManager(unittest.TestCase):
         # grab group ids from condition objs, which are individually nested within conditions
         ids_referenced = []
         for condition_obj in self.json_condition_objs:
-            if "items" in condition_obj:
-                for condition in condition_obj["items"]:
-                    if "object" in condition:
-                        ids_referenced += condition["object"]
+            if ITEMS_FIELD in condition_obj:
+                for condition in condition_obj[ITEMS_FIELD]:
+                    if OBJECT_FIELD in condition:
+                        ids_referenced += condition[OBJECT_FIELD]
 
         # ojects can also be referenced by object groups so this is needed to prevent orphans
         ids_refed_in_object_groups = []
         for object_group in self.json_object_groups:
-            ids_refed_in_object_groups.extend(object_group["items"])
+            ids_refed_in_object_groups.extend(object_group[ITEMS_FIELD])
 
         ids_referenced.extend(ids_refed_in_object_groups)
 
@@ -315,8 +305,8 @@ class TestPolicyManager(unittest.TestCase):
         ids_referenced = list(set(ids_referenced))
         
         # ids in groups are not a list, so grabbing them is easier. Strip duplicates like above.
-        ids_in_objects = [object["id"] for object in self.json_objects]
-        ids_in_objects += [ogroup["id"] for ogroup in self.json_object_groups]
+        ids_in_objects = [object[ID_FIELD] for object in self.json_objects]
+        ids_in_objects += [ogroup[ID_FIELD] for ogroup in self.json_object_groups]
 
         ids_in_objects = list(set(ids_in_objects))
 
@@ -325,18 +315,18 @@ class TestPolicyManager(unittest.TestCase):
         self.assertTrue(ids_contained, "Failed due to a mismatch in ids between condition objs and objects")
         
         # orphans the other way around are stored as warnings and printed late
-        self.warnings_add_orphan(ids_in_objects, ids_referenced, "objects")
+        self.warnings_add_orphan(ids_in_objects, ids_referenced, OBJECTS_FIELD)
         
     def test_group_types(self):
         """
         Tests the types of each group to make sure that they are the correct format
         """
         for group in self.json_object_groups:
-            idlen = len(group["id"])
-            group_items = group["items"]
+            idlen = len(group[ID_FIELD])
+            group_items = group[ITEMS_FIELD]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
-            group_type = group["type"]
+            group_type = group[TYPE_FIELD]
             valid_groups = ["ConditionGroup", "GeoipObjectGroup", "IpAddressObjectGroup", "ServiceEndpointObjectGroup"]
             isValid = group_type in valid_groups,
             self.assertTrue(isValid, "Failed because Object Group had unexpected type: " + group_type)
@@ -347,8 +337,8 @@ class TestPolicyManager(unittest.TestCase):
                                     " in group's items: " +  str(group_items))
                     
         for group in self.json_condition_groups:
-            idlen = len(group["id"])
-            group_items = group["items"]
+            idlen = len(group[ID_FIELD])
+            group_items = group[ITEMS_FIELD]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
             self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
             for item in group_items:
@@ -363,7 +353,6 @@ class TestPolicyManager(unittest.TestCase):
         Prints the validated policy manager string. Should only print if validation was successful.
         """
         try:
-            print(cls.warning_dict)
             printer = PolicyManagerStringBuilder(cls.json_policies, cls.json_configurations, cls.json_condition_objs, 
                                                  cls.json_condition_groups, cls.json_objects, cls.json_object_groups,
                                                  cls.json_rules,  cls.warning_dict)
@@ -372,7 +361,8 @@ class TestPolicyManager(unittest.TestCase):
         except KeyError as e:
             print("ERROR: Failed to print schema details after tests. Validation should also have failed.")
             print("\tThis error was: 'KeyError: " + str(e) + "'")
-        
+   
+
 """
 PolicyManagerStringBuilder builds strings out of the passed .json information, composed of policies, configurations, 
 condition objects, and groups. The intent is two-fold:
@@ -386,12 +376,12 @@ faster)
 Returns:
     PolicyManagerStringBuilder type: An object which returns built strings on the objects given to it
 """
+
+
 class PolicyManagerStringBuilder():
-    def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, warnings_dict):
+    def __init__(self, policies, configurations, condition_objs, condition_groups, objects, object_groups, rules, orphan_warnings):
         """
         Initialize the object with the dictionaries to be printed, grabbed directly from the .json
-        # NOTE spacing is done here with \t characters. However, the same can be done more cleanly with built-in Python
-        # str methods: https://docs.python.org/3/library/stdtypes.html#str.ljust
 
         Args:
             policies (dict): A policy, which has id, name, description, enabled, configurations, and condition objects
@@ -408,15 +398,14 @@ class PolicyManagerStringBuilder():
         self.objects = objects
         self.object_groups = object_groups
         self.rules = rules
-        self.warnings_dict = warnings_dict
+        self.orphans_warnings = orphan_warnings
         
-    def buildAllPoliciesString(self, prefix='', getNestedInfo=True, getWarnings=True):
+    def buildAllPoliciesString(self, getNestedInfo=True, getWarnings=True):
         """
         Builds a string that represents all policies, in multiple lines. Call this to print the entirety of the policy 
         manager.
 
         Args:
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be 
                                             returned. Defaults to True.
 
@@ -426,178 +415,173 @@ class PolicyManagerStringBuilder():
         """
         policies_arr = []
         for policy in self.policies:
-            policies_arr.append(self.buildPolicyString(policy, prefix=prefix, getNestedInfo=getNestedInfo))
+            policies_arr.append(self.buildPolicyString(policy, getNestedInfo=getNestedInfo))
         if getWarnings:
-            for obj, warnings in self.warnings_dict.items():
-                if "orphans" in warnings:
-                    policies_arr.append(' '.join(["WARNING: Orphans found in", obj, ":", str(warnings["orphans"])]))
+            for obj, warnings in self.orphans_warnings.items():
+                    policies_arr.append(' '.join(["WARNING: Orphans found in", obj, ":", str(warnings)]))
         return '\n'.join(policies_arr)
             
-    def buildPolicyString(self, policy, prefix='', getNestedInfo=True):
+    def buildPolicyString(self, policy, getNestedInfo=True):
         """
-        Builds and returns a string that represents a policy and its properties. If getNestedInfo is included, will 
+        Builds and returns a string that represents a policy and its propertie                                                                                          s. If getNestedInfo is included, will 
         print configurations and condition objects (and their nested info) linked to the "id" of the policy
 
         Args:
             policy (dict): The dict of a policy grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (configurations and condition objects) should be 
                                             returned. Defaults to True.
 
         Returns:
             string: A string representation of a policy and its properties
         """
-        policy_arr = [' '.join([prefix, "Policy:", policy["id"], "\tName:", policy["name"], "\tDesc:", policy["description"], "\tEnabled:", str(policy["enabled"])])]
+        
+        policy_json = {
+            "Policy": policy["id"],
+            "Name": policy["name"],
+            "Desc": policy["description"],
+            "Enabled": str(policy["enabled"]),
+            "Rules": [],
+            "Conditions": []
+        }
+        
         if getNestedInfo:
             if "rules" in policy:
                 for rule_id in policy["rules"]:
-                    policy_arr.append("\Rule:")
+                    rule_json=[]
                     for rule in self.rules:
-                        if rule["id"] == rule_id:
-                            action = rule["action"]
-                            if "configuration_id" in action:
+                        if rule[ID_FIELD] == rule_id:
+                            action = rule[ACTION_FIELD]
+                            if CONFIGURATION_ID_FIELD in action:
                                 for configuration in self.configurations:
                                     if configuration["id"] == action["configuration_id"]:
-                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                        rule_json.append(self.buildConfigurationString(configuration))
                                         break
-                            if "policy" in action:
+                            if POLICY_FIELD in action:
                                 for configuration in self.configurations:
                                     if configuration["id"] == action["policy"]:
-                                        policy_arr.append(self.buildConfigurationString(configuration, prefix="\t\t"))
+                                        rule_json.append(self.buildConfigurationString(configuration))
                                         break
-                            if "conditions" in rule:
-                                for condition_id in rule["conditions"]:
+                            if CONDITIONS_FIELD in rule:
+                                for condition_id in rule[CONDITIONS_FIELD]:
                                     for condition_obj in self.condition_objs:
                                         if condition_obj["id"] == condition_id:
-                                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix="\t\t"))
+                                            rule_json.append(self.buildConditionObjString(condition_obj))
                                             break
                                     for condition_obj in self.condition_groups:
                                         if condition_obj["id"] == condition_id:
-                                            policy_arr.append(self.buildConditionGroupString(condition_obj, prefix="\t\t"))
+                                            rule_json.append(self.buildConditionGroupString(condition_obj))
                                             break
+                    policy_json["Rules"].append({"Rule" : rule_json})
             if "conditions" in policy:
+                conditions_json = []
                 for condition_id in policy["conditions"]:
                     for condition_obj in self.condition_objs:
                         if condition_obj["id"] in condition_id:
-                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
+                            conditions_json.append(self.buildConditionObjString(condition_obj))
                     for condition_obj in self.condition_groups:
                         if condition_obj["id"] in condition_id:
-                            policy_arr.append(self.buildConditionObjString(condition_obj, prefix='\t'))
-        return '\n'.join(policy_arr)
-                
-    def buildAllConfigurationsString(self, prefix=''):
-        """
-        Builds a string that represents all configurations, in multiple lines
-
-        Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t Defaults to ''.
-
-        Returns:
-            string: A string representation of all configurations and their properties
-        """
-        configurations_arr = []
-        for configuration in self.configurations:
-            configurations_arr.append(self.buildConfigurationString(configuration, prefix=prefix))
-        return '\n'.join(configurations_arr)
+                            conditions_json.append(self.buildConditionObjString(condition_obj))
+                policy_json["Conditions"] = conditions_json
         
-    def buildConfigurationString(self, configuration, prefix=''):
+        return self.convert_json_to_string(policy_json)                    
+        
+    def buildConfigurationString(self, configuration):
         """
-        Builds and returns a string that represents a configuration and its properties
+        Builds and returns a object that represents a configuration and its properties
 
         Args:
             configuration (dict): The dict of a configuration grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
 
         Returns:
-            string: A string representation of a configuration and its properties
+            dict: A object representation of a configuration and its properties
         """
-        return ' '.join([prefix, "Config:", configuration["id"], "\tName:", configuration["name"], "\tDesc:", configuration["description"]])
-    
-    def buildAllConditionObjsString(self, prefix='', getNestedInfo=True):
+        
+        return {
+            "Config": {
+                "ID": configuration["id"], 
+                "Name" : configuration["name"], 
+                "Desc": configuration["description"]
+            }
+        }
+                
+    def buildConditionObjString(self, condition_obj):
         """
-        Builds and returns a string that represents all condition objects, in multiple lines
-
-        Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t. Defaults to ''.
-            getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
-                                            True.
-
-        Returns:
-            string: A string representation of all condition objects and their properties
-        """
-        condition_objs_arr = []
-        for condition_obj in self.condition_objs:
-            condition_objs_arr.append(self.buildConditionObjString(condition_obj, prefix=prefix, getNestedInfo=getNestedInfo))
-        return '\n'.join(condition_objs_arr)
-            
-    def buildConditionObjString(self, condition_obj, prefix='', getNestedInfo=True):
-        """
-        Builds and returns a string that represents a condition object and its properties. Prints more detailed 
+        Builds and returns a object that represents a condition object and its properties. Prints more detailed 
         information for the conditions in the condition object. If getNestedInfo is included, will print groups linked
         to the "groupid" of the conditions
 
         Args:
             condition object (dict): A dict of a condition object grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
                                             True.
 
         Returns:
-            string: A string representation of a condition object and its properties
+            dict: A object representation of a condition object and its properties
         """
-        condition_obj_arr = [' '.join([prefix, "Condition Object:", condition_obj["id"], "\tName:,", condition_obj["name"], "\tDescriptions:", condition_obj["description"]])]
+        
+        condition_json = {
+            "ID": condition_obj["id"],
+            "Name": condition_obj["name"], 
+            "Descriptions": condition_obj["description"],
+            "Conditions" : []
+        }
+        
         for condition in condition_obj["items"]:
             if "value" in condition:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], str(condition["value"])]))
+                condition_json["Conditions"].append({"Condition" : ' '.join([condition["type"], condition["op"], str(condition["value"])])})
             else:
-                condition_obj_arr.append(' '.join([prefix + '\t', "Condition:", condition["type"], condition["op"], "\tObjects:", str(condition["object"])]))       
-        return '\n'.join(condition_obj_arr)
+                condition_json["Conditions"].append({"Condition" : ' '.join([condition["type"], condition["op"] +",", "Objects :", str(condition["object"])])})
+        
+        return { "Condition Object" : condition_json}
 
-    def buildConditionGroupString(self, condition_obj, prefix='', getNestedInfo=True):
+    def buildConditionGroupString(self, condition_obj):
         """
-        Builds and returns a string that represents a condition group and its properties. 
+        Builds and returns a object that represents a condition group and its properties. 
 
         Args:
             condition group (dict): A dict of a condition object grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
             getNestedInfo (bool, optional): Whether nested info (groups in this case) should be returned. Defaults to 
                                             True.
 
         Returns:
             string: A string representation of a condition object and its properties
         """
-        condition_group_array = [' '.join([prefix, "Condition Group:", condition_obj["id"], "\tName:,", condition_obj["name"], "\tDescriptions:", condition_obj["description"]])]
-        for condition in condition_obj["items"]:
-            condition_group_array.append(' '.join([prefix + '\t', "ConditionID:", condition]))
-        return '\n'.join(condition_group_array)
-                
-    def buildAllGroupsString(self, prefix=''):
-        """
-        Builds and returns a string that represents all groups, in multiple lines
+        condition_group = {
+             "Condition Group": condition_obj["id"],
+             "Name": condition_obj["name"],
+             "Descriptions": condition_obj["description"],
+             "ConditionIDs": str(condition_obj["items"])
+        }
+               
+        return condition_group
+
+    def convert_json_to_string(self, input, indent=0):
+        """ 
+            Converts a json to string, but removes curly braces, brackets and quotes.
+            It recursively procces each field from json. If the field is dictionary or list, it displayes each member on sepparate line.
+            At each new function call, the indentation is increased.
 
         Args:
-            prefix (str, optional): A string to add to the beginning of each string. Usually \t. Defaults to ''.
+            input (json): The input object to format.
+            indent (int, optional): Number of spaces added before each line. Defaults to 0.
 
         Returns:
-            string: A string representation of all groups and their properties
+            string: The formated string
         """
-        groups_arr = []
-        for group in self.groups:
-            groups_arr.append(self.buildGroupString(group, prefix=prefix))
-        return '\n'.join(groups_arr)
+        if isinstance(input, dict):  
+            lines = []                       
+            for k, v in input.items():
+                # If the value from dict is another dict or list, print key and start on another line
+                if isinstance(v, (dict, list)):
+                    lines.append(f"{k}:\n{self.convert_json_to_string(v, indent + 2)}")
+                else:
+                    lines.append(f"{k}:{v}") 
+            return "\n".join(" " * indent + line for line in lines)
+        elif isinstance(input, list):
+            lines = [self.convert_json_to_string(i, indent + 2) for i in input]
+            return "\n".join(line for line in lines)
+        else:
+            return str(input) 
         
-    def buildGroupString(self, group, prefix=''):
-        """
-        Builds and returns a string that represents a group and its properties
-
-        Args:
-            group (dict): The dict of a group grabbed from the .json
-            prefix (str, optional): A string to add to the beginning of the string. Usually \t. Defaults to ''.
-
-        Returns:
-            string: A string representation of a group and its properties
-        """
-        return ' '.join([prefix, "Group:", group["id"], "\tName:", group["name"], "\tItems:", str(group["items"]), "\tType:", group["type"]])
-
 if __name__ == '__main__':
     unittest.main()
