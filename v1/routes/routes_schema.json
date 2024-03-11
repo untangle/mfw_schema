@@ -30,6 +30,10 @@
                 "nextHop": {
                     "type": "string",
                     "description": "The nexthop/gateway of the static route definition"
+                },
+                "metric": {
+                    "type": "number",
+                    "description": "Specifies the route metric to use"
                 }
             }
         }
