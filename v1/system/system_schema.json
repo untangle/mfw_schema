@@ -17,7 +17,8 @@
                 "setupWizard": { "$ref": "#/definitions/setup_wizard_settings" },
                 "autoUpgrade": { "$ref": "#/definitions/auto_settings" },
                 "autoBackup": { "$ref": "#/definitions/auto_settings" },
-                "logging": { "$ref": "#/definitions/logging" }
+                "logging": { "$ref": "#/definitions/logging" },
+                "databases": { "$ref": "#/definitions/databases_settings" }
             }
         },
         "logging": {
@@ -133,6 +134,57 @@
                     "minimum": 0,
                     "maximum": 59
                 }
+            }
+        },
+        "database_settings": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "database name",
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "uuid for Database",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Database type i.e. MySQL,postgres",
+                    "type": "string"
+                },
+                "enabled": {
+                    "description": "Database enabled/disabled",
+                    "type": "boolean"
+                },
+                "db_server": {
+                    "description": "Remote Host/Server",
+                    "type": "string"
+                },
+                "db_name": {
+                    "description": "Name of the Database.",
+                    "type": "string"
+                },
+                "db_username": {
+                    "description": "Username for the Database.",
+                    "type": "string"
+                },
+                "db_password": {
+                    "description": "Database password for the given user.",
+                    "type": "string"
+                },
+                "db_connection_string": {
+                    "description": "Connection String",
+                    "type": "string"
+                }
+    
+            }
+        },
+        "databases_settings": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/database_settings"
             }
         }
     }
