@@ -146,8 +146,8 @@
                 "description": {
                     "type": "string"
                 },
-                "uuid": {
-                    "description": "uuid for Database",
+                "id": {
+                    "description": "id for Database",
                     "type": "string"
                 },
                 "type": {

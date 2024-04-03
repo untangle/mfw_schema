@@ -4,7 +4,7 @@
         {
             "name": "postgres-connection",
             "description": "external postgres DB",
-            "uuid": "5aeaded8-074e-40b7-8421-5366a2550e11",
+            "id": "5aeaded8-074e-40b7-8421-5366a2550e11",
             "type": "postgres",
             "enabled": true,
             "db_server": "123.456.789.4",
