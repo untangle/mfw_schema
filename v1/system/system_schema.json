@@ -136,6 +136,12 @@
                 }
             }
         },
+        "database_list_settings": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/database_config_settings"
+            }
+        },
         "database_config_settings": {
             "type": "object",
             "properties": {
@@ -184,12 +190,6 @@
                     "type": "string"
                 }
     
-            }
-        },
-        "database_list_settings": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/database_config_settings"
             }
         }
     }
