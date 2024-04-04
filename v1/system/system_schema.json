@@ -136,7 +136,7 @@
                 }
             }
         },
-        "database_settings": {
+        "database_config_settings": {
             "type": "object",
             "properties": {
                 "name": {
@@ -189,7 +189,7 @@
         "databases_settings": {
             "type": "array",
             "items": {
-                "$ref": "#/definitions/database_settings"
+                "$ref": "#/definitions/database_config_settings"
             }
         }
     }
