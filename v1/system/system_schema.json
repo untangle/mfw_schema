@@ -18,7 +18,7 @@
                 "autoUpgrade": { "$ref": "#/definitions/auto_settings" },
                 "autoBackup": { "$ref": "#/definitions/auto_settings" },
                 "logging": { "$ref": "#/definitions/logging" },
-                "databases": { "$ref": "#/definitions/databases_settings" }
+                "databases": { "$ref": "#/definitions/database_list_settings" }
             }
         },
         "logging": {
@@ -186,7 +186,7 @@
     
             }
         },
-        "databases_settings": {
+        "database_list_settings": {
             "type": "array",
             "items": {
                 "$ref": "#/definitions/database_config_settings"
