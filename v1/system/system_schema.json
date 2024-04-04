@@ -140,14 +140,15 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "description": "database name",
+                    "description": "DB Connection name (this will be shown on UI)",
                     "type": "string"
                 },
                 "description": {
+                    "description": "Additional description for the DB Connection",
                     "type": "string"
                 },
                 "id": {
-                    "description": "id for Database",
+                    "description": "UUID for Database (auto-generated)",
                     "type": "string"
                 },
                 "type": {
@@ -155,7 +156,7 @@
                     "type": "string"
                 },
                 "enabled": {
-                    "description": "Database enabled/disabled",
+                    "description": "Database Connection enabled/disabled",
                     "type": "boolean"
                 },
                 "db_server": {
@@ -169,6 +170,10 @@
                 "db_username": {
                     "description": "Username for the Database.",
                     "type": "string"
+                },
+                "db_port": {
+                    "description": "Database Port",
+                    "type": "integer"
                 },
                 "db_password": {
                     "description": "Database password for the given user.",

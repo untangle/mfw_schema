@@ -10,6 +10,7 @@
             "db_server": "123.456.789.4",
             "db_name": "clientDetails",
             "db_username": "dev",
+            "db_port": 5023,
             "db_password": "S@mple#",
             "db_connection_string": "postgresql://dev:S@mple#@123.456.789.4/clientDetails"
         }
