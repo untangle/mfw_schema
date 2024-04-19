@@ -7,7 +7,7 @@
         "databases"
     ],
     "properties": {
-        "system": {
+        "databases": {
             "$ref": "databases_schema.json#/definitions/databases_settings"
         }
     }

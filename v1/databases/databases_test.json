@@ -11,7 +11,8 @@
             "db_username": "dev",
             "db_port": 5023,
             "db_password": "S@mple#",
-            "db_connection_string": "postgresql://dev:S@mple#@123.456.789.4/clientDetails"
+            "db_connection_string": "postgresql://dev:S@mple#@123.456.789.4/clientDetails",
+            "default": true
         }
     ]
 }

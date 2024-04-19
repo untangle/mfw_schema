@@ -58,7 +58,7 @@
         {
             "label": "Test databases",
             "type": "shell",
-            "command": "./validate.py databases v1/databases/test_schema.json v1/databases/databases_test.json",
+            "command": "./validate.py databases_schema v1/databases/test_schema.json v1/databases/databases_test.json",
             "group": {
                 "kind": "test",
                 "isDefault": true

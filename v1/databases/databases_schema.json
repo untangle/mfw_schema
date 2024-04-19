@@ -26,7 +26,12 @@
                 },
                 "type": {
                     "description": "Database type i.e. MySQL,postgres",
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "sqlite",
+                        "mysql",
+                        "postgres"
+                    ]
                 },
                 "enabled": {
                     "description": "Database Connection enabled/disabled",
@@ -55,6 +60,10 @@
                 "db_connection_string": {
                     "description": "Connection String",
                     "type": "string"
+                },
+                "default": {
+                    "description": "Flag which determines if the database is default",
+                    "type": "boolean"
                 }
     
             }
