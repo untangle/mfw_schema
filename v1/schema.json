@@ -83,6 +83,9 @@
         },
         "logger":{
             "$ref": "file:logger/logger_schema.json#/definitions/logger"
+        },
+        "databases": {
+            "$ref": "file:databases/databases_schema.json#/definitions/databases_settings"
         }
     },
     "definitions": {}

@@ -8,6 +8,7 @@ import v1.accounts.validate_accounts as validate_accounts
 import v1.application_control.validate_application_control as validate_application_control
 import v1.captiveportal.validate_captiveportal as validate_captiveportal
 import v1.dashboard.validate_dashboard as validate_dashboard
+import v1.databases.validate_databases_schema as validate_databases
 import v1.dhcp.validate_dhcp as validate_dhcp
 import v1.discovery.validate_discovery as validate_discovery
 import v1.dns.validate_dns as validate_dns
@@ -57,7 +58,8 @@ validate_dict = {
     "wan_schema": validate_wan,
     "webfilter_schema": validate_webfilter,
     "quota_manager": validate_quota_manager,
-    "webroot_schema": webroot_system_schema
+    "webroot_schema": webroot_system_schema,
+    "databases_schema": validate_databases
 }
 
 def main():
