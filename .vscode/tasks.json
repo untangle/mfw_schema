@@ -54,8 +54,16 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Test databases",
+            "type": "shell",
+            "command": "./validate.py databases v1/databases/test_schema.json v1/databases/databases_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
-
     ],
     "inputs": [
         {
@@ -99,7 +107,8 @@
                 "./v1/wan/wan_schema.json",
                 "./v1/webfilter/webfilter_schema.json",
                 "./v1/captiveportal/captiveportal_schema.json",
-                "./v1/quota_manager/quota_manager_schema.json"
+                "./v1/quota_manager/quota_manager_schema.json",
+                "./v1/databases/databases_schema.json"
             ],
             "default": ""
         },
@@ -112,7 +121,8 @@
                 "./v1/dynamic_lists/dynamic_lists_test.json",
                 "./v1/policy_manager/test_settings.json",
                 "./v1/captiveportal/captiveportal_test.json",
-                "./v1/quota_manager/quota_manager_test.json"
+                "./v1/quota_manager/quota_manager_test.json",
+                "./v1/databases/databases_test.json"
             ],
             "default": ""
         }

@@ -1,0 +1,17 @@
+{
+    "databases": [
+        {
+            "name": "postgres-connection",
+            "description": "external postgres DB",
+            "id": "5aeaded8-074e-40b7-8421-5366a2550e11",
+            "type": "postgres",
+            "enabled": true,
+            "db_server": "123.456.789.4",
+            "db_name": "clientDetails",
+            "db_username": "dev",
+            "db_port": 5023,
+            "db_password": "S@mple#",
+            "db_connection_string": "postgresql://dev:S@mple#@123.456.789.4/clientDetails"
+        }
+    ]
+}

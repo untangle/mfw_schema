@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:databases_schema.json",
+    "definitions": {
+        "databases_settings": {
+            "type": "array",
+            "description": "Database settings",
+            "items": {
+                "$ref": "#/definitions/database_config_settings"
+            }
+        },
+        "database_config_settings": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "DB Connection name (this will be shown on UI)",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Additional description for the DB Connection",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "UUID for Database (auto-generated)",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Database type i.e. MySQL,postgres",
+                    "type": "string"
+                },
+                "enabled": {
+                    "description": "Database Connection enabled/disabled",
+                    "type": "boolean"
+                },
+                "db_server": {
+                    "description": "Remote Host/Server",
+                    "type": "string"
+                },
+                "db_name": {
+                    "description": "Name of the Database.",
+                    "type": "string"
+                },
+                "db_username": {
+                    "description": "Username for the Database.",
+                    "type": "string"
+                },
+                "db_port": {
+                    "description": "Database Port",
+                    "type": "integer"
+                },
+                "db_password": {
+                    "description": "Database password for the given user.",
+                    "type": "string"
+                },
+                "db_connection_string": {
+                    "description": "Connection String",
+                    "type": "string"
+                }
+    
+            }
+        }
+    }
+}
