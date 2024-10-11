@@ -1,5 +1,5 @@
 {
-    "Denialofservice":{
+    "denialofservice":{
         "enabled": true,    
         "source_sessions_max_tcp": 5000,
         "source_sessions_max_udp": 5000,
