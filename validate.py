@@ -7,9 +7,9 @@ import unittest
 import v1.accounts.validate_accounts as validate_accounts
 import v1.application_control.validate_application_control as validate_application_control
 import v1.captiveportal.validate_captiveportal as validate_captiveportal
-import v1.denialofservice.validate_denialofservice as validate_denialofservice
 import v1.dashboard.validate_dashboard as validate_dashboard
 import v1.databases.validate_databases_schema as validate_databases
+import v1.denialofservice.validate_denialofservice as validate_denialofservice
 import v1.dhcp.validate_dhcp as validate_dhcp
 import v1.discovery.validate_discovery as validate_discovery
 import v1.dns.validate_dns as validate_dns
