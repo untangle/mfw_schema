@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:denialofservice_schema.json",
+    "definitions": {
+        "denialofservice_settings": {
+            "type": "object",
+            "description": "Denial of Service settings",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "source_sessions_max_tcp": {
+                "type": "number",
+                "description": "Maximum number of source TCP sessions"
+              },
+              "source_sessions_max_udp": {
+                "type": "number",
+                "description": "Maximum number of source UDP sessions"
+              },
+              "source_sessions_max_icmp": {
+                "type": "number",
+                "description": "Maximum number of source ICMP sessions"
+              },
+              "source_sessions_max_other": {
+                "type": "number",
+                "description": "Maximum number of other source sessions"
+              },
+              "dest_sessions_max_tcp": {
+                "type": "number",
+                "description": "Maximum number of destination TCP sessions"
+              },
+              "dest_sessions_max_udp": {
+                "type": "number",
+                "description": "Maximum number of destination UDP sessions"
+              },
+              "dest_sessions_max_icmp": {
+                "type": "number",
+                "description": "Maximum number of destination ICMP sessions"
+              },
+              "dest_sessions_max_other": {
+                "type": "number",
+                "description": "Maximum number of other destination sessions"
+              },
+              "new_sessions_per_second_tcp": {
+                "type": "number",
+                "description": "New TCP sessions allowed per second"
+              },
+              "new_sessions_per_second_udp": {
+                "type": "number",
+                "description": "New UDP sessions allowed per second"
+              },
+              "new_sessions_per_second_icmp": {
+                "type": "number",
+                "description": "New ICMP sessions allowed per second"
+              },
+              "block_duration": {
+                "type": "number",
+                "description": "Duration to block sessions (in seconds)"
+              },
+              "remove_active_sessions": {
+                "type": "boolean",
+                "description": "Indicates whether to remove active sessions"
+              }
+            }
+                 
+        }
+    }
+}

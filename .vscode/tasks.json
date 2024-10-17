@@ -63,7 +63,16 @@
                 "kind": "test",
                 "isDefault": true
             }
-        }
+        },
+        {
+            "label": "Test denialofservice",
+            "type": "shell",
+            "command": "./validate.py denialofservice v1/denialofservice/test_schema.json v1/denialofservice/denialofservice_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ],
     "inputs": [
         {
