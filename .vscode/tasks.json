@@ -117,7 +117,8 @@
                 "./v1/webfilter/webfilter_schema.json",
                 "./v1/captiveportal/captiveportal_schema.json",
                 "./v1/quota_manager/quota_manager_schema.json",
-                "./v1/databases/databases_schema.json"
+                "./v1/databases/databases_schema.json",
+                "./v1/denialofservice/denialofservice_schema.json"
             ],
             "default": ""
         },
@@ -131,7 +132,8 @@
                 "./v1/policy_manager/test_settings.json",
                 "./v1/captiveportal/captiveportal_test.json",
                 "./v1/quota_manager/quota_manager_test.json",
-                "./v1/databases/databases_test.json"
+                "./v1/databases/databases_test.json",
+                "./v1/denialofservice/denialofservice_test.json"
             ],
             "default": ""
         }
