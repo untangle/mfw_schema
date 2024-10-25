@@ -21,7 +21,7 @@
                 "type": "number",
                 "description": "Maximum number of source ICMP sessions"
               },
-              "source_sessions_max_other": {
+              "source_sessions_max_all": {
                 "type": "number",
                 "description": "Maximum number of other source sessions"
               },
@@ -37,7 +37,7 @@
                 "type": "number",
                 "description": "Maximum number of destination ICMP sessions"
               },
-              "dest_sessions_max_other": {
+              "dest_sessions_max_all": {
                 "type": "number",
                 "description": "Maximum number of other destination sessions"
               },
