@@ -73,6 +73,15 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "Test bypass config",
+            "type": "shell",
+            "command": "./validate.py bypass v1/bypass/test_schema.json v1/bypass/bypass_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ],
     "inputs": [
         {
@@ -118,7 +127,8 @@
                 "./v1/captiveportal/captiveportal_schema.json",
                 "./v1/quota_manager/quota_manager_schema.json",
                 "./v1/databases/databases_schema.json",
-                "./v1/denialofservice/denialofservice_schema.json"
+                "./v1/denialofservice/denialofservice_schema.json",
+                "./v1/bypass/bypass_schema.json"
             ],
             "default": ""
         },
@@ -133,7 +143,8 @@
                 "./v1/captiveportal/captiveportal_test.json",
                 "./v1/quota_manager/quota_manager_test.json",
                 "./v1/databases/databases_test.json",
-                "./v1/denialofservice/denialofservice_test.json"
+                "./v1/denialofservice/denialofservice_test.json",
+                "./v1/bypass/bypass_test.json"
             ],
             "default": ""
         }
