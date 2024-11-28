@@ -74,7 +74,7 @@
             }
         },
         {
-            "label": "Test bypass config",
+            "label": "Test bypass",
             "type": "shell",
             "command": "./validate.py bypass v1/bypass/test_schema.json v1/bypass/bypass_test.json",
             "group": {
