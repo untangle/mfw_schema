@@ -32,6 +32,9 @@
                         "$ref": "#/definitions/bypass_rules_conditions"
                     }
                 },
+                "log": {
+                    "type": "string"
+                },
                 "action": {
                     "type": "object",
                     "properties": {
@@ -73,6 +76,9 @@
                         "==",
                         "!="
                     ]
+                },
+                "port_protocol": {
+                    "type": "string"
                 }
             }
         }
