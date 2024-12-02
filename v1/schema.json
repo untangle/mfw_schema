@@ -86,6 +86,9 @@
         },
         "databases": {
             "$ref": "file:databases/databases_schema.json#/definitions/databases_settings"
+        },
+        "bypass": {
+            "$ref": "file:bypass/bypass_schema.json#/definitions/bypass_settings"
         }
     },
     "definitions": {}

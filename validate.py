@@ -31,6 +31,7 @@ import v1.wan.validate_wan as validate_wan
 import v1.webfilter.validate_webfilter as validate_webfilter
 import v1.quota_manager.validate_quota_manager as validate_quota_manager
 import v1.webroot.validate_webroot_schema as webroot_system_schema
+import v1.bypass.validate_bypass as validate_bypass
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -61,7 +62,8 @@ validate_dict = {
     "webfilter_schema": validate_webfilter,
     "quota_manager": validate_quota_manager,
     "webroot_schema": webroot_system_schema,
-    "databases_schema": validate_databases
+    "databases_schema": validate_databases,
+    "bypass": validate_bypass
 }
 
 def main():
