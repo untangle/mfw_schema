@@ -1,0 +1,17 @@
+{
+    "dns_filter": {
+        "enabled": true,
+        "logging": {
+            "enabled": true,
+            "filter": "ALL"
+        },
+        "blockList": [
+            {
+                "description": "Test blockList",
+                "enabled": true,
+                "flagged": true,
+                "name": "shopify.com"
+            }
+        ]
+    }
+}
