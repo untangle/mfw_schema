@@ -89,6 +89,9 @@
         },
         "bypass": {
             "$ref": "file:bypass/bypass_schema.json#/definitions/bypass_settings"
+        },
+        "dns_filter": {
+            "$ref": "file:dns_filter/dnsfilter_schema.json#/definitions/dnsfilter_settings"
         }
     },
     "definitions": {}
