@@ -1,0 +1,29 @@
+{
+    "dns_filter": {
+        "enabled": true,
+        "logging": {
+            "enabled": true,
+            "filter": "ALL"
+        },
+        "blockList": [
+            {
+                "description": "Test blockList 1",
+                "enabled": true,
+                "flagged": true,
+                "name": "shopify.com"
+            },
+            {
+                "description": "Test blockList 2",
+                "enabled": true,
+                "flagged": false,
+                "name": "spotify.com"
+            },
+            {
+                "description": "Test blockList 3",
+                "enabled": false,
+                "flagged": false,
+                "name": "arista.com"
+            }
+        ]
+    }
+}
