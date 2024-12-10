@@ -8,23 +8,7 @@
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Enable/Disable the host dns filter service"
-                },
-                "logging": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "description": "Enable/Disable the host dns filter logging"
-                        },
-                        "filter": {
-                            "type": "string",
-                            "enum": [
-                                "ALL",
-                                "BLOCKED"
-                            ]
-                        }
-                    }
+                    "description": "Enable/Disable the dns filter service"
                 },
                 "blockList": {
                     "type": "array",
@@ -44,6 +28,12 @@
                     "type": "boolean"
                 },
                 "flagged": {
+                    "type": "boolean"
+                },
+                "logged": {
+                    "type": "boolean"
+                },
+                "exact": {
                     "type": "boolean"
                 },
                 "name": {

@@ -83,7 +83,7 @@
             }
         },
         {
-            "label": "Test DNSFilter",
+            "label": "Test DNS Filter",
             "type": "shell",
             "command": "./validate.py dns_filter v1/dns_filter/test_schema.json v1/dns_filter/dnsfilter_test.json",
             "group": {
