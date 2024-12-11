@@ -12,15 +12,21 @@
                 },
                 "categories": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/webfilter_categories" }
+                    "items": {
+                        "$ref": "#/definitions/webfilter_categories"
+                    }
                 },
                 "blockList": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/webfilter_list_item" }
+                    "items": {
+                        "$ref": "#/definitions/webfilter_list_item"
+                    }
                 },
                 "passList": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/webfilter_list_item" }
+                    "items": {
+                        "$ref": "#/definitions/webfilter_list_item"
+                    }
                 }
             }
         },
@@ -39,6 +45,10 @@
                 "id": {
                     "type": "number",
                     "description": "Unique identifier of the webfilter category"
+                },
+                "logged": {
+                    "type": "boolean",
+                    "description": "True if webfilter category is being reported, false otherwise"
                 }
             }
         },
@@ -65,6 +75,10 @@
                 "name": {
                     "type": "string",
                     "description": "The list item value to match on"
+                },
+                "logged": {
+                    "type": "boolean",
+                    "description": "True if list item is being reported, false otherwise"
                 }
             }
         }
