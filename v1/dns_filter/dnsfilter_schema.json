@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:dnsfilter_schema.json",
+    "definitions": {
+        "dnsfilter_settings": {
+            "type": "object",
+            "description": "DNS filter settings",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the dns filter service"
+                },
+                "blockList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dnsfilter_blocklist"
+                    }
+                }
+            }
+        },
+        "dnsfilter_blocklist": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "flagged": {
+                    "type": "boolean"
+                },
+                "logged": {
+                    "type": "boolean"
+                },
+                "exact": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

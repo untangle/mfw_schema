@@ -82,6 +82,15 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "Test DNS Filter",
+            "type": "shell",
+            "command": "./validate.py dns_filter v1/dns_filter/test_schema.json v1/dns_filter/dnsfilter_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ],
     "inputs": [
         {
@@ -128,7 +137,9 @@
                 "./v1/quota_manager/quota_manager_schema.json",
                 "./v1/databases/databases_schema.json",
                 "./v1/denialofservice/denialofservice_schema.json",
-                "./v1/bypass/bypass_schema.json"
+                "./v1/bypass/bypass_schema.json",
+                "./v1/dns_filter/dnsfilter_schema.json"
+
             ],
             "default": ""
         },
@@ -144,7 +155,8 @@
                 "./v1/quota_manager/quota_manager_test.json",
                 "./v1/databases/databases_test.json",
                 "./v1/denialofservice/denialofservice_test.json",
-                "./v1/bypass/bypass_test.json"
+                "./v1/bypass/bypass_test.json",
+                "./v1/dns_filter/dnsfilter_test.json"
             ],
             "default": ""
         }
