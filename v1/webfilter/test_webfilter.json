@@ -48,7 +48,8 @@
                 "description": "pass 2",
                 "exact": false,
                 "flagged": true,
-                "logged": true            }
+                "logged": true
+            }
         ]
     }
 }
