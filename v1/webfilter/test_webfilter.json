@@ -5,11 +5,13 @@
             {
                 "enabled": true,
                 "flagged": true,
+                "logged": true,
                 "id": 1
             },
             {
                 "enabled": false,
                 "flagged": false,
+                "logged": false,
                 "id": 2
             }
         ],
@@ -19,6 +21,7 @@
                 "description": "block 1",
                 "exact": true,
                 "flagged": false,
+                "logged": true,
                 "name": "1"
             },
             {
@@ -26,6 +29,7 @@
                 "description": "block 2",
                 "exact": false,
                 "flagged": false,
+                "logged": true,
                 "name": "2"
             }
         ],
@@ -35,16 +39,17 @@
                 "name": "1",
                 "description": "pass 1",
                 "exact": true,
-                "flagged": false
+                "flagged": false,
+                "logged": true
             },
             {
                 "enabled": true,
                 "name": "2",
                 "description": "pass 2",
                 "exact": false,
-                "flagged": true
+                "flagged": true,
+                "logged": true
             }
         ]
-
     }
 }
