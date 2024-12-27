@@ -14,9 +14,9 @@
                     "type": "boolean",
                     "description": "Enable/Disable logging of the the geoip fencing results"
                 },
-                "blockedCountries": {
-                    "type": "array",
-                    "items": { "$ref": "#/definitions/country_settings" }
+                "actions": {
+                    "type": "object",
+                    "items": { "$ref": "#/definitions/actions" }
                 },
                 "passedNetworks": {
                     "type": "array",
@@ -24,9 +24,22 @@
                 }
             }
         },
-        "country_settings": {
-            "type": "string",
-            "description": "Countries to filter on"
+        "actions": {
+            "type": "object",
+            "properties": {
+                "block": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "log": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
         },
         "geoip_network_settings": {
             "type": "object",
