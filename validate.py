@@ -33,6 +33,7 @@ import v1.quota_manager.validate_quota_manager as validate_quota_manager
 import v1.webroot.validate_webroot_schema as webroot_system_schema
 import v1.bypass.validate_bypass as validate_bypass
 import v1.dns_filter.validate_dnsfilter as validate_dnsfilter
+import v1.alerts.validate_alerts as validate_alerts
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -65,7 +66,8 @@ validate_dict = {
     "webroot_schema": webroot_system_schema,
     "databases_schema": validate_databases,
     "bypass": validate_bypass,
-    "dns_filter": validate_dnsfilter
+    "dns_filter": validate_dnsfilter,
+    "alerts":validate_alerts
 }
 
 def main():

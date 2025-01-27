@@ -1,0 +1,22 @@
+{
+    "alerts": {
+        "deviceId": "mfw6.1",
+        "message": "ALERT_LOGIN_SUCCESS",
+        "data": [
+            {
+                "type": "USER",
+                "severity": "WARN",
+                "timestamp": 1737973558,
+                "additional_parameter_1": "remoteAddress",
+                "additional_parameter_2": "addtional_data"
+            },
+            {
+                "type": "USER",
+                "severity": "INFO",
+                "timestamp": 1737973762,
+                "additional_parameter_1": "remoteAddress",
+                "additional_parameter_2": ""
+            }
+        ]
+    }
+}
