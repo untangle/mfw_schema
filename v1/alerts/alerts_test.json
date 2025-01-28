@@ -5,16 +5,18 @@
         "data": [
             {
                 "type": "USER",
+		"enabled": true,
                 "severity": "WARN",
                 "timestamp": 1737973558,
-                "additional_parameter_1": "remoteAddress",
+                "additional_parameter_1": {"remoteAddress":"1.1.1.1"},
                 "additional_parameter_2": "addtional_data"
             },
             {
                 "type": "USER",
+		"enabled": false,
                 "severity": "INFO",
                 "timestamp": 1737973762,
-                "additional_parameter_1": "remoteAddress",
+                "additional_parameter_1": {"remoteAddress":"1.1.1.1"},
                 "additional_parameter_2": ""
             }
         ]

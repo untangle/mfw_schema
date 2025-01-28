@@ -29,6 +29,9 @@
                     "type": "string",
                     "description": "type of alert being sent like USER, WEBFILTER, GEOIP etc"
                 },
+                "enabled": {
+                    "type": "boolean"
+                },
                 "severity": {
                     "type": "string",
                     "description": "severity of the alert",
@@ -39,7 +42,7 @@
                     "description": "timestamp when the event was fired in SECONDS"
                 },
                 "additional_parameter_1": {
-                    "type": "string",
+                    "type": "object",
                     "description": "Additional parameters/metadata"
                 },
                 "additional_parameter_2": {
