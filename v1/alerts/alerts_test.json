@@ -1,24 +1,24 @@
 {
     "alerts": {
-        "deviceId": "mfw6.1",
-        "message": "ALERT_LOGIN_SUCCESS",
-        "data": [
+        "ALERT_LOGIN_SUCCESS": 
             {
-                "type": "USER",
 		"enabled": true,
-                "severity": "WARN",
-                "timestamp": 1737973558,
-                "additional_parameter_1": {"remoteAddress":"1.1.1.1"},
-                "additional_parameter_2": "addtional_data"
+                "description": "User login successful alert"
             },
+        "DNSFILTER_FLAG_SESSION": 
             {
-                "type": "USER",
+		"enabled": true,
+                "description": "Dns filter session flagged alert"
+            },
+        "DNSFILTER_BLOCK_SESSION": 
+            {
 		"enabled": false,
-                "severity": "INFO",
-                "timestamp": 1737973762,
-                "additional_parameter_1": {"remoteAddress":"1.1.1.1"},
-                "additional_parameter_2": ""
+                "description": "Dns filter session blocked alert"
+            },
+        "ALERT_LOGIN_FAILURE": 
+            {
+		"enabled": false,
+                "description": "User login failure alert"
             }
-        ]
     }
 }

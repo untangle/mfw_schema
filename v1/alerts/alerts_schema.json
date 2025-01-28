@@ -6,47 +6,18 @@
             "type": "object",
             "description": "alerts configuration",
             "properties": {
-                "deviceId": {
-                    "type": "string",
-                    "description": "Device ID"
-                },
                 "message": {
-                    "type": "string",
-                    "description": "Alert message"
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/alert_data"
-                    }
-                }
-            }
-        },
-        "alert_data": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "description": "type of alert being sent like USER, WEBFILTER, GEOIP etc"
-                },
-                "enabled": {
-                    "type": "boolean"
-                },
-                "severity": {
-                    "type": "string",
-                    "description": "severity of the alert",
-                    "enum": ["INFO","WARN","ERROR","DEBUG","CRITICAL"]
-                },
-                "timestamp": {
-                    "type": "integer",
-                    "description": "timestamp when the event was fired in SECONDS"
-                },
-                "additional_parameter_1": {
                     "type": "object",
-                    "description": "Additional parameters/metadata"
-                },
-                "additional_parameter_2": {
-                    "type": "string"
+                    "description": "Alert message",
+		    "required": ["enabled"],
+		    "properties": {
+			    "enabled": {
+				    "type": "boolean"
+			    },
+			    "description": {
+				    "type": "string"
+			    }
+		    }
                 }
             }
         }
