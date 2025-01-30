@@ -3,23 +3,23 @@
     "$id": "file:alerts_schema.json",
     "definitions": {
         "alerts_settings": {
-            "type": "object",
+            "type": "array",
             "description": "alerts configuration",
+            "items": {
+                "$ref": "#/definitions/alert_object"
+            }
+        },
+	"alert_object": {
+            "type": "object",
+	    "required": ["message","enabled"],
             "properties": {
                 "message": {
-                    "type": "object",
-                    "description": "Alert message",
-		    "required": ["enabled"],
-		    "properties": {
-			    "enabled": {
-				    "type": "boolean"
-			    },
-			    "description": {
-				    "type": "string"
-			    }
-		    }
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
                 }
             }
-        }
+	}
     }
 }

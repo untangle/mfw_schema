@@ -1,24 +1,20 @@
 {
-    "alerts": {
-        "ALERT_LOGIN_SUCCESS": 
+    "alerts": [
             {
-		"enabled": true,
-                "description": "User login successful alert"
+		"message": "ALERT_LOGIN_SUCCESS",
+		"enabled": true
             },
-        "DNSFILTER_FLAG_SESSION": 
             {
-		"enabled": true,
-                "description": "Dns filter session flagged alert"
+		"message": "DNSFILTER_FLAG_SESSION",
+		"enabled": true
             },
-        "DNSFILTER_BLOCK_SESSION": 
             {
-		"enabled": false,
-                "description": "Dns filter session blocked alert"
+		"message": "DNSFILTER_BLOCK_SESSION",
+		"enabled": false
             },
-        "ALERT_LOGIN_FAILURE": 
             {
-		"enabled": false,
-                "description": "User login failure alert"
+		"message": "ALERT_LOGIN_FAILURE",
+		"enabled": false
             }
-    }
+    ]
 }
