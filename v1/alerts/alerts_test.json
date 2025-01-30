@@ -9,11 +9,11 @@
             "enabled": false
         },
         {
-            "message": "SESSION_BLOCKED",
+            "message": "THREAT_PREVENTION_SESSION_BLOCKED",
             "enabled": true
         },
         {
-            "message": "SESSION_REDIRECTED",
+            "message": "THREAT_PREVENTION_SESSION_REDIRECTED",
             "enabled": false
         },
         {
@@ -25,7 +25,7 @@
             "enabled": false
         },
         {
-            "message": "GEO_IP_BLOCKED_SESSION",
+            "message": "GEOIP_BLOCKED_SESSION",
             "enabled": true
         },
         {
@@ -65,11 +65,11 @@
             "enabled": false
         },
         {
-            "message": "SESSION_REDIRECTED",
+            "message": "CAPTIVE_PORTAL_SESSION_REDIRECTED",
             "enabled": false
         },
         {
-            "message": "SESSION_BLOCKED",
+            "message": "CAPTIVE_PORTAL_SESSION_BLOCKED",
             "enabled": false
         },
         {
@@ -106,6 +106,10 @@
         },
         {
             "message": "POLICYMANAGER_SESSION_REJECTED",
+            "enabled": false
+        },
+        {
+            "message": "DOS_EVENT",
             "enabled": false
         }
     ]
