@@ -92,6 +92,9 @@
         },
         "dns_filter": {
             "$ref": "file:dns_filter/dnsfilter_schema.json#/definitions/dnsfilter_settings"
+        },
+        "alerts": {
+            "$ref": "file:alerts/alerts_schema.json#/definitions/alerts_settings"
         }
     },
     "definitions": {}

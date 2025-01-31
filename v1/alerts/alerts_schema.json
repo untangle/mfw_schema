@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "file:alerts_schema.json",
+    "definitions": {
+        "alerts_settings": {
+            "type": "array",
+            "description": "alerts configuration",
+            "items": {
+                "$ref": "#/definitions/alert_object"
+            }
+        },
+	"alert_object": {
+            "type": "object",
+	    "required": ["message","enabled"],
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+	}
+    }
+}

@@ -91,6 +91,15 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "Test Alerts",
+            "type": "shell",
+            "command": "./validate.py alerts v1/alerts/test_schema.json v1/alerts/alerts_test.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ],
     "inputs": [
         {
@@ -138,7 +147,8 @@
                 "./v1/databases/databases_schema.json",
                 "./v1/denialofservice/denialofservice_schema.json",
                 "./v1/bypass/bypass_schema.json",
-                "./v1/dns_filter/dnsfilter_schema.json"
+                "./v1/dns_filter/dnsfilter_schema.json",
+                "./v1/alerts/alerts_schema.json"
 
             ],
             "default": ""
@@ -156,7 +166,8 @@
                 "./v1/databases/databases_test.json",
                 "./v1/denialofservice/denialofservice_test.json",
                 "./v1/bypass/bypass_test.json",
-                "./v1/dns_filter/dnsfilter_test.json"
+                "./v1/dns_filter/dnsfilter_test.json",
+                "./v1/alerts/alerts_test.json"
             ],
             "default": ""
         }

@@ -1,0 +1,116 @@
+{
+    "alerts": [
+        {
+            "message": "ALERT_LOGIN_FAILED",
+            "enabled": true
+        },
+        {
+            "message": "ALERT_LOGIN_SUCCESS",
+            "enabled": false
+        },
+        {
+            "message": "THREAT_PREVENTION_SESSION_BLOCKED",
+            "enabled": true
+        },
+        {
+            "message": "THREAT_PREVENTION_SESSION_REDIRECTED",
+            "enabled": false
+        },
+        {
+            "message": "WEBFILTER_BLOCK_SESSION",
+            "enabled": true
+        },
+        {
+            "message": "WEBFILTER_FLAG_SESSION",
+            "enabled": false
+        },
+        {
+            "message": "GEOIP_BLOCKED_SESSION",
+            "enabled": true
+        },
+        {
+            "message": "SETTINGS_UPDATED",
+            "enabled": false
+        },
+        {
+            "message": "ALERT_NEW_DEVICE_DISCOVERED",
+            "enabled": false
+        },
+        {
+            "message": "INTERFACE_OFFLINE",
+            "enabled": false
+        },
+        {
+            "message": "SYSUPGRADE_FAILED",
+            "enabled": true
+        },
+        {
+            "message": "UPGRADE_FAILED",
+            "enabled": true
+        },
+        {
+            "message": "EXPORT_SETTINGS_FAILED",
+            "enabled": false
+        },
+        {
+            "message": "APPLICATIONCONTROL_SESSION_BLOCKED",
+            "enabled": false
+        },
+        {
+            "message": "APPLICATIONCONTROL_SESSION_FLAGGED",
+            "enabled": false
+        },
+        {
+            "message": "APPLICATIONCONTROL_SESSION_REJECTED",
+            "enabled": false
+        },
+        {
+            "message": "CAPTIVE_PORTAL_SESSION_REDIRECTED",
+            "enabled": false
+        },
+        {
+            "message": "CAPTIVE_PORTAL_SESSION_BLOCKED",
+            "enabled": false
+        },
+        {
+            "message": "DNSFILTER_FLAG_SESSION",
+            "enabled": false
+        },
+        {
+            "message": "DNSFILTER_BLOCK_SESSION",
+            "enabled": false
+        },
+        {
+            "message": "DYNAMICLISTS_SESSION_BLOCK",
+            "enabled": false
+        },
+        {
+            "message": "DATABASE_STATUS_ONLINE",
+            "enabled": false
+        },
+        {
+            "message": "DATABASE_STATUS_OFFLINE",
+            "enabled": true
+        },
+        {
+            "message": "DATABASE_SCHEMA_MISMATCH",
+            "enabled": false
+        },
+        {
+            "message": "DATABASE_WRITE_FAILED",
+            "enabled": false
+        },
+        {
+            "message": "POLICYMANAGER_SESSION_BLOCKED",
+            "enabled": false
+        },
+        {
+            "message": "POLICYMANAGER_SESSION_REJECTED",
+            "enabled": false
+        },
+        {
+            "message": "DOS_EVENT",
+            "enabled": false
+        }
+    ]
+}
