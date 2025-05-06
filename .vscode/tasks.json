@@ -100,6 +100,15 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "Test Network",
+            "type": "shell",
+            "command": "./validate.py network_schema v1/network/test_schema.json v1/network/test_network.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
     ],
     "inputs": [
         {
