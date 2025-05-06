@@ -86,7 +86,7 @@
                 "name": {
                     "type": "string",
                     "description": "Human readable name",
-                    "maxLength": 8,
+                    "maxLength": 15,
                     "minLength": 1
                 },
                 "enabled": {
