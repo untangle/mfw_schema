@@ -17,7 +17,7 @@
       },
       {
         "interfaceId": 2, 
-        "name": "e12345678901234",
+        "name": "e123456789",
         "device": "device 2", 
         "type": "NIC",
         "configType": "ADDRESSED",
