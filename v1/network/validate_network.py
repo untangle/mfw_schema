@@ -35,8 +35,9 @@ class TestNetworkSchema(unittest.TestCase):
         validates network
         """
         network = self.json_data["network"]
-        self.assertEqual(len(network.get("devices")), 0,  "Invalid devices content")
-        self.assertEqual(len(network.get("interfaces")), 1,  "Invalid interfaces content")
+        self.assertEqual(len(network.get("devices")), 1,  "Invalid devices content")
+        self.assertEqual(len(network.get("interfaces")), 2,  "Invalid interfaces content")
+        self.assertEqual(len(network.get("interfaces")[1].get("name")), 15, "Interface name should support size 15")
         self.assertEqual(len(network.get("switches")), 2,  "Invalid switches content")
 
 if __name__ == '__main__':

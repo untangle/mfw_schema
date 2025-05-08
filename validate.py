@@ -50,8 +50,7 @@ validate_dict = {
     "geoip_schema": validate_geoip,
     "ipsec_server_schema": validate_ipsec_server,
     "logger_schema" : validate_logger,
-    # disabled until https://awakesecurity.atlassian.net/browse/MFW-4120 is fixed
-    # "network_schema": validate_network,
+    "network_schema": validate_network,
     "policy_manager": validatepolicy,
     # disabled until https://awakesecurity.atlassian.net/browse/MFW-4121 is fixed
     # "reports_schema": validate_reports,

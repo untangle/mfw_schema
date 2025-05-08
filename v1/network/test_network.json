@@ -2,7 +2,8 @@
    "network": {
     "devices": [
       {
-
+        "name": "enp0s3",
+        "description": "dummy device"
       }
     ],
     "interfaces": [
@@ -13,7 +14,16 @@
         "type": "NIC",
         "configType": "ADDRESSED",
         "wan": true
+      },
+      {
+        "interfaceId": 2, 
+        "name": "e12345678901234",
+        "device": "device 2", 
+        "type": "NIC",
+        "configType": "ADDRESSED",
+        "wan": false
       }
+
     ],
     "switches": [
       {
