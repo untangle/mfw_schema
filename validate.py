@@ -21,7 +21,7 @@ import v1.ipsec_server.validate_ipsec_server as validate_ipsec_server
 import v1.logger.validate_logger as validate_logger
 import v1.network.validate_network as validate_network
 import v1.policy_manager.validatepolicy as validatepolicy
-import v1.reports.validate_reports as validate_reports
+# import v1.reports.validate_reports as validate_reports
 import v1.routes.validate_routes as validate_routes
 import v1.stats.validate_stats as validate_stats
 import v1.system.validate_system_schema as validate_system_schema
@@ -34,6 +34,7 @@ import v1.webroot.validate_webroot_schema as webroot_system_schema
 import v1.bypass.validate_bypass as validate_bypass
 import v1.dns_filter.validate_dnsfilter as validate_dnsfilter
 import v1.alerts.validate_alerts as validate_alerts
+import v1.ips.validate_ips as validate_ips
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -66,7 +67,8 @@ validate_dict = {
     "databases_schema": validate_databases,
     "bypass": validate_bypass,
     "dns_filter": validate_dnsfilter,
-    "alerts":validate_alerts
+    "alerts":validate_alerts,
+    "ips": validate_ips
 }
 
 def main():

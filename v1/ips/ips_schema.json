@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "ips_settings": {
+            "type":"object",
+            "description": "Intrusion Prevention Service settings",
+            "additionalItems": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the Intrusion Prevention Service"
+                },
+                "rules": {
+                    "type": "array",
+                    "description": "List of IPS rules used to override the default rules",
+                    "items": { "$ref": "#/definitions/ips_rule" }
+                },
+                "ruleLists": {
+                    "type": "array",
+                    "description": "List of IPS rule list sources",
+                    "items": { "$ref": "#/definitions/ips_rule_list" }
+                }
+            }
+        },
+        "ips_rule": {
+            "type": "object",
+            "description": "IPS rule",
+            "additionalProperties": false,
+            "properties": {
+                "sid": {
+                    "type": "integer",
+                    "description": "The unique identifier for the IPS rule"
+                },
+                "action": {
+                    "type": "string",
+                    "description": "Action to take when the rule matches",
+                    "enum": ["alert", "block", "pass", "reject"]
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message to log when the rule matches (optional)"
+                },
+                "classType": {
+                    "type": "string",
+                    "description": "Class type of the IPS rule"
+                }
+            }
+        },
+        "ips_rule_list": {
+            "type": "object",
+            "description": "IPS rule list source",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the IPS rule list"
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URL to fetch the IPS rule list from"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the IPS rule list"
+                },
+                "lastUpdated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Last updated timestamp of the IPS rule list"
+                },
+                "localFileLocation": {
+                    "type": "string",
+                    "description": "Local file path where the IPS rule list is stored"
+                },
+                "errorFieldMessage": {
+                    "type": "string",
+                    "description": "File path to log errors related to this rule list"
+                },
+                "errorFieldTimestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Timestamp of the last error related to this rule list"
+                }
+            }
+        }
+    }
+}

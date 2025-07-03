@@ -1,0 +1,45 @@
+{
+  "ips_settings": {
+    "enabled": true,
+    "rules": [
+      {
+        "sid": 1000001,
+        "action": "block",
+        "message": "Attempted Administrator Privilege Gain",
+        "classType": "attempted-admin"
+      },
+      {
+        "sid": 1000002,
+        "action": "alert",
+        "message": "Web Application Attack",
+        "classType": "web-application-attack"
+      },
+      {
+        "sid": 2000455,
+        "action": "pass",
+        "message": "Benign traffic",
+        "classType": "unknown"
+      }
+    ],
+    "ruleLists": [
+      {
+        "name": "Emerging Threats Open",
+        "url": "https://rules.emergingthreats.net/open/suricata-5.0/emerging-all.rules",
+        "enabled": true,
+        "lastUpdated": "2025-07-03T10:00:00Z",
+        "localFileLocation": "/var/lib/suricata/emerging-all.rules",
+        "errorFieldMessage": "timeout while fetching rules",
+        "errorFieldTimestamp": "2025-07-03T10:00:05Z"
+      },
+      {
+        "name": "Snort Community Rules",
+        "url": "https://www.snort.org/downloads/community/community-rules.tar.gz",
+        "enabled": false,
+        "lastUpdated": "2025-06-25T14:30:00Z",
+        "localFileLocation": "/var/lib/suricata/snort-community.rules",
+        "errorFieldMessage": "",
+        "errorFieldTimestamp": ""
+      }
+    ]
+  }
+}
