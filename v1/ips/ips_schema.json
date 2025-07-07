@@ -46,7 +46,7 @@
                 },
                 "classType": {
                     "type": "string",
-                    "description": "Class type of the IPS rule"
+                    "description": "Class type of the IPS rule (optional)"
                 }
             }
         },
