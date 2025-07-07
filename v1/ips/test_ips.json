@@ -3,18 +3,21 @@
     "enabled": true,
     "rules": [
       {
+        "enabled": true,
         "sid": 1000001,
         "action": "block",
         "message": "Attempted Administrator Privilege Gain",
         "classType": "attempted-admin"
       },
       {
+        "enabled": true,
         "sid": 1000002,
         "action": "alert",
         "message": "Web Application Attack",
         "classType": "web-application-attack"
       },
       {
+        "enabled": false,
         "sid": 2000455,
         "action": "pass",
         "message": "Benign traffic",
