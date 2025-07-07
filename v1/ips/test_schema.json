@@ -8,7 +8,7 @@
     ],
     "properties": {
         "ips": {
-            "$ref": "ip_schema.json#/definitions/ips_settings"
+            "$ref": "ips_schema.json#/definitions/ips_settings"
         }
     }
 }
