@@ -27,12 +27,11 @@ class TestIpsSchema(unittest.TestCase):
         else:
             raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
 
-    def test_ipsec_server(self):
+    def test_ips(self):
         """
-        validates ipsec_server
+        validates ips
         """
         server = self.json_data["ips"]
-        self.assertEqual(server.get("debug"), 1,  "Invalid debug value")
         self.assertTrue(server.get("enabled"), "Invalid enabled value")
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 {
-  "ips_settings": {
+  "ips": {
     "enabled": true,
     "rules": [
       {
