@@ -66,24 +66,6 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable/Disable the IPS rule list"
-                },
-                "lastUpdated": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Last updated timestamp of the IPS rule list"
-                },
-                "localFileLocation": {
-                    "type": "string",
-                    "description": "Local file path where the IPS rule list is stored"
-                },
-                "errorFieldMessage": {
-                    "type": "string",
-                    "description": "File path to log errors related to this rule list"
-                },
-                "errorFieldTimestamp": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Timestamp of the last error related to this rule list"
                 }
             }
         }
