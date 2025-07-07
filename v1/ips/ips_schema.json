@@ -27,6 +27,10 @@
             "description": "IPS rule",
             "additionalProperties": false,
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable/Disable the IPS rule"
+                },
                 "sid": {
                     "type": "integer",
                     "description": "The unique identifier for the IPS rule"
