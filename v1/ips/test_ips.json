@@ -40,7 +40,7 @@
         "url": "https://ids.edge.arista.com/suricatasignatures.tar.gz",
         "description": "Suricata Community Rules",
         "version": "6",
-        "localDir": "current"
+        "local_dir": "current"
         }
     ]
   }
