@@ -38,7 +38,7 @@
       {
         "name": "Suricata Community Rules",
         "url": "https://ids.edge.arista.com/suricatasignatures.tar.gz",
-        "description": "Suricata Community Rules",
+        "enabled": true,
         "version": "6",
         "local_dir": "current"
         }
