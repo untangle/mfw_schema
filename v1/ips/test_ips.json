@@ -34,7 +34,14 @@
         "name": "Snort Community Rules",
         "url": "https://www.snort.org/downloads/community/community-rules.tar.gz",
         "enabled": false
-      }
+      },
+      {
+        "name": "Suricata Community Rules",
+        "url": "https://ids.edge.arista.com/suricatasignatures.tar.gz",
+        "enabled": true,
+        "version": "6",
+        "local_dir": "rules"
+        }
     ]
   }
 }

@@ -66,6 +66,14 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable/Disable the IPS rule list"
+                },
+                "local_dir": {
+                    "type": "string",
+                    "description": "Local directory to reference the IPS rule list (optional)"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Version of the IPS rule list (optional)"
                 }
             }
         }
