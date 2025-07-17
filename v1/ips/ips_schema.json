@@ -8,7 +8,15 @@
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Enable/Disable the Intrusion Prevention Service"
+                    "description": "Enable/Disable IPS/IPS"
+                },
+                "ips_enabled": {
+                    "type": "boolean",
+                    "description": "Is Intrusion Prevention Services enabled"
+                },
+                "ids_enabled": {
+                    "type":"boolean",
+                    "description": "Is Intrusion Detection Services enabled"
                 },
                 "rules": {
                     "type": "array",
