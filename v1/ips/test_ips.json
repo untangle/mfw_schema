@@ -1,6 +1,6 @@
 {
   "ips": {
-    "enabled": true,
+    "service_level": "IPS",
     "rules": [
       {
         "enabled": true,

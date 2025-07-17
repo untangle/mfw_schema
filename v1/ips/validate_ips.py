@@ -32,7 +32,7 @@ class TestIpsSchema(unittest.TestCase):
         validates ips
         """
         server = self.json_data["ips"]
-        self.assertTrue(server.get("enabled"), "Invalid enabled value")
+        self.assertEqual(server.get("service_level"), "IPS", "Invalid service level")
 
 if __name__ == '__main__':
     unittest.main()
