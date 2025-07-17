@@ -6,10 +6,6 @@
             "description": "Intrusion Prevention Service settings",
             "additionalItems": false,
             "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable/Disable IPS/IPS"
-                },
                 "ips_enabled": {
                     "type": "boolean",
                     "description": "Is Intrusion Prevention Services enabled"
