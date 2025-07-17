@@ -6,10 +6,13 @@
             "description": "Intrusion Prevention Service settings",
             "additionalItems": false,
             "properties": {
-                "service_level": {
-                    "type": "string",
-                    "description": "Can be 'None', 'IDS', or 'IPS'. 'None' disables the service, 'IDS' enables it in detection mode, and 'IPS' enables it in prevention mode.",
-                    "enum": ["None", "IDS", "IPS"]
+                "enabled_ids": {
+                    "type": "boolean",
+                    "description": "Is IDS enabled"
+                },
+                "enabled_ips": {
+                    "type": "boolean",
+                    "description": "Is IPS enabled"
                 },
                 "rules": {
                     "type": "array",
