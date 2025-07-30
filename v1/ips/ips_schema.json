@@ -6,9 +6,13 @@
             "description": "Intrusion Prevention Service settings",
             "additionalItems": false,
             "properties": {
-                "enabled": {
+                "enabled_ids": {
                     "type": "boolean",
-                    "description": "Enable/Disable the Intrusion Prevention Service"
+                    "description": "Is IDS enabled"
+                },
+                "enabled_ips": {
+                    "type": "boolean",
+                    "description": "Is IPS enabled"
                 },
                 "rules": {
                     "type": "array",
