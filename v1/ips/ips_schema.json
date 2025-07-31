@@ -6,9 +6,9 @@
             "description": "Intrusion Prevention Service settings",
             "additionalItems": false,
             "properties": {
-                "enabled_ids": {
+                "enabled": {
                     "type": "boolean",
-                    "description": "Is IDS enabled"
+                    "description": "Is plugin enabled"
                 },
                 "enabled_ips": {
                     "type": "boolean",
