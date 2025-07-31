@@ -1,7 +1,7 @@
 {
   "ips": {
+    "enabled": true,
     "enabled_ips": true,
-    "enabled_ids": false,
     "rules": [
       {
         "enabled": true,
