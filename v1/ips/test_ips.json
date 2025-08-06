@@ -2,6 +2,7 @@
   "ips": {
     "enabled": true,
     "enabled_ips": true,
+    "update_time": "02:30",
     "rules": [
       {
         "enabled": true,
