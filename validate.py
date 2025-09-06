@@ -4,37 +4,37 @@ import argparse
 import os
 import unittest
 
-import v1.accounts.validate_accounts as validate_accounts
-import v1.application_control.validate_application_control as validate_application_control
-import v1.captiveportal.validate_captiveportal as validate_captiveportal
-import v1.dashboard.validate_dashboard as validate_dashboard
 import v1.databases.validate_databases_schema as validate_databases
-import v1.denialofservice.validate_denialofservice as validate_denialofservice
-import v1.dhcp.validate_dhcp as validate_dhcp
-import v1.discovery.validate_discovery as validate_discovery
-import v1.dns.validate_dns as validate_dns
-import v1.dynamic_lists.validate_dynamic_lists as validate_dynamic_lists
-import v1.files.validate_files as validate_files
-import v1.firewall.validate_firewall as validate_firewall
-import v1.geoip.validate_geoip as validate_geoip
-import v1.ipsec_server.validate_ipsec_server as validate_ipsec_server
-import v1.logger.validate_logger as validate_logger
-import v1.network.validate_network as validate_network
-import v1.policy_manager.validatepolicy as validatepolicy
-# import v1.reports.validate_reports as validate_reports
-import v1.routes.validate_routes as validate_routes
-import v1.stats.validate_stats as validate_stats
-import v1.system.validate_system_schema as validate_system_schema
-import v1.threatprevention.validate_threatprevention as validate_threatprevention
-import v1.uris.validate_uris as validate_uris
-import v1.wan.validate_wan as validate_wan
-import v1.webfilter.validate_webfilter as validate_webfilter
-import v1.quota_manager.validate_quota_manager as validate_quota_manager
 import v1.webroot.validate_webroot_schema as webroot_system_schema
-import v1.bypass.validate_bypass as validate_bypass
-import v1.dns_filter.validate_dnsfilter as validate_dnsfilter
-import v1.alerts.validate_alerts as validate_alerts
-import v1.ips.validate_ips as validate_ips
+from v1.accounts import validate_accounts
+from v1.alerts import validate_alerts
+from v1.application_control import validate_application_control
+from v1.bypass import validate_bypass
+from v1.captiveportal import validate_captiveportal
+from v1.dashboard import validate_dashboard
+from v1.denialofservice import validate_denialofservice
+from v1.dhcp import validate_dhcp
+from v1.discovery import validate_discovery
+from v1.dns import validate_dns
+from v1.dns_filter import validate_dnsfilter
+from v1.dynamic_lists import validate_dynamic_lists
+from v1.files import validate_files
+from v1.firewall import validate_firewall
+from v1.geoip import validate_geoip
+from v1.ips import validate_ips
+from v1.ipsec_server import validate_ipsec_server
+from v1.logger import validate_logger
+from v1.network import validate_network
+from v1.policy_manager import validatepolicy
+from v1.quota_manager import validate_quota_manager
+from v1.reports import validate_reports
+from v1.routes import validate_routes
+from v1.stats import validate_stats
+from v1.system import validate_system_schema
+from v1.threatprevention import validate_threatprevention
+from v1.uris import validate_uris
+from v1.wan import validate_wan
+from v1.webfilter import validate_webfilter
 
 validate_dict = {
     "accounts_schema": validate_accounts,
@@ -50,11 +50,11 @@ validate_dict = {
     "firewall_schema": validate_firewall,
     "geoip_schema": validate_geoip,
     "ipsec_server_schema": validate_ipsec_server,
-    "logger_schema" : validate_logger,
+    "logger_schema": validate_logger,
     "network_schema": validate_network,
     "policy_manager": validatepolicy,
     # disabled until https://awakesecurity.atlassian.net/browse/MFW-4121 is fixed
-    # "reports_schema": validate_reports,
+    "reports_schema": validate_reports,
     "routes_schema": validate_routes,
     "stats_schema": validate_stats,
     "system_schema": validate_system_schema,
@@ -67,35 +67,58 @@ validate_dict = {
     "databases_schema": validate_databases,
     "bypass": validate_bypass,
     "dns_filter": validate_dnsfilter,
-    "alerts":validate_alerts,
-    "ips": validate_ips
+    "alerts": validate_alerts,
+    "ips": validate_ips,
 }
 
-def main():
+
+def main() -> None:
     """
     Grabs passed arguments, and then uses that information to validate a json file against a schema. Usage:
         > validate.py schema_file json_file
     """
     parser = argparse.ArgumentParser(description=__file__ + " Usage:")
-    parser.add_argument("directories", type=str, nargs='?', default="", help="directories whose schema will be validated. For multiple, separate with a comma")
-    parser.add_argument("schema_file", type=str, nargs='?', default="", help="The schema to validate against. Blank uses directory default.")
-    parser.add_argument("json_file", type=str, nargs='?', default="", help="The json file to validate. Blank uses directory default.")
+    parser.add_argument(
+        "directories",
+        type=str,
+        nargs="?",
+        default="",
+        help="directories whose schema will be validated. For multiple, separate with a comma",
+    )
+    parser.add_argument(
+        "schema_file",
+        type=str,
+        nargs="?",
+        default="",
+        help="The schema to validate against. Blank uses directory default.",
+    )
+    parser.add_argument(
+        "json_file",
+        type=str,
+        nargs="?",
+        default="",
+        help="The json file to validate. Blank uses directory default.",
+    )
     args = parser.parse_args()
 
     os.environ["SCHEMA_FILE"] = args.schema_file
-    os.environ["JSON_FILE"]   = args.json_file
-    directories = args.directories.split(",") if len(args.directories) > 0 else list(validate_dict.keys())
+    os.environ["JSON_FILE"] = args.json_file
+    directories = (
+        args.directories.split(",") if len(args.directories) > 0 else list(validate_dict.keys())
+    )
     for directory in directories:
         run_test_on_module(validate_dict[directory])
     os.environ.pop("SCHEMA_FILE", None)
     os.environ.pop("JSON_FILE", None)
 
-def run_test_on_module(module):
+
+def run_test_on_module(module) -> None:
     print("=== START OF MODULE TEST: " + str(module) + " ===\n")
     # Sets environment variables with the passed files, runs validation, then deletes as a teardown
     suite = unittest.TestLoader().loadTestsFromModule(module)
     unittest.TextTestRunner(verbosity=2).run(suite)
     print("=== END OF MODULE TEST: " + str(module) + " ===\n")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

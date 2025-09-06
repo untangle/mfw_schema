@@ -109,6 +109,15 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "(Local) Run All Validations",
+            "type": "shell",
+            "command": "./setup_and_run_validations.sh",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
     ],
     "inputs": [
         {
