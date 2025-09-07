@@ -117,6 +117,15 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Generate Pydantic Models",
+            "type": "shell",
+            "command": "./generate_models.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         }
     ],
     "inputs": [
