@@ -325,7 +325,7 @@ class TestPolicyManager(unittest.TestCase):
             idlen = len(group[ID_FIELD])
             group_items = group[ITEMS_FIELD]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
-            self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
+            self.assertNotEqual(len(group_items), 0, "Failed because a group has an empty item list")
             group_type = group[TYPE_FIELD]
             valid_groups = ["ConditionGroup", "GeoipObjectGroup", "IpAddressObjectGroup", "ServiceEndpointObjectGroup"]
             isValid = group_type in valid_groups,
@@ -333,18 +333,18 @@ class TestPolicyManager(unittest.TestCase):
             if isValid:
                 for item in group_items:
                     # Validate that the items are object IDs
-                    self.assertEquals(len(item), idlen, "Failed because Object Group has a weird format: " + item + 
+                    self.assertEqual(len(item), idlen, "Failed because Object Group has a weird format: " + item +
                                     " in group's items: " +  str(group_items))
                     
         for group in self.json_condition_groups:
             idlen = len(group[ID_FIELD])
             group_items = group[ITEMS_FIELD]
             self.assertIsNotNone(group_items, "Failed because a group has a null item list")
-            self.assertNotEquals(len(group_items), 0, "Failed because a group has an empty item list")
+            self.assertNotEqual(len(group_items), 0, "Failed because a group has an empty item list")
             for item in group_items:
                 # Validate that the items are object IDs
-                self.assertEquals(len(item), idlen, "Failed because Condition Group has a weird format: " + item + 
-                                " in group's items: " +  str(group_items))
+                self.assertEqual(len(item), idlen, "Failed because Condition Group has a weird format: " + item +
+                                 " in group's items: " +  str(group_items))
 
 
     @classmethod

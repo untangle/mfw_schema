@@ -409,7 +409,7 @@
                     "description": "The wireless throughput mode"
                 },
                 "openvpnConfFile": {
-                    "$ref": "file:../files/files_schema.json#/definitions/file_settings"
+                    "$ref": "../files/files_schema.json#/definitions/file_settings"
                 },
                 "openvpnUsernamePasswordEnabled": {
                     "type": "boolean",

@@ -104,6 +104,34 @@
             "description": "A reporting SQL condition",
             "required": ["uniqueId","name","category","description","displayOrder","type","rendering"],
             "properties": {
+                "uniqueId": {
+                    "type": "string",
+                    "description": "The unique string identifier"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the report"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "The category of the report"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The description of the report"
+                },
+                "displayOrder": {
+                    "type": "integer",
+                    "description": "The sort order for this report"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["TEXT","EVENTS","CATEGORIES","SERIES","CATEGORIES_SERIES"],
+                    "description": "The type of report/chart"
+                },
+                "rendering": {
+                    "$ref": "#/definitions/report_rendering"
+                },
                 "column": {
                     "type": "string",
                     "description": "The column to check the value"

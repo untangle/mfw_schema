@@ -608,13 +608,13 @@
                 "webfilter"
             ],
             "geoip": {
-                "$ref": "file:geoip/geoip_schema.json#/definitions/geoip_settings"
+                "$ref": "geoip/geoip_schema.json#/definitions/geoip_settings"
             },
             "threatprevention": {
-                "$ref": "file:threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" 
+                "$ref": "threatprevention/threatprevention_schema.json#/definitions/threatprevention_settings" 
             },
             "webfilter": {
-                "$ref": "file:webfilter/webfilter_schema.json#/definitions/webfilter_settings"
+                "$ref": "webfilter/webfilter_schema.json#/definitions/webfilter_settings"
             }
         },
 
