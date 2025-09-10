@@ -17,6 +17,90 @@
                 "switches": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/switch_settings" }
+                },
+                "bgp": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "BGP settings",
+                        "required": ["local_asn", "router_id", "address_family", "neighbor"],
+                        "properties": {
+                            "vrf": {
+                                "type": "string",
+                                "description": "The VRF to use for this BGP instance",
+                                "default": "default"
+                            },
+                            "local_asn": {
+                                "type": "integer",
+                                "description": "The local Autonomous System Number",
+                                "minimum": 0,
+                                "maximum": 4294967295
+                            },
+                            "router_id": {
+                                "type": "string",
+                                "description": "The BGP router ID",
+                                "format": "ipv4"
+                            },
+                            "graceful_restart": {
+                                "type": "boolean",
+                                "description": "Enable BGP graceful restart",
+                                "default": false
+                            },
+                            "advertised_networks": {
+                                "type": "array",
+                                "description": "A list of networks to advertise",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "address_family": {
+                                "type": "object",
+                                "description": "BGP address family configuration",
+                                "required": ["ipv4", "ipv6"],
+                                "properties": {
+                                    "ipv4": {
+                                        "type": "boolean",
+                                        "description": "Enable IPv4 address family"
+                                    },
+                                    "ipv6": {
+                                        "type": "boolean",
+                                        "description": "Enable IPv6 address family"
+                                    }
+                                }
+                            },
+                            "neighbor": {
+                                "type": "object",
+                                "description": "BGP neighbor configuration",
+                                "required": ["ip", "asn"],
+                                "properties": {
+                                    "ip": {
+                                        "type": "string",
+                                        "description": "The IP address of the neighbor"
+                                    },
+                                    "asn": {
+                                        "type": "integer",
+                                        "description": "The Autonomous System Number of the neighbor",
+                                        "minimum": 0,
+                                        "maximum": 4294967295
+                                    },
+                                    "update_source": {
+                                        "type": "string",
+                                        "description": "The source IP address for BGP updates"
+                                    },
+                                    "keepalive": {
+                                        "type": "integer",
+                                        "description": "The BGP keepalive timer in seconds",
+                                        "default": 60
+                                    },
+                                    "hold": {
+                                        "type": "integer",
+                                        "description": "The BGP hold timer in seconds",
+                                        "default": 180
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

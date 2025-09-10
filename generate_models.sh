@@ -19,7 +19,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # 2. Validate the schemas to find structural errors before generation
 echo -e "\n--- Validating all schemas ---"
-.venv/bin/python3 validate_schemas.py "$SOURCE_SCHEMA_DIR"
+python3 validate_schemas.py "$SOURCE_SCHEMA_DIR"
 echo -e "--- Validation Complete ---\n"
 
 
@@ -45,6 +45,6 @@ sed -i 's/Table_1/Table/g' "$OUTPUT_FILE"
 
 # 5. Validate the generated model
 echo "Validating generated model..."
-.venv/bin/python3 test_pydantic_model.py
+python3 test_pydantic_model.py
 
 echo "Done! Model saved to $OUTPUT_FILE"
