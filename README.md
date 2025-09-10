@@ -63,6 +63,35 @@ To generate the Pydantic models, you can run the `generate_models.sh` script:
 ./generate_models.sh
 ```
 
+### Using the Generated Code in Another Project (Git Submodule)
+
+To use the generated Pydantic models in another project, you can add this repository as a Git submodule. This will link the two projects and allow you to keep the schema and generated models in sync.
+
+1.  **Add the submodule:** In your other project's root directory, run the following command:
+
+    ```bash
+    git submodule add <repository_url> mfw_schema
+    ```
+
+2.  **Initialize the submodule:**
+
+    ```bash
+    git submodule update --init --recursive
+    ```
+
+3.  **Add the submodule to your Python path:** In your other project, you will need to add the `mfw_schema` directory to your Python path. You can do this by adding the following code to your project's main entry point:
+
+    ```python
+    import sys
+    sys.path.append("path/to/mfw_schema")
+    ```
+
+4.  **Import the generated models:** You can now import the generated models in your other project:
+
+    ```python
+    from pydantic_models.v1_config import V1Config
+    ```
+
 ### Adding a New Object to the Schema
 
 To add a new object to the schema, you will need to perform the following steps:
@@ -93,12 +122,3 @@ To add a new object to the schema, you will need to perform the following steps:
 
 8.  **Generate the Pydantic models:** Run the `generate_models.sh` script to generate the updated Pydantic models.
 
-### Pydantic Model Generation Script Modifications
-
-The `generate_models.sh` script has been modified to address issues with the `datamodel-codegen` tool's handling of complex, circular dependencies in the JSON schemas. The following changes have been made:
-
-1.  **Removal of `file:` prefix:** The non-standard `file:` prefix has been permanently removed from all `$ref` values in the JSON schema files. This simplifies the generation process and aligns the project with modern best practices.
-
-2.  **Post-processing steps:** The script includes a post-processing step that uses `sed` to remove incorrect relative imports and replace aliases with their original class names. This is a workaround for the `datamodel-codegen` tool's limitations and ensures that the generated file is valid.
-
-3.  **Validation test:** The script now executes the `test_pydantic_model.py` script after generating the model. This test validates the generated model by creating an instance with sample data, ensuring that the model is working as expected.
