@@ -115,10 +115,10 @@
             "required": ["exceed_action_id", "quota_id", "type"],
             "properties": {
                 "exceed_action_id": {
-                    "$ref": "#/definitions/quota_manager_object_id"
+                    "$ref": "#/definitions/quota_manager_configuration_id"
                 },
                 "quota_id": {
-                    "$ref": "#/definitions/quota_manager_object_id"
+                    "$ref": "#/definitions/quota_manager_configuration_id"
                 },
                 "type": {
                     "type": "string"
