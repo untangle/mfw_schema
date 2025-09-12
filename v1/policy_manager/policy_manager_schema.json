@@ -694,7 +694,7 @@
                             "$ref": "#/definitions/policy_manager_service_endpoint"
                         },
                         {
-                            "$ref": "#/definitions/policy_manger_condition_group"
+                            "$ref": "#/definitions/policy_manager_condition_group"
                         }
                     ]
                 }
