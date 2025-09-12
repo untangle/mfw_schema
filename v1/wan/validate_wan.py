@@ -11,30 +11,41 @@ class TestWanSchema(unittest.TestCase):
     JSON_FILENAME_DEFAULT = "test_wan.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
     json_data = {}
-    
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """
-        setUpClass runs before all tests. Grabs file information, using some defaults if the environment variables 
-        fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
+        setUpClass runs before all tests. Grabs file information, using some defaults if the environment variables
+        fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors
         out, so any follow-up tests won't run
         """
-        current_directory = os.path.dirname(os.path.realpath(__file__))       
-        schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
-        
-        firewall_schema_path = os.path.abspath(os.path.join(current_directory, "../firewall/firewall_schema.json"))
-        schema_validator.addExternalRef(firewall_schema_path, "file:../firewall/firewall_schema.json")
-        
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        schema_validator = SchemaValidator(
+            current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT
+        )
+
+        firewall_schema_path = os.path.abspath(
+            os.path.join(current_directory, "../firewall/firewall_schema.json")
+        )
+        schema_validator.addExternalRef(
+            firewall_schema_path, "file:../firewall/firewall_schema.json"
+        )
+
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
-            raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
+            msg = "ERROR: Validation of schema failed. Skipping all tests and printing."
+            raise unittest.SkipTest(
+                msg
+            )
 
-    def test_validate_schema(self):
+    def test_validate_schema(self) -> None:
         """
         Test used to enable setUpClass for schema validation test.
         """
-        self.assertTrue(True)
+        assert True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
+
