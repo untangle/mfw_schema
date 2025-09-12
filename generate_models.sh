@@ -44,6 +44,12 @@ sed -i 's/Rule_1/Rule/g' "$OUTPUT_FILE"
 sed -i 's/Chain_1/Chain/g' "$OUTPUT_FILE"
 sed -i 's/Table_1/Table/g' "$OUTPUT_FILE"
 
+echo "Formatting..."
+ruff format "$OUTPUT_DIR"
+
+echo "Checking and fixing common issues..."
+ruff check --fix "$OUTPUT_DIR"
+
 # 5. Validate the generated model
 echo "Validating generated model..."
 python3 test_pydantic_model.py
