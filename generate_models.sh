@@ -16,12 +16,13 @@ CLASS_NAME="V1Config"
 echo "Setting up output directory..."
 rm -rf "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR"
+# create init file to make this a module for imports
+touch "$OUTPUT_DIR/__init__.py"
 
 # 2. Validate the schemas to find structural errors before generation
 echo -e "\n--- Validating all schemas ---"
 python3 validate_schemas.py "$SOURCE_SCHEMA_DIR"
 echo -e "--- Validation Complete ---\n"
-
 
 # 3. Generate the Pydantic model from the schema
 echo "Generating Pydantic model from the schema..."
