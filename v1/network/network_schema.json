@@ -101,6 +101,10 @@
                                "dependentRequired": {
                                    "keepalive": ["hold"],
                                    "hold": ["keepalive"]
+                               },
+                               "propertiesGreaterThan": {
+                                   "greater": "hold",
+                                   "lesser": "keepalive"
                                }
                             }
                         }
