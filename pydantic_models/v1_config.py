@@ -5,10 +5,12 @@
 from __future__ import annotations
 
 from enum import Enum
-from ipaddress import IPv4Address, IPv6Address
-from typing import Any, Dict, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel, confloat, conint, constr
+
+if TYPE_CHECKING:
+    from ipaddress import IPv4Address, IPv6Address
 
 
 class AddressFamily(BaseModel):
@@ -21,19 +23,19 @@ class Neighbor(BaseModel):
     asn: conint(ge=0, le=4294967295) = Field(
         ..., description="The Autonomous System Number of the neighbor"
     )
-    update_source: Optional[str] = Field(None, description="The source IP address for BGP updates")
-    keepalive: Optional[int] = Field(60, description="The BGP keepalive timer in seconds")
-    hold: Optional[int] = Field(180, description="The BGP hold timer in seconds")
+    update_source: str | None = Field(None, description="The source IP address for BGP updates")
+    keepalive: int | None = Field(60, description="The BGP keepalive timer in seconds")
+    hold: int | None = Field(180, description="The BGP hold timer in seconds")
 
 
 class BgpItem(BaseModel):
-    vrf: Optional[str] = Field("default", description="The VRF to use for this BGP instance")
+    vrf: str | None = Field("default", description="The VRF to use for this BGP instance")
     local_asn: conint(ge=0, le=4294967295) = Field(
         ..., description="The local Autonomous System Number"
     )
     router_id: IPv4Address = Field(..., description="The BGP router ID")
-    graceful_restart: Optional[bool] = Field(False, description="Enable BGP graceful restart")
-    advertised_networks: Optional[List[str]] = Field(
+    graceful_restart: bool | None = Field(False, description="Enable BGP graceful restart")
+    advertised_networks: list[str] | None = Field(
         None, description="A list of networks to advertise"
     )
     address_family: AddressFamily = Field(..., description="BGP address family configuration")
@@ -87,7 +89,7 @@ class DhcpOption(BaseModel):
         extra="forbid",
     )
     enabled: bool = Field(..., description="True if option is enabled")
-    description: Optional[str] = Field(
+    description: str | None = Field(
         None, description="Admin-supplied human readable description"
     )
     value: str = Field(..., description="The dnsmasq option value")
@@ -149,8 +151,8 @@ class Encoding(Enum):
 class FileSettings(BaseModel):
     encoding: Encoding = Field(..., description="The encoding of the file")
     contents: str = Field(..., description="The (encoded) contents of the file")
-    path: Optional[str] = Field(None, description="The path of the file, not useds in some cases")
-    operation: Optional[str] = Field(
+    path: str | None = Field(None, description="The path of the file, not useds in some cases")
+    operation: str | None = Field(
         None,
         description="The sync-settings operation that needs to take place if this file changes",
     )
@@ -181,17 +183,17 @@ class WireguardPeer(BaseModel):
         extra="forbid",
     )
     publicKey: str = Field(..., description="The wireguard peer's public key")
-    allowedIps: List[WireguardAllowedIp] = Field(
+    allowedIps: list[WireguardAllowedIp] = Field(
         ..., description="List of peer's allowed IP addresses"
     )
-    host: Optional[str] = Field(None, description="The wireguard server's IP or hostname")
-    port: Optional[int] = Field(None, description="The wireguard server's port")
-    presharedKey: Optional[str] = Field(None, description="The wireguard peer's pre-shared key")
-    keepalive: Optional[int] = Field(
+    host: str | None = Field(None, description="The wireguard server's IP or hostname")
+    port: int | None = Field(None, description="The wireguard server's port")
+    presharedKey: str | None = Field(None, description="The wireguard peer's pre-shared key")
+    keepalive: int | None = Field(
         None,
         description="The wireguard persistent keepalive interval (seconds) for this peer",
     )
-    routeAllowedIps: Optional[bool] = Field(
+    routeAllowedIps: bool | None = Field(
         None, description="True if packets from this wireguard peer should be routed"
     )
 
@@ -201,53 +203,53 @@ class Track(BaseModel):
 
 
 class Logging(BaseModel):
-    type: Optional[str] = Field(None, description="Type of log file")
-    file: Optional[str] = Field(None, description="Path to log file")
-    size: Optional[int] = Field(None, description="Size of log file in Kib")
-    remote: Optional[bool] = Field(None, description="Is log file located remotely")
-    ip: Optional[str] = Field(None, description="IP of remote log")
-    port: Optional[int] = Field(None, description="Port of remote log")
-    protocol: Optional[str] = Field(
+    type: str | None = Field(None, description="Type of log file")
+    file: str | None = Field(None, description="Path to log file")
+    size: int | None = Field(None, description="Size of log file in Kib")
+    remote: bool | None = Field(None, description="Is log file located remotely")
+    ip: str | None = Field(None, description="IP of remote log")
+    port: int | None = Field(None, description="Port of remote log")
+    protocol: str | None = Field(
         None, description="Protocol for remote logging (either tcp/udp)"
     )
-    prefix: Optional[str] = Field(None, description="Logging Prefix")
+    prefix: str | None = Field(None, description="Logging Prefix")
 
 
 class SetupWizardSettings(BaseModel):
-    completed: Optional[bool] = Field(
+    completed: bool | None = Field(
         None, description="True if the setup wizard has been completed"
     )
-    lastStep: Optional[str] = Field(
+    lastStep: str | None = Field(
         None,
         description="The last completed step of the wizard (used by the wizard to store progress for restore)",
     )
 
 
 class TimeZoneSettings(BaseModel):
-    displayName: Optional[str] = Field(
+    displayName: str | None = Field(
         None, description="The display name of the timezone (in the UI)"
     )
-    value: Optional[str] = Field(None, description="The actual value of the timezone (used by OS)")
+    value: str | None = Field(None, description="The actual value of the timezone (used by OS)")
 
 
 class CloudSettings(BaseModel):
-    enabled: Optional[bool] = Field(None, description="Enable cloud connection")
-    supportAccessEnabled: Optional[bool] = Field(
+    enabled: bool | None = Field(None, description="Enable cloud connection")
+    supportAccessEnabled: bool | None = Field(
         None, description="Enable remote support team access"
     )
-    cloudServers: Optional[List[str]] = Field(None, description="Remote cloud servers")
+    cloudServers: list[str] | None = Field(None, description="Remote cloud servers")
 
 
 class AutoSettings(BaseModel):
-    enabled: Optional[bool] = Field(None, description="Enable auto schedule")
-    dayOfWeek: Optional[conint(ge=0, le=6)] = Field(
+    enabled: bool | None = Field(None, description="Enable auto schedule")
+    dayOfWeek: conint(ge=0, le=6) | None = Field(
         None,
         description="The day of week to auto run process (0-6) (0 is Sunday 6 is Saturday)",
     )
-    hourOfDay: Optional[conint(ge=0, le=23)] = Field(
+    hourOfDay: conint(ge=0, le=23) | None = Field(
         None, description="The hour of day to auto run process (0-23)"
     )
-    minuteOfHour: Optional[conint(ge=0, le=59)] = Field(
+    minuteOfHour: conint(ge=0, le=59) | None = Field(
         None, description="The minute of hour to auto run process (0-59)"
     )
 
@@ -276,15 +278,15 @@ class Operator(Enum):
 
 
 class ReportQueryText(BaseModel):
-    columns: List[str] = Field(..., description="The columns to query for text-based reports")
+    columns: list[str] = Field(..., description="The columns to query for text-based reports")
 
 
 class ReportQuerySeries(BaseModel):
-    columns: Optional[List[str]] = Field(
+    columns: list[str] | None = Field(
         None,
         description="The columns to query for series reports. If null, the columns will be queried dynamically using categoriesGroupColumn, categoriesAggregation, and categoriesLimit. If unspecified the categories query will be used to determine columns",
     )
-    timeIntervalSeconds: Optional[conint(ge=1)] = Field(
+    timeIntervalSeconds: conint(ge=1) | None = Field(
         None,
         description="The time granularity of series report in seconds (1 = 1 datapoint/second, 60 = 1 datapoint/minute). Beware often 1 second is ideal and the UI can aggregate multiple datapoints using dataGroupingApproximation. 60 if unspecified.",
     )
@@ -303,26 +305,26 @@ class ReportQueryCategories(BaseModel):
         ...,
         description='This is the value to be aggregated. For count(*) this can be "*".',
     )
-    limit: Optional[int] = Field(
+    limit: int | None = Field(
         None,
         description="This is the limit of the number of results for categories. 10 for Top 10. Beware this is normally null (no limit) as the rendering will properly show the sum of the long tail of values as 'Others'.",
     )
-    orderByColumn: Optional[conint(ge=1, le=2)] = Field(
+    orderByColumn: conint(ge=1, le=2) | None = Field(
         None,
         description="This defines the column to use to order the results. 1 means categoriesOrderByColumn, 2 means the aggregation by value. 2 if unspecified.",
     )
-    orderAsc: Optional[bool] = Field(
+    orderAsc: bool | None = Field(
         None,
         description="If true the results will be order by ASC, if false or unspecified the results will be order by DESC.",
     )
 
 
 class ReportQueryEvents(BaseModel):
-    orderByColumn: Optional[str] = Field(
+    orderByColumn: str | None = Field(
         None,
         description="The column name to order by. If unspecified the results will be ordered by 'time_stamp'",
     )
-    orderAsc: Optional[bool] = Field(
+    orderAsc: bool | None = Field(
         None,
         description="If true the results will be order by ASC, if false or unspecified the results will be order by DESC.",
     )
@@ -363,64 +365,64 @@ class DataGroupingApproximation(Enum):
 
 
 class ReportRendering(BaseModel):
-    type: Optional[Type3] = Field(None, description="The chart type")
-    units: Optional[str] = Field(None, description="The units of the report")
-    colors: Optional[List[str]] = Field(None, description="The color palette")
-    stacking: Optional[Stacking] = Field(
+    type: Type3 | None = Field(None, description="The chart type")
+    units: str | None = Field(None, description="The units of the report")
+    colors: list[str] | None = Field(None, description="The color palette")
+    stacking: Stacking | None = Field(
         None,
         description="Stacking type. In case of Time Series data, multiple series can be stacked.",
     )
-    lineWidth: Optional[confloat(ge=0.0, le=5.0, multiple_of=0.5)] = Field(
+    lineWidth: confloat(ge=0.0, le=5.0, multiple_of=0.5) | None = Field(
         None, description="The line/area chart line width (px)"
     )
-    borderWidth: Optional[confloat(ge=0.0, le=5.0, multiple_of=0.5)] = Field(
+    borderWidth: confloat(ge=0.0, le=5.0, multiple_of=0.5) | None = Field(
         None, description="The border width separating pie slices (px)"
     )
-    topAreaOpacity: Optional[confloat(ge=0.0, le=1.0, multiple_of=0.1)] = Field(
+    topAreaOpacity: confloat(ge=0.0, le=1.0, multiple_of=0.1) | None = Field(
         None, description="The opacity of top part for an area chart"
     )
-    bottomAreaOpacity: Optional[confloat(ge=0.0, le=1.0, multiple_of=0.1)] = Field(
+    bottomAreaOpacity: confloat(ge=0.0, le=1.0, multiple_of=0.1) | None = Field(
         None, description="The opacity of bottom part for an area chart"
     )
-    dashStyle: Optional[DashStyle] = Field(
+    dashStyle: DashStyle | None = Field(
         None, description="The line/area charts line dashing style"
     )
-    dataGroupingEnabled: Optional[bool] = Field(
+    dataGroupingEnabled: bool | None = Field(
         None, description="True to enable data grouping for Time Series"
     )
-    dataGroupingApproximation: Optional[DataGroupingApproximation] = Field(
+    dataGroupingApproximation: DataGroupingApproximation | None = Field(
         None, description="The approximation method for data grouping"
     )
-    dataGroupingFactor: Optional[confloat(ge=10.0, le=50.0, multiple_of=10.0)] = Field(
+    dataGroupingFactor: confloat(ge=10.0, le=50.0, multiple_of=10.0) | None = Field(
         None,
         description="The data grouping size. Higher value results in bigger number of points being grouped. (px)",
     )
-    donutInnerSize: Optional[confloat(ge=0.0, le=90.0, multiple_of=10.0)] = Field(
+    donutInnerSize: confloat(ge=0.0, le=90.0, multiple_of=10.0) | None = Field(
         None,
         description="Inner ring percent size of a donut (which is a pie based chart). 0 is equivalent to a normal pie",
     )
-    field_3dEnabled: Optional[bool] = Field(
+    field_3dEnabled: bool | None = Field(
         None,
         alias="3dEnabled",
         description="Enable or disable the 3D options for the pie/donut charts",
     )
-    field_3dAlpha: Optional[confloat(ge=0.0, le=100.0, multiple_of=5.0)] = Field(
+    field_3dAlpha: confloat(ge=0.0, le=100.0, multiple_of=5.0) | None = Field(
         None, alias="3dAlpha", description="Adjusts the 3D aspect of the pie chart"
     )
-    field_3dDepth: Optional[confloat(ge=10.0, le=50.0, multiple_of=5.0)] = Field(
+    field_3dDepth: confloat(ge=10.0, le=50.0, multiple_of=5.0) | None = Field(
         None, alias="3dDepth", description="Adjusts the 3D depth of the pie chart"
     )
-    slicesNumber: Optional[confloat(ge=2.0, le=15.0, multiple_of=1.0)] = Field(
+    slicesNumber: confloat(ge=2.0, le=15.0, multiple_of=1.0) | None = Field(
         None, description="The number of pie slices to show on pie charts by default"
     )
-    defaultColumns: Optional[List[str]] = Field(
+    defaultColumns: list[str] | None = Field(
         None,
         description="The the default column names to display for event list reports",
     )
-    columnRenames: Optional[Dict[str, Any]] = Field(
+    columnRenames: dict[str, Any] | None = Field(
         None, description="A string->string map for database name to display name"
     )
-    textString: Optional[str] = Field(
+    textString: str | None = Field(
         None, description="The user-defined string for a text report"
     )
 
@@ -492,16 +494,16 @@ class RuleAction(BaseModel):
     model_config = ConfigDict(
         extra="allow",
     )
-    type: Optional[Type7] = None
-    chain: Optional[str] = None
-    dnat_address: Optional[str] = None
-    dnat_port: Optional[int] = None
-    snat_address: Optional[str] = None
-    priority: Optional[conint(ge=1, le=21)] = None
-    destination: Optional[int] = None
-    policy: Optional[int] = None
-    limit_exceed_action: Optional[str] = None
-    return_action: Optional[bool] = Field(
+    type: Type7 | None = None
+    chain: str | None = None
+    dnat_address: str | None = None
+    dnat_port: int | None = None
+    snat_address: str | None = None
+    priority: conint(ge=1, le=21) | None = None
+    destination: int | None = None
+    policy: int | None = None
+    limit_exceed_action: str | None = None
+    return_action: bool | None = Field(
         None,
         description="True if an additional RETURN action is to be added ahead of SET_PRIORITY",
     )
@@ -518,7 +520,7 @@ class Type8(Enum):
 
 
 class Action3(RuleAction):
-    type: Optional[Type8] = None
+    type: Type8 | None = None
 
 
 class Op(Enum):
@@ -527,7 +529,7 @@ class Op(Enum):
 
 
 class RuleCondition1(BaseModel):
-    op: Optional[Op] = None
+    op: Op | None = None
 
 
 class Value(Enum):
@@ -664,10 +666,10 @@ class RuleCondition2(BaseModel):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition3(RuleCondition1, RuleCondition2):
@@ -676,10 +678,10 @@ class RuleCondition3(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition4(RuleCondition1, RuleCondition2):
@@ -688,10 +690,10 @@ class RuleCondition4(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition5(RuleCondition1, RuleCondition2):
@@ -700,10 +702,10 @@ class RuleCondition5(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition6(RuleCondition1, RuleCondition2):
@@ -712,10 +714,10 @@ class RuleCondition6(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition7(RuleCondition1, RuleCondition2):
@@ -724,10 +726,10 @@ class RuleCondition7(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition8(RuleCondition1, RuleCondition2):
@@ -736,10 +738,10 @@ class RuleCondition8(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition9(RuleCondition1, RuleCondition2):
@@ -748,10 +750,10 @@ class RuleCondition9(RuleCondition1, RuleCondition2):
     )
     type: Type9
     value: str
-    op: Optional[Op1] = None
-    rate_unit: Optional[RateUnit] = None
-    burst_unit: Optional[BurstUnit] = None
-    group_selector: Optional[GroupSelector] = None
+    op: Op1 | None = None
+    rate_unit: RateUnit | None = None
+    burst_unit: BurstUnit | None = None
+    group_selector: GroupSelector | None = None
 
 
 class RuleCondition(
@@ -767,15 +769,7 @@ class RuleCondition(
         ]
     ]
 ):
-    root: Union[
-        RuleCondition3,
-        RuleCondition4,
-        RuleCondition5,
-        RuleCondition6,
-        RuleCondition7,
-        RuleCondition8,
-        RuleCondition9,
-    ] = Field(..., description="A rule condition")
+    root: RuleCondition3 | RuleCondition4 | RuleCondition5 | RuleCondition6 | RuleCondition7 | RuleCondition8 | RuleCondition9 = Field(..., description="A rule condition")
 
 
 class Rule(BaseModel):
@@ -783,128 +777,116 @@ class Rule(BaseModel):
         extra="forbid",
     )
     ruleId: conint(ge=1) = Field(..., description="The rule ID")
-    enabled: Optional[bool] = Field(None, description="True if rule is enabled, False otherwise")
-    description: Optional[str] = Field(None, description="The human description")
-    conditions: Optional[
-        List[
-            Union[
-                RuleCondition3,
-                RuleCondition4,
-                RuleCondition5,
-                RuleCondition6,
-                RuleCondition7,
-                RuleCondition8,
-                RuleCondition9,
-            ]
-        ]
-    ] = None
-    action: Optional[RuleAction] = None
-    readOnly: Optional[bool] = Field(None, description="True if read only, False otherwise")
+    enabled: bool | None = Field(None, description="True if rule is enabled, False otherwise")
+    description: str | None = Field(None, description="The human description")
+    conditions: list[RuleCondition3 | RuleCondition4 | RuleCondition5 | RuleCondition6 | RuleCondition7 | RuleCondition8 | RuleCondition9] | None = None
+    action: RuleAction | None = None
+    readOnly: bool | None = Field(None, description="True if read only, False otherwise")
 
 
 class Action2(RuleAction):
-    type: Optional[Type6] = None
+    type: Type6 | None = None
 
 
 class Rule2(Rule):
-    action: Optional[Action2] = None
+    action: Action2 | None = None
 
 
 class Chain(BaseModel):
     name: str = Field(..., description="The name of the chain")
-    description: Optional[str] = Field(None, description="The human description")
-    hook: Optional[Hook] = Field(
+    description: str | None = Field(None, description="The human description")
+    hook: Hook | None = Field(
         None, description="The netfilter hook, only applies to base chains"
     )
-    priority: Optional[int] = Field(
+    priority: int | None = Field(
         None, description="The netfilter priority, only applies to base chains"
     )
-    base: Optional[bool] = Field(None, description="True if base chain, False otherwise")
-    editable: Optional[bool] = Field(
+    base: bool | None = Field(None, description="True if base chain, False otherwise")
+    editable: bool | None = Field(
         None, description="True if chain is editable, False otherwise"
     )
-    rules: List[Rule]
+    rules: list[Rule]
 
 
 class Action1(RuleAction):
-    type: Optional[Type4] = None
+    type: Type4 | None = None
 
 
 class Rule1(Rule):
-    action: Optional[Action1] = None
+    action: Action1 | None = None
 
 
 class Chain1(Chain):
-    rules: Optional[List[Rule1]] = None
+    rules: list[Rule1] | None = None
 
 
 class Table(BaseModel):
     name: str = Field(..., description="The name of the table")
     family: Family = Field(..., description="The family of the table")
-    chain_type: Optional[ChainType] = Field(None, description="The type of chains in this table")
-    chains: List[Chain]
-    description: Optional[str] = Field(None, description="The human description")
+    chain_type: ChainType | None = Field(None, description="The type of chains in this table")
+    chains: list[Chain]
+    description: str | None = Field(None, description="The human description")
 
 
 class Action(RuleAction):
-    type: Optional[Type4] = None
+    type: Type4 | None = None
 
 
 class RuleModel(Rule):
-    action: Optional[Action] = None
+    action: Action | None = None
 
 
 class ChainModel(Chain):
-    rules: Optional[List[RuleModel]] = None
+    rules: list[RuleModel] | None = None
 
 
 class AccessTable(Table):
-    chains: Optional[List[ChainModel]] = None
+    chains: list[ChainModel] | None = None
 
 
 class StaticDhcpEntry(BaseModel):
     address: str = Field(..., description="IP Address to assign to the device")
     macAddress: str = Field(..., description="The MAC address of the device")
-    description: Optional[str] = Field(None, description="The human description")
+    description: str | None = Field(None, description="The human description")
 
 
 class LocalDnsServer(BaseModel):
     domain: str = Field(..., description="A local domain")
     localServer: str = Field(..., description="The IP of a local DNS server")
-    description: Optional[str] = Field(None, description="The human description")
+    description: str | None = Field(None, description="The human description")
 
 
 class StaticDnsEntry(BaseModel):
     address: str = Field(..., description="IP Address to map")
     name: str = Field(..., description="The name to map")
-    description: Optional[str] = Field(None, description="The human description")
+    description: str | None = Field(None, description="The human description")
 
 
 class AccountCredentials(BaseModel):
-    username: Optional[str] = Field(None, description="The username")
-    email: Optional[str] = Field(None, description="This accounts email address")
-    authorizedKeys: Optional[str] = Field(None, description="SSH authorized keys")
-    passwordCleartext: Optional[str] = Field(
+    username: str | None = Field(None, description="The username")
+    email: str | None = Field(None, description="This accounts email address")
+    authorizedKeys: str | None = Field(None, description="SSH authorized keys")
+    passwordCleartext: str | None = Field(
         None,
         description="The cleartext password - this should not be saved in the settings file",
     )
-    passwordHashMD5: Optional[str] = Field(
+    passwordHashMD5: str | None = Field(
         None,
         description="The hash of the password as it would appear in /etc/shadow (MD5 salted)",
     )
-    passwordHashSHA256: Optional[str] = Field(
+    passwordHashSHA256: str | None = Field(
         None,
         description="The hash of the password as it would appear in /etc/shadow (SHA256 salted)",
     )
-    passwordHashSHA512: Optional[str] = Field(
+    passwordHashSHA512: str | None = Field(
         None,
         description="The hash of the password as it would appear in /etc/shadow (SHA512 salted)",
     )
 
 
 class WidgetSettings(BaseModel):
-    name: Optional[str] = Field(None, description="The name of the report")
-    interval: Optional[int] = Field(None, description="The refresh interval (in seconds)")
+    name: str | None = Field(None, description="The name of the report")
+    interval: int | None = Field(None, description="The refresh interval (in seconds)")
 
 
 class Type17(Enum):
@@ -929,7 +911,7 @@ class BalanceAlgorithm(Enum):
 
 class WanInterface(BaseModel):
     interfaceId: int = Field(..., description="The interfaceId of the interface")
-    weight: Optional[conint(ge=1, le=10000)] = Field(
+    weight: conint(ge=1, le=10000) | None = Field(
         None, description="The static balance weight for this interface"
     )
 
@@ -968,39 +950,39 @@ class ConnectivityTestType(Enum):
 
 class WanCriterion(BaseModel):
     type: Type18 = Field(..., description="The policy type")
-    attribute: Optional[Attribute] = Field(None, description="An interface attribute")
-    name_contains: Optional[str] = Field(
+    attribute: Attribute | None = Field(None, description="An interface attribute")
+    name_contains: str | None = Field(
         None,
         description="The string to search for in interface names for the NAME attribute criterion",
     )
-    metric: Optional[Metric] = Field(None, description="An interface metric")
-    metric_value: Optional[int] = Field(
+    metric: Metric | None = Field(None, description="An interface metric")
+    metric_value: int | None = Field(
         None, description="The value associated with the interface metric"
     )
-    metric_op: Optional[MetricOp] = None
-    connectivityTestType: Optional[ConnectivityTestType] = Field(
+    metric_op: MetricOp | None = None
+    connectivityTestType: ConnectivityTestType | None = Field(
         None, description="The type of connectivity test"
     )
-    connectivityTestInterval: Optional[int] = Field(
+    connectivityTestInterval: int | None = Field(
         None, description="The connectivity test interval in seconds"
     )
-    connectivityTestTimeout: Optional[int] = Field(
+    connectivityTestTimeout: int | None = Field(
         None, description="The connectivity test timeout in seconds"
     )
-    connectivityTestFailureThreshold: Optional[int] = Field(
+    connectivityTestFailureThreshold: int | None = Field(
         None,
         description="The number of test failures (out of 10) that represents an interface failure",
     )
-    connectivityTestTarget: Optional[str] = Field(None, description="IP/host address to test")
+    connectivityTestTarget: str | None = Field(None, description="IP/host address to test")
 
 
 class DiscoveryPluginSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    type: Optional[str] = Field(None, description="The discovery collector type")
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the individual collector")
-    autoInterval: Optional[float] = Field(
+    type: str | None = Field(None, description="The discovery collector type")
+    enabled: bool | None = Field(None, description="Enable/Disable the individual collector")
+    autoInterval: float | None = Field(
         None, description="The autoscan interval to run this collector on"
     )
 
@@ -1010,116 +992,116 @@ class Actions1(BaseModel):
 
 
 class Actions(BaseModel):
-    block: Optional[List[str]] = None
-    log: Optional[List[str]] = None
+    block: list[str] | None = None
+    log: list[str] | None = None
 
 
 class GeoipNetworkSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    address: Optional[str] = Field(None, description="CIDR network to bypass from fencing")
-    description: Optional[str] = Field(None, description="Description of the network")
+    address: str | None = Field(None, description="CIDR network to bypass from fencing")
+    description: str | None = Field(None, description="Description of the network")
 
 
 class Authentication(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    shared_secret: Optional[str] = Field(None, description="The shared secret value for auth")
-    type: Optional[str] = Field(None, description="the type of authentication configured")
+    shared_secret: str | None = Field(None, description="The shared secret value for auth")
+    type: str | None = Field(None, description="the type of authentication configured")
 
 
 class IpsecEncryption(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    encryption: Optional[str] = Field(None, description="The encryption type")
-    group: Optional[str] = Field(None, description="The encryption group information")
-    hash: Optional[str] = Field(None, description="The hash type information")
+    encryption: str | None = Field(None, description="The encryption type")
+    group: str | None = Field(None, description="The encryption group information")
+    hash: str | None = Field(None, description="The hash type information")
 
 
 class NetworkDefinition(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    network: Optional[str] = Field(None, description="the network address")
-    prefix: Optional[float] = Field(None, description="The network CIDR prefix range")
+    network: str | None = Field(None, description="the network address")
+    prefix: float | None = Field(None, description="The network CIDR prefix range")
 
 
 class StaticRouteItem(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="True if static route is enabled, false otherwise"
     )
-    description: Optional[str] = Field(None, description="Description of the static route")
-    interfaceId: Optional[float] = Field(
+    description: str | None = Field(None, description="Description of the static route")
+    interfaceId: float | None = Field(
         None, description="The interface ID to link the static route with"
     )
-    network: Optional[str] = Field(
+    network: str | None = Field(
         None, description="Static route network destination information"
     )
-    nextHop: Optional[str] = Field(
+    nextHop: str | None = Field(
         None, description="The nexthop/gateway of the static route definition"
     )
-    metric: Optional[float] = Field(None, description="Specifies the route metric to use")
+    metric: float | None = Field(None, description="Specifies the route metric to use")
 
 
 class ThreatpreventionBypassItem(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    host: Optional[str] = Field(None, description="CIDR network to bypass from threat prevention")
-    description: Optional[str] = Field(None, description="Description of the network")
+    host: str | None = Field(None, description="CIDR network to bypass from threat prevention")
+    description: str | None = Field(None, description="Description of the network")
 
 
 class UriTranslations(BaseModel):
-    uri: Optional[str] = Field(None, description="The URI to match for")
-    host: Optional[str] = Field(
+    uri: str | None = Field(None, description="The URI to match for")
+    host: str | None = Field(
         None, description="The host to replace the URI with during URI translation"
     )
 
 
 class WebfilterCategories(BaseModel):
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None,
         description="True if webfilter category is being filtered/blocked, false otherwise",
     )
-    flagged: Optional[bool] = Field(
+    flagged: bool | None = Field(
         None, description="True if webfilter category is being flagged, false otherwise"
     )
-    id: Optional[float] = Field(None, description="Unique identifier of the webfilter category")
-    logged: Optional[bool] = Field(
+    id: float | None = Field(None, description="Unique identifier of the webfilter category")
+    logged: bool | None = Field(
         None,
         description="True if webfilter category is being reported, false otherwise",
     )
 
 
 class WebfilterListItem(BaseModel):
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="True if list item filtered/blocked, false otherwise"
     )
-    description: Optional[str] = Field(None, description="Description of the list item")
-    exact: Optional[bool] = Field(
+    description: str | None = Field(None, description="Description of the list item")
+    exact: bool | None = Field(
         None,
         description="True if list item name is being exact matched, otherwise wildcard match the name",
     )
-    flagged: Optional[bool] = Field(
+    flagged: bool | None = Field(
         None, description="True if list item is being flagged, false otherwise"
     )
-    name: Optional[str] = Field(None, description="The list item value to match on")
-    logged: Optional[bool] = Field(
+    name: str | None = Field(None, description="The list item value to match on")
+    logged: bool | None = Field(
         None, description="True if list item is being reported, false otherwise"
     )
 
 
 class ApplicationControlActions(BaseModel):
-    reject: Optional[List[str]] = None
-    block: Optional[List[str]] = None
-    flag: Optional[List[str]] = None
-    log: Optional[List[str]] = None
+    reject: list[str] | None = None
+    block: list[str] | None = None
+    flag: list[str] | None = None
+    log: list[str] | None = None
 
 
 class Type19(Enum):
@@ -1131,9 +1113,9 @@ class Type19(Enum):
 
 
 class ApplicationControlCustomRulesCondition(BaseModel):
-    type: Optional[Type19] = None
-    value: Optional[str] = None
-    op: Optional[Op1] = None
+    type: Type19 | None = None
+    value: str | None = None
+    op: Op1 | None = None
 
 
 class Type20(Enum):
@@ -1171,9 +1153,9 @@ class Op10(Enum):
 
 
 class PolicyManagerCriterion(BaseModel):
-    type: Optional[Type20] = None
-    op: Optional[Op10] = None
-    object: Optional[Union[Any, List[Any]]] = None
+    type: Type20 | None = None
+    op: Op10 | None = None
+    object: Any | list[Any] | None = None
 
 
 class Type21(Enum):
@@ -1227,14 +1209,14 @@ class PolicyManagerCategory(Enum):
     webfilter = "webfilter"
 
 
-class PolicyManagerFilters(RootModel[List[Dict[str, Any]]]):
-    root: List[Dict[str, Any]]
+class PolicyManagerFilters(RootModel[list[dict[str, Any]]]):
+    root: list[dict[str, Any]]
 
 
 class PolicyManagerFilter(BaseModel):
-    operator: Optional[str] = None
-    type: Optional[str] = None
-    property: Optional[str] = None
+    operator: str | None = None
+    type: str | None = None
+    property: str | None = None
 
 
 class Type32(Enum):
@@ -1257,43 +1239,43 @@ class PingAnalyzerSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    name: Optional[str] = Field(None, description="Name of Ping Analyzer")
-    interfaceIds: Optional[List[int]] = None
-    ipv4Addresses: Optional[List[str]] = None
-    ipv6Addresses: Optional[List[str]] = None
-    enabled: Optional[bool] = Field(None, description="Turns a Ping Analyzer on or off")
+    name: str | None = Field(None, description="Name of Ping Analyzer")
+    interfaceIds: list[int] | None = None
+    ipv4Addresses: list[str] | None = None
+    ipv6Addresses: list[str] | None = None
+    enabled: bool | None = Field(None, description="Turns a Ping Analyzer on or off")
 
 
 class DynamicListsConfiguration(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="True, if user want this configuration to be active."
     )
-    name: Optional[str] = Field(None, description="Name of the block list from source")
-    id: Optional[str] = Field(None, description="ID of the block list from source")
-    source: Optional[str] = Field(None, description="The source URL or the local file path")
-    type: Optional[str] = Field(None, description="Either IP or URL block list type from source")
-    pollingUnit: Optional[str] = Field(
+    name: str | None = Field(None, description="Name of the block list from source")
+    id: str | None = Field(None, description="ID of the block list from source")
+    source: str | None = Field(None, description="The source URL or the local file path")
+    type: str | None = Field(None, description="Either IP or URL block list type from source")
+    pollingUnit: str | None = Field(
         None,
         description="Tells us the interval of fetching whether its Minutes, Hours, Days or Months as a unit",
     )
-    pollingTime: Optional[float] = Field(
+    pollingTime: float | None = Field(
         None,
         description="The respective value based on the selection of the PullingUnit",
     )
-    skipCertCheck: Optional[bool] = Field(
+    skipCertCheck: bool | None = Field(
         None, description="Flag to ignore certificate verification of HTTPS requests"
     )
-    parsingMethod: Optional[str] = Field(
+    parsingMethod: str | None = Field(
         None,
         description="The parsing method for a passed IP list. Stored as a regular expression.",
     )
 
 
 class Logo(BaseModel):
-    imageName: Optional[str] = None
+    imageName: str | None = None
 
 
 class Type33(Enum):
@@ -1302,7 +1284,7 @@ class Type33(Enum):
 
 
 class Action4(BaseModel):
-    type: Optional[Type33] = None
+    type: Type33 | None = None
 
 
 class Type34(Enum):
@@ -1325,24 +1307,24 @@ class Op11(Enum):
 
 
 class CaptiveportalRulesConditions(BaseModel):
-    type: Optional[Type34] = None
-    value: Optional[str] = None
-    op: Optional[Op11] = None
+    type: Type34 | None = None
+    value: str | None = None
+    op: Op11 | None = None
 
 
 class QuotaManagerConfiguration(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
     data_size: str
     period: str
 
 
 class QuotaManagerExceedAction(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    default: Optional[bool] = None
+    name: str | None = None
+    description: str | None = None
+    default: bool | None = None
     action: str
 
 
@@ -1360,7 +1342,7 @@ class QuotaManagerRuleCondition(BaseModel):
     op: str
     type: str
     value: str
-    proto: Optional[str] = None
+    proto: str | None = None
 
 
 class Logname(Enum):
@@ -1382,8 +1364,8 @@ class LoggerSetting1(BaseModel):
     logname: Logname = Field(..., description="The logging level")
 
 
-class LoggerSetting(RootModel[Optional[Dict[str, LoggerSetting1]]]):
-    root: Optional[Dict[str, LoggerSetting1]] = Field(
+class LoggerSetting(RootModel[Optional[dict[str, LoggerSetting1]]]):
+    root: dict[str, LoggerSetting1] | None = Field(
         None, description="The logger settings for a package or function"
     )
 
@@ -1395,20 +1377,20 @@ class Type35(Enum):
 
 
 class DatabaseConfigSettings(BaseModel):
-    name: Optional[str] = Field(None, description="DB Connection name (this will be shown on UI)")
-    description: Optional[str] = Field(
+    name: str | None = Field(None, description="DB Connection name (this will be shown on UI)")
+    description: str | None = Field(
         None, description="Additional description for the DB Connection"
     )
-    id: Optional[str] = Field(None, description="UUID for Database (auto-generated)")
-    type: Optional[Type35] = Field(None, description="Database type i.e. MySQL,postgres")
-    enabled: Optional[bool] = Field(None, description="Database Connection enabled/disabled")
-    db_server: Optional[str] = Field(None, description="Remote Host/Server")
-    db_name: Optional[str] = Field(None, description="Name of the Database.")
-    db_username: Optional[str] = Field(None, description="Username for the Database.")
-    db_port: Optional[int] = Field(None, description="Database Port")
-    db_password: Optional[str] = Field(None, description="Database password for the given user.")
-    db_connection_string: Optional[str] = Field(None, description="Connection String")
-    default: Optional[bool] = Field(
+    id: str | None = Field(None, description="UUID for Database (auto-generated)")
+    type: Type35 | None = Field(None, description="Database type i.e. MySQL,postgres")
+    enabled: bool | None = Field(None, description="Database Connection enabled/disabled")
+    db_server: str | None = Field(None, description="Remote Host/Server")
+    db_name: str | None = Field(None, description="Name of the Database.")
+    db_username: str | None = Field(None, description="Username for the Database.")
+    db_port: int | None = Field(None, description="Database Port")
+    db_password: str | None = Field(None, description="Database password for the given user.")
+    db_connection_string: str | None = Field(None, description="Connection String")
+    default: bool | None = Field(
         None, description="Flag which determines if the database is default"
     )
 
@@ -1418,7 +1400,7 @@ class Type36(Enum):
 
 
 class Action6(BaseModel):
-    type: Optional[Type36] = None
+    type: Type36 | None = None
 
 
 class Type37(Enum):
@@ -1436,19 +1418,19 @@ class Type37(Enum):
 
 
 class BypassRulesConditions(BaseModel):
-    type: Optional[Type37] = None
-    value: Optional[str] = None
-    op: Optional[Op11] = None
-    port_protocol: Optional[str] = None
+    type: Type37 | None = None
+    value: str | None = None
+    op: Op11 | None = None
+    port_protocol: str | None = None
 
 
 class DnsfilterBlocklist(BaseModel):
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    flagged: Optional[bool] = None
-    logged: Optional[bool] = None
-    exact: Optional[bool] = None
-    name: Optional[str] = None
+    description: str | None = None
+    enabled: bool | None = None
+    flagged: bool | None = None
+    logged: bool | None = None
+    exact: bool | None = None
+    name: str | None = None
 
 
 class AlertObject(BaseModel):
@@ -1467,26 +1449,26 @@ class IpsRule(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the IPS rule")
-    sid: Optional[int] = Field(None, description="The unique identifier for the IPS rule")
-    action: Optional[Action7] = Field(None, description="Action to take when the rule matches")
-    message: Optional[str] = Field(
+    enabled: bool | None = Field(None, description="Enable/Disable the IPS rule")
+    sid: int | None = Field(None, description="The unique identifier for the IPS rule")
+    action: Action7 | None = Field(None, description="Action to take when the rule matches")
+    message: str | None = Field(
         None, description="Message to log when the rule matches (optional)"
     )
-    classType: Optional[str] = Field(None, description="Class type of the IPS rule (optional)")
+    classType: str | None = Field(None, description="Class type of the IPS rule (optional)")
 
 
 class IpsRuleList(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    name: Optional[str] = Field(None, description="Name of the IPS rule list")
-    url: Optional[str] = Field(None, description="URL to fetch the IPS rule list from")
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the IPS rule list")
-    local_dir: Optional[str] = Field(
+    name: str | None = Field(None, description="Name of the IPS rule list")
+    url: str | None = Field(None, description="URL to fetch the IPS rule list from")
+    enabled: bool | None = Field(None, description="Enable/Disable the IPS rule list")
+    local_dir: str | None = Field(
         None, description="Local directory to reference the IPS rule list (optional)"
     )
-    version: Optional[str] = Field(None, description="Version of the IPS rule list (optional)")
+    version: str | None = Field(None, description="Version of the IPS rule list (optional)")
 
 
 class SwitchSettings(BaseModel):
@@ -1494,8 +1476,8 @@ class SwitchSettings(BaseModel):
         extra="forbid",
     )
     name: str = Field(..., description="The switch name (switch0)")
-    ports: List[SwitchPort] = Field(..., description="The ports of the switch")
-    vlans: List[SwitchVlan] = Field(..., description="Hardware based vlans of the switch")
+    ports: list[SwitchPort] = Field(..., description="The ports of the switch")
+    vlans: list[SwitchVlan] = Field(..., description="Hardware based vlans of the switch")
 
 
 class InterfaceSettings(BaseModel):
@@ -1504,7 +1486,7 @@ class InterfaceSettings(BaseModel):
     )
     interfaceId: conint(ge=1) = Field(..., description="Unique interface ID")
     name: constr(min_length=1, max_length=15) = Field(..., description="Human readable name")
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="True if this interface is enabled, False otherwise"
     )
     device: str = Field(..., description="The physical dev represented by this interface (eth0)")
@@ -1512,182 +1494,182 @@ class InterfaceSettings(BaseModel):
         ...,
         description="True if interface is a WAN (internet) connected interface, False otherwise",
     )
-    hidden: Optional[bool] = Field(
+    hidden: bool | None = Field(
         None,
         description="True if this interface should be hidden from the user, False otherwise",
     )
     type: Type
     configType: ConfigType = Field(..., description="The configuration type")
-    natEgress: Optional[bool] = Field(
+    natEgress: bool | None = Field(
         None,
         description="If true, NAT outbound sessions and block non-port-forwarded sessions from this interface",
     )
-    natIngress: Optional[bool] = Field(
+    natIngress: bool | None = Field(
         None,
         description="If true, NAT inbound sessions and block non-port-forwarded sessions to this interface",
     )
-    v4ConfigType: Optional[V4ConfigType] = Field(None, description="The IPv4 configuration type")
-    v4StaticAddress: Optional[IPv4Address] = Field(None, description="The IPv4 static address")
-    v4StaticPrefix: Optional[conint(ge=1, le=32)] = Field(
+    v4ConfigType: V4ConfigType | None = Field(None, description="The IPv4 configuration type")
+    v4StaticAddress: IPv4Address | None = Field(None, description="The IPv4 static address")
+    v4StaticPrefix: conint(ge=1, le=32) | None = Field(
         None, description="The IPv4 static prefix (netmask)"
     )
-    v4StaticGateway: Optional[IPv4Address] = Field(None, description="The IPv4 static gateway")
-    v4StaticDNS1: Optional[IPv4Address] = Field(None, description="The IPv4 DNS 1")
-    v4StaticDNS2: Optional[IPv4Address] = Field(None, description="The IPv4 DNS 2")
-    v4DhcpAddressOverride: Optional[IPv4Address] = Field(
+    v4StaticGateway: IPv4Address | None = Field(None, description="The IPv4 static gateway")
+    v4StaticDNS1: IPv4Address | None = Field(None, description="The IPv4 DNS 1")
+    v4StaticDNS2: IPv4Address | None = Field(None, description="The IPv4 DNS 2")
+    v4DhcpAddressOverride: IPv4Address | None = Field(
         None, description="The DHCP address override"
     )
-    v4DhcpPrefixOverride: Optional[conint(ge=1, le=32)] = Field(
+    v4DhcpPrefixOverride: conint(ge=1, le=32) | None = Field(
         None, description="The DHCP prefix override"
     )
-    v4DhcpGatewayOverride: Optional[IPv4Address] = Field(
+    v4DhcpGatewayOverride: IPv4Address | None = Field(
         None, description="The DHCP gateway override"
     )
-    v4DhcpDNS1Override: Optional[IPv4Address] = Field(None, description="The DHCP DNS 1 override")
-    v4DhcpDNS2Override: Optional[IPv4Address] = Field(None, description="The DHCP DNS 2 override")
-    v4PPPoEUsername: Optional[constr(min_length=1)] = Field(None, description="The PPPoE username")
-    v4PPPoEPassword: Optional[constr(min_length=1)] = Field(None, description="The PPPoE password")
-    v4PPPoEUsePeerDNS: Optional[bool] = Field(None, description="If true, use PPPoE peer DNS")
-    v4PPPoEOverrideDNS1: Optional[IPv4Address] = Field(
+    v4DhcpDNS1Override: IPv4Address | None = Field(None, description="The DHCP DNS 1 override")
+    v4DhcpDNS2Override: IPv4Address | None = Field(None, description="The DHCP DNS 2 override")
+    v4PPPoEUsername: constr(min_length=1) | None = Field(None, description="The PPPoE username")
+    v4PPPoEPassword: constr(min_length=1) | None = Field(None, description="The PPPoE password")
+    v4PPPoEUsePeerDNS: bool | None = Field(None, description="If true, use PPPoE peer DNS")
+    v4PPPoEOverrideDNS1: IPv4Address | None = Field(
         None, description="The PPPoE DNS 1 override"
     )
-    v4PPPoEOverrideDNS2: Optional[IPv4Address] = Field(
+    v4PPPoEOverrideDNS2: IPv4Address | None = Field(
         None, description="The PPPoE DNS 2 override"
     )
-    v4Aliases: Optional[List[Ipv4Alias]] = Field(None, description="IPv4 address aliases")
-    v6ConfigType: Optional[V6ConfigType] = Field(None, description="IPv6 configuration type")
-    v6StaticAddress: Optional[IPv6Address] = Field(None, description="The IPv6 static address")
-    v6StaticPrefix: Optional[conint(ge=1, le=128)] = Field(
+    v4Aliases: list[Ipv4Alias] | None = Field(None, description="IPv4 address aliases")
+    v6ConfigType: V6ConfigType | None = Field(None, description="IPv6 configuration type")
+    v6StaticAddress: IPv6Address | None = Field(None, description="The IPv6 static address")
+    v6StaticPrefix: conint(ge=1, le=128) | None = Field(
         None, description="The IPv6 static prefix"
     )
-    v6StaticGateway: Optional[IPv6Address] = Field(None, description="The IPv6 static gateway")
-    v6StaticDNS1: Optional[IPv6Address] = Field(None, description="The IPv6 DNS 1")
-    v6StaticDNS2: Optional[IPv6Address] = Field(None, description="The IPv6 DNS 2")
-    v6DhcpDNS1Override: Optional[IPv6Address] = Field(None, description="The DHCP DNS 1 override")
-    v6DhcpDNS2Override: Optional[IPv6Address] = Field(None, description="The DHCP DNS 2 override")
-    v6AssignHint: Optional[str] = Field(None, description="The IPv6 auto assign hint")
-    v6AssignPrefix: Optional[conint(ge=1, le=128)] = Field(
+    v6StaticGateway: IPv6Address | None = Field(None, description="The IPv6 static gateway")
+    v6StaticDNS1: IPv6Address | None = Field(None, description="The IPv6 DNS 1")
+    v6StaticDNS2: IPv6Address | None = Field(None, description="The IPv6 DNS 2")
+    v6DhcpDNS1Override: IPv6Address | None = Field(None, description="The DHCP DNS 1 override")
+    v6DhcpDNS2Override: IPv6Address | None = Field(None, description="The DHCP DNS 2 override")
+    v6AssignHint: str | None = Field(None, description="The IPv6 auto assign hint")
+    v6AssignPrefix: conint(ge=1, le=128) | None = Field(
         None, description="The IPv6 auto assign prefix"
     )
-    v6Aliases: Optional[List[Ipv6Alias]] = Field(None, description="IPv6 address aliases")
-    routerAdvertisements: Optional[bool] = Field(None, description="Send router advertisements")
-    bridgedTo: Optional[conint(ge=1)] = Field(
+    v6Aliases: list[Ipv6Alias] | None = Field(None, description="IPv6 address aliases")
+    routerAdvertisements: bool | None = Field(None, description="Send router advertisements")
+    bridgedTo: conint(ge=1) | None = Field(
         None,
         description="The interface ID that this interface is bridgedTo if this is configType == BRIDGED",
     )
-    qosEnabled: Optional[bool] = Field(None, description="Enable QoS")
-    downloadKbps: Optional[conint(ge=0)] = Field(
+    qosEnabled: bool | None = Field(None, description="Enable QoS")
+    downloadKbps: conint(ge=0) | None = Field(
         None,
         description="The maximum download kilobit per second of this WAN interface",
     )
-    uploadKbps: Optional[conint(ge=0)] = Field(
+    uploadKbps: conint(ge=0) | None = Field(
         None, description="The maximum upload kilobit per second of this WAN interface"
     )
-    macaddr: Optional[str] = Field(None, description="The MAC address to set for the interface")
-    dhcpEnabled: Optional[bool] = Field(
+    macaddr: str | None = Field(None, description="The MAC address to set for the interface")
+    dhcpEnabled: bool | None = Field(
         None, description="If true, provide DHCP on this interface"
     )
-    dhcpRangeStart: Optional[IPv4Address] = Field(
+    dhcpRangeStart: IPv4Address | None = Field(
         None, description="The start of the DHCP offer range"
     )
-    dhcpRangeEnd: Optional[IPv4Address] = Field(
+    dhcpRangeEnd: IPv4Address | None = Field(
         None, description="The end of the DHCP offer range"
     )
-    dhcpLeaseDuration: Optional[conint(ge=0)] = Field(
+    dhcpLeaseDuration: conint(ge=0) | None = Field(
         None, description="The DHCP lease duration in seconds"
     )
-    dhcpGatewayOverride: Optional[IPv4Address] = Field(
+    dhcpGatewayOverride: IPv4Address | None = Field(
         None,
         description="The DHCP gateway to offer. If null, the local interface IP is used",
     )
-    dhcpPrefixOverride: Optional[conint(ge=1, le=32)] = Field(
+    dhcpPrefixOverride: conint(ge=1, le=32) | None = Field(
         None,
         description="The DHCP prefix/netmask to offer. If null, the local interface prefix is used",
     )
-    dhcpDNSOverride: Optional[IPv4Address] = Field(
+    dhcpDNSOverride: IPv4Address | None = Field(
         None,
         description="The DHCP DNS to offer. If null, the local interface IP is used",
     )
-    dhcpOptions: Optional[List[DhcpOption]] = Field(None, description="DHCP Options")
-    vrrpEnabled: Optional[bool] = Field(None, description="True if VRRP is enabled")
-    vrrpID: Optional[conint(ge=1, le=255)] = Field(None, description="The VRRP ID")
-    vrrpPriority: Optional[conint(ge=1, le=255)] = Field(None, description="The VRRP priority")
-    vrrpV4Aliases: Optional[List[Ipv4Alias]] = Field(None, description="VRRP IPv4 address aliases")
-    vrrpTrack: Optional[List[Track]] = Field(None, description="VRRP Group Tracked Objects")
-    wirelessSsid: Optional[str] = Field(None, description="The wireless SSID")
-    wirelessEncryption: Optional[WirelessEncryption] = Field(
+    dhcpOptions: list[DhcpOption] | None = Field(None, description="DHCP Options")
+    vrrpEnabled: bool | None = Field(None, description="True if VRRP is enabled")
+    vrrpID: conint(ge=1, le=255) | None = Field(None, description="The VRRP ID")
+    vrrpPriority: conint(ge=1, le=255) | None = Field(None, description="The VRRP priority")
+    vrrpV4Aliases: list[Ipv4Alias] | None = Field(None, description="VRRP IPv4 address aliases")
+    vrrpTrack: list[Track] | None = Field(None, description="VRRP Group Tracked Objects")
+    wirelessSsid: str | None = Field(None, description="The wireless SSID")
+    wirelessEncryption: WirelessEncryption | None = Field(
         None, description="The wireless encryption method"
     )
-    wirelessMode: Optional[WirelessMode] = Field(
+    wirelessMode: WirelessMode | None = Field(
         None, description="The wireless mode (AP or client)"
     )
-    wirelessPassword: Optional[str] = Field(None, description="The wireless password")
-    wirelessChannel: Optional[conint(ge=0)] = Field(None, description="The wireless channel")
-    wirelessThroughput: Optional[str] = Field(None, description="The wireless throughput mode")
-    openvpnConfFile: Optional[FileSettings] = None
-    openvpnUsernamePasswordEnabled: Optional[bool] = Field(
+    wirelessPassword: str | None = Field(None, description="The wireless password")
+    wirelessChannel: conint(ge=0) | None = Field(None, description="The wireless channel")
+    wirelessThroughput: str | None = Field(None, description="The wireless throughput mode")
+    openvpnConfFile: FileSettings | None = None
+    openvpnUsernamePasswordEnabled: bool | None = Field(
         None,
         description="True if this openvpn interface requires username/password authentication",
     )
-    openvpnUsername: Optional[str] = Field(
+    openvpnUsername: str | None = Field(
         None, description="The openvpn username if usename authentication enabled"
     )
-    boundInterfaceId: Optional[str] = Field(
+    boundInterfaceId: str | None = Field(
         None,
         description="The interfaceId of the interface that binding technologies i.e. openvpn, VLANs, Wireguard should use to connect (0 or undefined means Any WAN)",
     )
-    openvpnPasswordBase64: Optional[str] = Field(
+    openvpnPasswordBase64: str | None = Field(
         None,
         description="The openvpn password in cleartext/base64 if username authentication if enabled",
     )
-    openvpnPeerDns: Optional[bool] = Field(
+    openvpnPeerDns: bool | None = Field(
         None,
         description="Enables or Disables using the Peer DNS option from the OpenVPN tunnel",
     )
-    wireguardPrivateKey: Optional[str] = Field(None, description="The wireguard private key")
-    wireguardPublicKey: Optional[str] = Field(None, description="The wireguard public key")
-    wireguardAddresses: Optional[List[WireguardAddress]] = Field(
+    wireguardPrivateKey: str | None = Field(None, description="The wireguard private key")
+    wireguardPublicKey: str | None = Field(None, description="The wireguard public key")
+    wireguardAddresses: list[WireguardAddress] | None = Field(
         None, description="List of WireGuard's interface IP addresses"
     )
-    wireguardEditMode: Optional[WireguardEditMode] = Field(
+    wireguardEditMode: WireguardEditMode | None = Field(
         None, description="How this VPN is to be edited"
     )
-    wireguardType: Optional[WireguardType] = Field(None, description="Type of of VPN")
-    wireguardPort: Optional[int] = Field(None, description="The port that wireguard listens on")
-    wireguardPeers: Optional[List[WireguardPeer]] = Field(
+    wireguardType: WireguardType | None = Field(None, description="Type of of VPN")
+    wireguardPort: int | None = Field(None, description="The port that wireguard listens on")
+    wireguardPeers: list[WireguardPeer] | None = Field(
         None, description="List of wireguard peers"
     )
-    simNetwork: Optional[str] = Field(None, description="Sim network name")
-    simApn: Optional[str] = Field(None, description="Modem access point name")
-    simProfile: Optional[int] = Field(None, description="Modem profile number")
-    simPin: Optional[int] = Field(None, description="Sim pin code")
-    simDelay: Optional[int] = Field(None, description="Delay before configuring the modem on boot")
-    simTimeout: Optional[int] = Field(
+    simNetwork: str | None = Field(None, description="Sim network name")
+    simApn: str | None = Field(None, description="Modem access point name")
+    simProfile: int | None = Field(None, description="Modem profile number")
+    simPin: int | None = Field(None, description="Sim pin code")
+    simDelay: int | None = Field(None, description="Delay before configuring the modem on boot")
+    simTimeout: int | None = Field(
         None, description="Time to wait while attempting to configure the connection"
     )
-    simAuth: Optional[SimAuth] = Field(None, description="Sim authentication method")
-    simUsername: Optional[str] = Field(None, description="Sim authentication username")
-    simPassword: Optional[str] = Field(None, description="Sim authentication password")
-    simMode: Optional[SimMode] = Field(None, description="Sim mode")
-    simPdptype: Optional[SimPdptype] = Field(None, description="Sim connection method")
-    simPlmn: Optional[int] = Field(
+    simAuth: SimAuth | None = Field(None, description="Sim authentication method")
+    simUsername: str | None = Field(None, description="Sim authentication username")
+    simPassword: str | None = Field(None, description="Sim authentication password")
+    simMode: SimMode | None = Field(None, description="Sim mode")
+    simPdptype: SimPdptype | None = Field(None, description="Sim connection method")
+    simPlmn: int | None = Field(
         None,
         description="Sim PLMN (first three digits are mmc, last three digits are mnc)",
     )
-    simAutoconnect: Optional[bool] = Field(None, description="Enable automatic connect/reconnect")
-    ethAutoneg: Optional[bool] = Field(None, description="Auto negotiation on/off")
-    ethDuplex: Optional[EthDuplex] = Field(None, description="Duplex mode")
-    ethSpeed: Optional[int] = Field(None, description="Interface speed")
-    mtu: Optional[int] = Field(None, description="Interface MTU setting")
-    routeMtu: Optional[bool] = Field(None, description="Use Route MTU Discovery to determine MTU")
-    vlanid: Optional[int] = Field(
+    simAutoconnect: bool | None = Field(None, description="Enable automatic connect/reconnect")
+    ethAutoneg: bool | None = Field(None, description="Auto negotiation on/off")
+    ethDuplex: EthDuplex | None = Field(None, description="Duplex mode")
+    ethSpeed: int | None = Field(None, description="Interface speed")
+    mtu: int | None = Field(None, description="Interface MTU setting")
+    routeMtu: bool | None = Field(None, description="Use Route MTU Discovery to determine MTU")
+    vlanid: int | None = Field(
         None,
         description="Software device level 8021q VLAN ID to assign to an interface - requires a parent 'boundInterfaceId'",
     )
-    virtual: Optional[bool] = Field(
+    virtual: bool | None = Field(
         None, description="Virtual interface indicator (vlan/vpn/etc.)"
     )
-    wanWeight: Optional[float] = Field(
+    wanWeight: float | None = Field(
         None,
         description="Weight of WAN interacted to use in weighted balance algorithms",
     )
@@ -1699,14 +1681,14 @@ class SystemSettings(BaseModel):
     )
     hostName: str
     domainName: str
-    httpPort: Optional[str] = None
-    httpsPort: Optional[str] = None
-    cloud: Optional[CloudSettings] = None
-    timeZone: Optional[TimeZoneSettings] = None
-    setupWizard: Optional[SetupWizardSettings] = None
-    autoUpgrade: Optional[AutoSettings] = None
-    autoBackup: Optional[AutoSettings] = None
-    logging: Optional[Logging] = None
+    httpPort: str | None = None
+    httpsPort: str | None = None
+    cloud: CloudSettings | None = None
+    timeZone: TimeZoneSettings | None = None
+    setupWizard: SetupWizardSettings | None = None
+    autoUpgrade: AutoSettings | None = None
+    autoBackup: AutoSettings | None = None
+    logging: Logging | None = None
 
 
 class ReportCondition(BaseModel):
@@ -1717,46 +1699,37 @@ class ReportCondition(BaseModel):
     displayOrder: int = Field(..., description="The sort order for this report")
     type: Type1 = Field(..., description="The type of report/chart")
     rendering: ReportRendering
-    column: Optional[str] = Field(None, description="The column to check the value")
-    operator: Optional[Operator] = Field(None, description="The sql operator")
-    value: Optional[str] = Field(None, description="The value to check")
+    column: str | None = Field(None, description="The column to check the value")
+    operator: Operator | None = Field(None, description="The sql operator")
+    value: str | None = Field(None, description="The value to check")
 
 
 class FilterTable(Table):
-    chains: Optional[List[Chain1]] = None
+    chains: list[Chain1] | None = None
 
 
 class Chain2(Chain):
-    rules: Optional[List[Rule2]] = None
+    rules: list[Rule2] | None = None
 
 
 class NatTable(Table):
-    chains: Optional[List[Chain2]] = None
+    chains: list[Chain2] | None = None
 
 
 class Rule3(Rule):
-    action: Optional[Action3] = None
+    action: Action3 | None = None
 
 
 class Chain3(Chain):
-    rules: Optional[List[Rule3]] = None
+    rules: list[Rule3] | None = None
 
 
 class ShapingTable(Table):
-    chains: Optional[List[Chain3]] = None
+    chains: list[Chain3] | None = None
 
 
 class FirewallSettings(BaseModel):
-    tables: Optional[
-        Union[
-            Dict[constr(pattern=r"access"), AccessTable],
-            Dict[constr(pattern=r"filter"), FilterTable],
-            Dict[constr(pattern=r"nat"), NatTable],
-            Dict[constr(pattern=r"port_forward"), Any],
-            Dict[constr(pattern=r"shaping"), ShapingTable],
-            Dict[constr(pattern=r".{1,}"), Table],
-        ]
-    ] = Field(
+    tables: dict[constr(pattern=r"access"), AccessTable] | dict[constr(pattern=r"filter"), FilterTable] | dict[constr(pattern=r"nat"), NatTable] | dict[constr(pattern=r"port_forward"), Any] | dict[constr(pattern=r"shaping"), ShapingTable] | dict[constr(pattern=r".{1,}"), Table] | None = Field(
         None,
         description="A map from the table name as the key, to the table json object",
     )
@@ -1766,10 +1739,10 @@ class DhcpSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    dhcpAuthoritative: Optional[bool] = Field(
+    dhcpAuthoritative: bool | None = Field(
         None, description="True if this is the only dhcp server on the network"
     )
-    staticDhcpEntries: Optional[List[StaticDhcpEntry]] = Field(
+    staticDhcpEntries: list[StaticDhcpEntry] | None = Field(
         None, description="List of static DHCP assignments"
     )
 
@@ -1778,263 +1751,263 @@ class DnsSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    localServers: Optional[List[LocalDnsServer]] = Field(
+    localServers: list[LocalDnsServer] | None = Field(
         None, description="List of local DNS servers"
     )
-    staticEntries: Optional[List[StaticDnsEntry]] = Field(
+    staticEntries: list[StaticDnsEntry] | None = Field(
         None, description="List of static DNS assignments"
     )
 
 
 class AccountsSettings(BaseModel):
-    credentials: Optional[List[AccountCredentials]] = None
+    credentials: list[AccountCredentials] | None = None
 
 
 class DashboardSettings(BaseModel):
-    widgets: Optional[List[WidgetSettings]] = None
+    widgets: list[WidgetSettings] | None = None
 
 
 class WanPolicy(BaseModel):
     policyId: conint(ge=1) = Field(..., description="The policy ID")
-    enabled: Optional[bool] = Field(None, description="True if policy is enabled, False otherwise")
-    description: Optional[str] = Field(None, description="The human description")
+    enabled: bool | None = Field(None, description="True if policy is enabled, False otherwise")
+    description: str | None = Field(None, description="The human description")
     type: Type17 = Field(..., description="The policy type")
-    best_of_metric: Optional[BestOfMetric] = Field(
+    best_of_metric: BestOfMetric | None = Field(
         None, description="The metric used for best of policies"
     )
-    interfaces: List[WanInterface] = Field(
+    interfaces: list[WanInterface] = Field(
         ...,
         description="The list of interfaces in the policy.  A single interface of id 0 means all wan interfaces",
     )
-    balance_algorithm: Optional[BalanceAlgorithm] = Field(
+    balance_algorithm: BalanceAlgorithm | None = Field(
         None, description="Algorithm used for balance type policies"
     )
-    criteria: Optional[List[WanCriterion]] = Field(
+    criteria: list[WanCriterion] | None = Field(
         None, description="The list of policy interface criteria"
     )
-    readOnly: Optional[bool] = Field(None, description="True if read only, False otherwise")
+    readOnly: bool | None = Field(None, description="True if read only, False otherwise")
 
 
 class DiscoverySettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="Enable/Disable the host device discovery tool"
     )
-    plugins: Optional[List[DiscoveryPluginSettings]] = None
+    plugins: list[DiscoveryPluginSettings] | None = None
 
 
 class GeoipSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the geoip fencing service")
-    enabledLog: Optional[bool] = Field(
+    enabled: bool | None = Field(None, description="Enable/Disable the geoip fencing service")
+    enabledLog: bool | None = Field(
         None, description="Enable/Disable logging of the the geoip fencing results"
     )
-    actions: Optional[Union[List[Actions], Actions1]] = None
-    passedNetworks: Optional[List[GeoipNetworkSettings]] = None
+    actions: list[Actions] | Actions1 | None = None
+    passedNetworks: list[GeoipNetworkSettings] | None = None
 
 
 class GatewayDefinition(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    gateway: Optional[str] = Field(
+    gateway: str | None = Field(
         None, description="gateway address information for local/remote gateway"
     )
-    networks: Optional[List[NetworkDefinition]] = None
+    networks: list[NetworkDefinition] | None = None
 
 
-class RouteSettings(RootModel[List[StaticRouteItem]]):
-    root: List[StaticRouteItem] = Field(..., description="Static route entries")
+class RouteSettings(RootModel[list[StaticRouteItem]]):
+    root: list[StaticRouteItem] = Field(..., description="Static route entries")
 
 
 class ThreatpreventionSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="Enable/Disable the threat prevention service"
     )
-    redirect: Optional[bool] = Field(None, description="Enable/Disable redirection to block page")
-    sensitivity: Optional[float] = Field(
+    redirect: bool | None = Field(None, description="Enable/Disable redirection to block page")
+    sensitivity: float | None = Field(
         None,
         description="Threat Prevention sensitivity level, block everything above this threat level",
     )
-    passList: Optional[List[ThreatpreventionBypassItem]] = None
+    passList: list[ThreatpreventionBypassItem] | None = None
 
 
 class Uris(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    uriTranslations: Optional[List[UriTranslations]] = None
+    uriTranslations: list[UriTranslations] | None = None
 
 
 class WebfilterSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="True if webfilter is enabled, false otherwise"
     )
-    categories: Optional[List[WebfilterCategories]] = None
-    blockList: Optional[List[WebfilterListItem]] = None
-    passList: Optional[List[WebfilterListItem]] = None
+    categories: list[WebfilterCategories] | None = None
+    blockList: list[WebfilterListItem] | None = None
+    passList: list[WebfilterListItem] | None = None
 
 
 class ApplicationControlCustomRules(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    category: Optional[str] = None
-    conditions: Optional[List[List[ApplicationControlCustomRulesCondition]]] = None
-    action: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
+    category: str | None = None
+    conditions: list[list[ApplicationControlCustomRulesCondition]] | None = None
+    action: str | None = None
 
 
 class PolicyManagerConfiguration(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    category: Optional[List[PolicyManagerCategory]] = None
+    name: str | None = None
+    description: str | None = None
+    category: list[PolicyManagerCategory] | None = None
 
 
 class PolicyManagerObject(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
 
 
 class PolicyManagerObjectGroup(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    items: List[str]
+    name: str | None = None
+    description: str | None = None
+    items: list[str]
 
 
 class PolicyManagerCondition(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    conditions: Optional[List[PolicyManagerCriterion]] = None
+    name: str | None = None
+    description: str | None = None
+    conditions: list[PolicyManagerCriterion] | None = None
 
 
 class PolicyManagerConditionGroup(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    items: List[str]
+    name: str | None = None
+    description: str | None = None
+    items: list[str]
 
 
 class PolicyManagerRule1(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type21] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type21 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule2(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type22] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type22 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule3(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type23] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type23 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule4(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type24] = None
-    conditions: Optional[List[str]] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type24 | None = None
+    conditions: list[str] | None = None
 
 
 class PolicyManagerRule5(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type25] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type25 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule6(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type26] = None
-    conditions: Optional[List[str]] = None
-    dnat_address: Optional[str] = None
-    dnat_port: Optional[int] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type26 | None = None
+    conditions: list[str] | None = None
+    dnat_address: str | None = None
+    dnat_port: int | None = None
 
 
 class PolicyManagerRule7(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type27] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type27 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule8(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type28] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type28 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule9(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type29] = None
-    conditions: Optional[List[str]] = None
-    configuration_id: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type29 | None = None
+    conditions: list[str] | None = None
+    configuration_id: str | None = None
 
 
 class PolicyManagerRule10(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type30] = None
-    conditions: Optional[List[str]] = None
-    priority: Optional[int] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type30 | None = None
+    conditions: list[str] | None = None
+    priority: int | None = None
 
 
 class PolicyManagerRule11(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    type: Optional[Type31] = None
-    conditions: Optional[List[str]] = None
-    snat_address: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    type: Type31 | None = None
+    conditions: list[str] | None = None
+    snat_address: str | None = None
 
 
 class PolicyManagerRule(
@@ -2054,116 +2027,104 @@ class PolicyManagerRule(
         ]
     ]
 ):
-    root: Union[
-        PolicyManagerRule1,
-        PolicyManagerRule2,
-        PolicyManagerRule3,
-        PolicyManagerRule4,
-        PolicyManagerRule5,
-        PolicyManagerRule6,
-        PolicyManagerRule7,
-        PolicyManagerRule8,
-        PolicyManagerRule9,
-        PolicyManagerRule10,
-        PolicyManagerRule11,
-    ]
+    root: PolicyManagerRule1 | PolicyManagerRule2 | PolicyManagerRule3 | PolicyManagerRule4 | PolicyManagerRule5 | PolicyManagerRule6 | PolicyManagerRule7 | PolicyManagerRule8 | PolicyManagerRule9 | PolicyManagerRule10 | PolicyManagerRule11
 
 
 class PolicyManagerPolicy(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    conditions: Optional[List[str]] = None
-    rule: Optional[List[str]] = None
+    name: str | None = None
+    description: str | None = None
+    conditions: list[str] | None = None
+    rule: list[str] | None = None
 
 
 class PolicyManagerGroup(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
+    id: str | None = None
+    name: str | None = None
+    description: str | None = None
     type: Type32
-    choice: Optional[Union[PolicyManagerConditionGroup, List[Any]]] = None
+    choice: PolicyManagerConditionGroup | list[Any] | None = None
 
 
 class StatsSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    pingAnalyzers: Optional[List[PingAnalyzerSettings]] = None
+    pingAnalyzers: list[PingAnalyzerSettings] | None = None
 
 
 class DynamicListsSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(
+    enabled: bool | None = Field(
         None, description="enables or disables the entire dynamic blocklist feature"
     )
-    configurations: Optional[List[DynamicListsConfiguration]] = None
+    configurations: list[DynamicListsConfiguration] | None = None
 
 
 class CaptiveportalRules(BaseModel):
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    ruleId: Optional[str] = None
-    conditions: Optional[List[CaptiveportalRulesConditions]] = None
-    action: Optional[Action4] = None
+    description: str | None = None
+    enabled: bool | None = None
+    ruleId: str | None = None
+    conditions: list[CaptiveportalRulesConditions] | None = None
+    action: Action4 | None = None
 
 
 class QuotaManagerRule(BaseModel):
     id: str
-    name: Optional[str] = None
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    action: Optional[Union[List[QuotaManagerRuleAction], Action5]] = None
-    conditions: Optional[List[QuotaManagerRuleCondition]] = None
+    name: str | None = None
+    description: str | None = None
+    enabled: bool | None = None
+    action: list[QuotaManagerRuleAction] | Action5 | None = None
+    conditions: list[QuotaManagerRuleCondition] | None = None
 
 
 class Logger(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    alertd: Dict[str, LoggerSetting1] = Field(
+    alertd: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
-    cls: Dict[str, LoggerSetting1] = Field(
+    cls: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
-    discoverd: Dict[str, LoggerSetting1] = Field(
+    discoverd: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
-    packetd: Dict[str, LoggerSetting1] = Field(
+    packetd: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
-    reportd: Dict[str, LoggerSetting1] = Field(
+    reportd: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
-    restd: Dict[str, LoggerSetting1] = Field(
+    restd: dict[str, LoggerSetting1] = Field(
         ..., description="The logger settings for a package or function"
     )
 
 
 class BypassRules(BaseModel):
-    description: Optional[str] = None
-    enabled: Optional[bool] = None
-    ruleId: Optional[str] = None
-    conditions: Optional[List[BypassRulesConditions]] = None
-    log: Optional[str] = None
-    action: Optional[Action6] = None
+    description: str | None = None
+    enabled: bool | None = None
+    ruleId: str | None = None
+    conditions: list[BypassRulesConditions] | None = None
+    log: str | None = None
+    action: Action6 | None = None
 
 
 class DnsfilterSettings(BaseModel):
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the dns filter service")
-    blockList: Optional[List[DnsfilterBlocklist]] = None
+    enabled: bool | None = Field(None, description="Enable/Disable the dns filter service")
+    blockList: list[DnsfilterBlocklist] | None = None
 
 
 class IpsSettings(BaseModel):
-    enabled: Optional[bool] = Field(None, description="Is plugin enabled")
-    enabled_ips: Optional[bool] = Field(None, description="Is IPS enabled")
-    rules: Optional[List[IpsRule]] = Field(
+    enabled: bool | None = Field(None, description="Is plugin enabled")
+    enabled_ips: bool | None = Field(None, description="Is IPS enabled")
+    rules: list[IpsRule] | None = Field(
         None, description="List of IPS rules used to override the default rules"
     )
-    ruleLists: Optional[List[IpsRuleList]] = Field(
+    ruleLists: list[IpsRuleList] | None = Field(
         None, description="List of IPS rule list sources"
     )
 
@@ -2172,10 +2133,10 @@ class NetworkSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    interfaces: Optional[List[InterfaceSettings]] = None
-    devices: Optional[List[DeviceSettings]] = None
-    switches: Optional[List[SwitchSettings]] = None
-    bgp: Optional[List[BgpItem]] = None
+    interfaces: list[InterfaceSettings] | None = None
+    devices: list[DeviceSettings] | None = None
+    switches: list[SwitchSettings] | None = None
+    bgp: list[BgpItem] | None = None
 
 
 class ReportEntry(BaseModel):
@@ -2184,23 +2145,23 @@ class ReportEntry(BaseModel):
     category: str = Field(..., description="The category of the report")
     description: str = Field(..., description="The description of the report")
     displayOrder: int = Field(..., description="The sort order for this report")
-    readOnly: Optional[bool] = Field(None, description="True if read only, False otherwise")
+    readOnly: bool | None = Field(None, description="True if read only, False otherwise")
     type: Type1 = Field(..., description="The type of report/chart")
-    table: Optional[str] = Field(None, description="The table the report queries")
-    tables: Optional[List[str]] = Field(
+    table: str | None = Field(None, description="The table the report queries")
+    tables: list[str] | None = Field(
         None,
         description="A list of tables joined if this is a join. This is used by the UI",
     )
-    conditions: Optional[List[ReportCondition]] = None
-    columnDisambiguation: Optional[List[Any]] = Field(
+    conditions: list[ReportCondition] | None = None
+    columnDisambiguation: list[Any] | None = Field(
         None,
         description="This list of string->string map is a way to disambiguate column names for joined tables (ie time_stamp > a.time_stamp)",
     )
-    userConditions: Optional[List[ReportCondition]] = None
-    queryCategories: Optional[ReportQueryCategories] = None
-    queryText: Optional[ReportQueryText] = None
-    querySeries: Optional[ReportQuerySeries] = None
-    queryEvents: Optional[ReportQueryEvents] = None
+    userConditions: list[ReportCondition] | None = None
+    queryCategories: ReportQueryCategories | None = None
+    queryText: ReportQueryText | None = None
+    querySeries: ReportQuerySeries | None = None
+    queryEvents: ReportQueryEvents | None = None
     rendering: ReportRendering
 
 
@@ -2208,114 +2169,102 @@ class WanSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    policy_chains: Optional[List[Chain]] = None
-    policies: Optional[List[WanPolicy]] = None
+    policy_chains: list[Chain] | None = None
+    policies: list[WanPolicy] | None = None
 
 
 class IpsecServerSettings(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    enabled: Optional[bool] = Field(None, description="Enable/Disable the geoip fencing service")
-    debug: Optional[float] = Field(None, description="Enable/Disable ipsec server debug logs")
-    authentication: Optional[Authentication] = Field(None, description="authentication definition")
-    phase1: Optional[List[IpsecEncryption]] = None
-    phase2: Optional[List[IpsecEncryption]] = None
-    local: Optional[List[GatewayDefinition]] = None
-    remote: Optional[List[GatewayDefinition]] = None
+    enabled: bool | None = Field(None, description="Enable/Disable the geoip fencing service")
+    debug: float | None = Field(None, description="Enable/Disable ipsec server debug logs")
+    authentication: Authentication | None = Field(None, description="authentication definition")
+    phase1: list[IpsecEncryption] | None = None
+    phase2: list[IpsecEncryption] | None = None
+    local: list[GatewayDefinition] | None = None
+    remote: list[GatewayDefinition] | None = None
 
 
 class ApplicationControlSettings(BaseModel):
-    enabled: Optional[bool] = None
-    cloud_classification: Optional[bool] = None
-    custom_rules: Optional[List[ApplicationControlCustomRules]] = None
-    actions: Optional[List[ApplicationControlActions]] = None
+    enabled: bool | None = None
+    cloud_classification: bool | None = None
+    custom_rules: list[ApplicationControlCustomRules] | None = None
+    actions: list[ApplicationControlActions] | None = None
 
 
 class PolicyManagerSettings(BaseModel):
-    enabled: Optional[bool] = None
-    configurations: List[PolicyManagerConfiguration]
-    objects: List[PolicyManagerObject]
-    object_groups: List[PolicyManagerObjectGroup]
-    conditions: List[PolicyManagerCondition]
-    condition_groups: Optional[List[PolicyManagerConditionGroup]] = None
-    rules: List[
-        Union[
-            PolicyManagerRule1,
-            PolicyManagerRule2,
-            PolicyManagerRule3,
-            PolicyManagerRule4,
-            PolicyManagerRule5,
-            PolicyManagerRule6,
-            PolicyManagerRule7,
-            PolicyManagerRule8,
-            PolicyManagerRule9,
-            PolicyManagerRule10,
-            PolicyManagerRule11,
-        ]
+    enabled: bool | None = None
+    configurations: list[PolicyManagerConfiguration]
+    objects: list[PolicyManagerObject]
+    object_groups: list[PolicyManagerObjectGroup]
+    conditions: list[PolicyManagerCondition]
+    condition_groups: list[PolicyManagerConditionGroup] | None = None
+    rules: list[
+        PolicyManagerRule1 | PolicyManagerRule2 | PolicyManagerRule3 | PolicyManagerRule4 | PolicyManagerRule5 | PolicyManagerRule6 | PolicyManagerRule7 | PolicyManagerRule8 | PolicyManagerRule9 | PolicyManagerRule10 | PolicyManagerRule11
     ]
-    policies: List[PolicyManagerPolicy]
+    policies: list[PolicyManagerPolicy]
 
 
 class CaptiveportalSettings(BaseModel):
-    enabled: Optional[bool] = None
-    acceptText: Optional[str] = None
-    acceptButtonText: Optional[str] = None
-    messageHeading: Optional[str] = None
-    messageText: Optional[str] = None
-    welcomeText: Optional[str] = None
-    logo: Optional[Logo] = None
-    timeoutValue: Optional[float] = None
-    timeoutPeriod: Optional[str] = None
-    pageTitle: Optional[str] = None
-    rules: Optional[List[CaptiveportalRules]] = None
+    enabled: bool | None = None
+    acceptText: str | None = None
+    acceptButtonText: str | None = None
+    messageHeading: str | None = None
+    messageText: str | None = None
+    welcomeText: str | None = None
+    logo: Logo | None = None
+    timeoutValue: float | None = None
+    timeoutPeriod: str | None = None
+    pageTitle: str | None = None
+    rules: list[CaptiveportalRules] | None = None
 
 
 class QuotaManagerSettings(BaseModel):
-    enabled: Optional[bool] = None
-    configurations: List[QuotaManagerConfiguration]
-    exceed_actions: List[QuotaManagerExceedAction]
-    rules: List[QuotaManagerRule]
+    enabled: bool | None = None
+    configurations: list[QuotaManagerConfiguration]
+    exceed_actions: list[QuotaManagerExceedAction]
+    rules: list[QuotaManagerRule]
 
 
 class BypassSettings(BaseModel):
-    rules: Optional[List[BypassRules]] = None
+    rules: list[BypassRules] | None = None
 
 
 class ReportsSettings(BaseModel):
-    entries: Optional[List[ReportEntry]] = None
+    entries: list[ReportEntry] | None = None
 
 
 class V1Config(BaseModel):
     version: conint(ge=1)
     network: NetworkSettings
     system: SystemSettings
-    reports: Optional[ReportsSettings] = None
-    firewall: Optional[FirewallSettings] = None
-    dhcp: Optional[DhcpSettings] = None
-    dns: Optional[DnsSettings] = None
-    accounts: Optional[AccountsSettings] = None
-    dashboard: Optional[DashboardSettings] = None
-    files: Optional[Any] = None
-    wan: Optional[WanSettings] = None
-    discovery: Optional[DiscoverySettings] = None
-    geoip: Optional[GeoipSettings] = None
-    ipsec: Optional[IpsecServerSettings] = None
-    routes: Optional[Any] = None
-    threatprevention: Optional[ThreatpreventionSettings] = None
-    uris: Optional[Any] = None
-    webfilter: Optional[WebfilterSettings] = None
-    application_control: Optional[ApplicationControlSettings] = None
-    policy_manager: Optional[PolicyManagerSettings] = None
-    stats: Optional[StatsSettings] = None
-    dynamic_lists: Optional[DynamicListsSettings] = None
-    captive_portal: Optional[CaptiveportalSettings] = None
-    quota_manager: Optional[QuotaManagerSettings] = None
-    logger: Optional[Logger] = None
-    databases: Optional[List[DatabaseConfigSettings]] = Field(
+    reports: ReportsSettings | None = None
+    firewall: FirewallSettings | None = None
+    dhcp: DhcpSettings | None = None
+    dns: DnsSettings | None = None
+    accounts: AccountsSettings | None = None
+    dashboard: DashboardSettings | None = None
+    files: Any | None = None
+    wan: WanSettings | None = None
+    discovery: DiscoverySettings | None = None
+    geoip: GeoipSettings | None = None
+    ipsec: IpsecServerSettings | None = None
+    routes: Any | None = None
+    threatprevention: ThreatpreventionSettings | None = None
+    uris: Any | None = None
+    webfilter: WebfilterSettings | None = None
+    application_control: ApplicationControlSettings | None = None
+    policy_manager: PolicyManagerSettings | None = None
+    stats: StatsSettings | None = None
+    dynamic_lists: DynamicListsSettings | None = None
+    captive_portal: CaptiveportalSettings | None = None
+    quota_manager: QuotaManagerSettings | None = None
+    logger: Logger | None = None
+    databases: list[DatabaseConfigSettings] | None = Field(
         None, description="Database settings"
     )
-    bypass: Optional[BypassSettings] = None
-    dns_filter: Optional[DnsfilterSettings] = None
-    alerts: Optional[List[AlertObject]] = Field(None, description="alerts configuration")
-    ips: Optional[IpsSettings] = None
+    bypass: BypassSettings | None = None
+    dns_filter: DnsfilterSettings | None = None
+    alerts: list[AlertObject] | None = Field(None, description="alerts configuration")
+    ips: IpsSettings | None = None
