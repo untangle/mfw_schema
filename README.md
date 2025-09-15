@@ -63,6 +63,12 @@ To generate the Pydantic models, you can run the `generate_models.sh` script:
 ./generate_models.sh
 ```
 
+You can also set the `MFW_SCHEMA_PYDANTIC_OUTPUT_DIR` environment variable to control the output directory of the generated models. If this variable is not set, the models will be generated in the `pydantic_models` directory by default.
+
+```bash
+MFW_SCHEMA_PYDANTIC_OUTPUT_DIR=my_models ./generate_models.sh
+```
+
 ### Using the Generated Code in Another Project (Git Submodule)
 
 To use the generated Pydantic models in another project, you can add this repository as a Git submodule. This will link the two projects and allow you to keep the schema and generated models in sync.

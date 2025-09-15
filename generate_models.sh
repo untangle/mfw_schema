@@ -6,8 +6,9 @@ set -e
 # --- Configuration ---
 SOURCE_SCHEMA_DIR="v1"
 TOP_LEVEL_SCHEMA_NAME="schema.json"
-OUTPUT_FILE="pydantic_models/v1_config.py"
-OUTPUT_DIR=$(dirname "$OUTPUT_FILE")
+# Use MFW_SCHEMA_PYDANTIC_OUTPUT_DIR if set, otherwise default to 'pydantic_models'
+OUTPUT_DIR="${MFW_SCHEMA_PYDANTIC_OUTPUT_DIR:-pydantic_models}"
+OUTPUT_FILE="$OUTPUT_DIR/v1_config.py"
 CLASS_NAME="V1Config"
 
 # --- Script Logic ---
