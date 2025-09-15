@@ -97,7 +97,11 @@
                                         "description": "The BGP hold timer in seconds",
                                         "default": 180
                                     }
-                                }
+                                },
+                               "dependentRequired": {
+                                   "keepalive": ["hold"],
+                                   "hold": ["keepalive"]
+                               }
                             }
                         }
                     }

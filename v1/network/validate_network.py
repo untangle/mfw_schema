@@ -39,6 +39,7 @@ class TestNetworkSchema(unittest.TestCase):
         self.assertEqual(len(network.get("interfaces")), 2,  "Invalid interfaces content")
         self.assertEqual(len(network.get("interfaces")[1].get("name")), 10, "Interface name should support size 15")
         self.assertEqual(len(network.get("switches")), 2,  "Invalid switches content")
+        self.assertEqual(len(network.get("bgp")), 2, "Invalid bgp content")
 
 if __name__ == '__main__':
     unittest.main()
