@@ -246,7 +246,7 @@
                     "type": "string",
                     "enum": ["JUMP","GOTO","ACCEPT","RETURN","REJECT","DROP","DNAT","SNAT","MASQUERADE","SET_PRIORITY","LIMIT_EXCEED_ACTION","WAN_POLICY"]
                 },
-                "chain": {
+                "target_chain": {
                     "type": "string"
                 },
                 "dnat_address": {

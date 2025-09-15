@@ -587,11 +587,11 @@
                         ]
                     }    
                 },
-                "rule":  {
+                "rule_ids":  {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/policy_manager_rule_id"
-                    }    
+                    }
                 }
             }        
         },
