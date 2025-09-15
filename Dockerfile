@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application's code from the host to the container at /usr/src/app
 COPY . .
 
-# Make the script executable
-RUN chmod +x generate_models.sh
-
 # Command to run the script
 CMD ["./generate_models.sh"]

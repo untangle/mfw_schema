@@ -9,7 +9,7 @@ This stores the JSON schemas that describe the settings.
 
 ### Prerequisites
 
-- Python 3.6+
+- Python 3.9+
 
 ### Setup
 

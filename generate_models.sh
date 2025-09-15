@@ -45,7 +45,9 @@ sed -i 's/Chain_1/Chain/g' "$OUTPUT_FILE"
 sed -i 's/Table_1/Table/g' "$OUTPUT_FILE"
 
 echo "Ruff Formatting $OUTPUT_DIR"
-ruff format "$OUTPUT_DIR"
+ruff format --target-version py39 "$OUTPUT_DIR"
+echo "Ruff check/fixing $OUTPUT_DIR"
+ruff check --target-version py39 --fix "$OUTPUT_DIR"
 
 # 5. Validate the generated model
 echo "Validating generated model..."
