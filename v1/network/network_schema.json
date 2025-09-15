@@ -509,7 +509,7 @@
                 },
                 "openvpnUsername": {
                     "type": "string",
-                    "description": "The openvpn username if usename authentication enabled"
+                    "description": "The openvpn username if username authentication enabled"
                 },
                 "boundInterfaceId": {
                     "type": "string",
@@ -538,7 +538,7 @@
                 },
                 "wireguardEditMode": {
                     "type": "string",
-                    "description": "How this VPN is to be editied",
+                    "description": "How this VPN is to be edited",
                     "enum": ["PASTE", "MANUAL"]
                 },
                 "wireguardType": {
@@ -641,7 +641,7 @@
                 },
                 "wanWeight": {
                     "type": "number",
-                    "description": "Weight of WAN interace to use in weighted balance algorithms"
+                    "description": "Weight of WAN interface to use in weighted balance algorithms"
                 }
             }
         },

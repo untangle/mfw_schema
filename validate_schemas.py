@@ -37,7 +37,7 @@ def validate_all_schemas(directory: Path) -> None:
                 )
             print(f"    Details: {e.message}\n")
             error_found = True
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"\n--- UNEXPECTED ERROR in file: {json_file} ---")
             print(f"    {e}\n")
             error_found = True
@@ -50,7 +50,7 @@ def validate_all_schemas(directory: Path) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2:  # noqa: PLR2004
         print("Usage: python validate_schemas.py <directory_to_scan>")
         sys.exit(1)
 

@@ -237,7 +237,7 @@
                 },
                 "colors": {
                     "type": "array",
-                    "description": "The color pallette",
+                    "description": "The color palette",
                     "items": {"type": "string"}
                 },
                 "stacking": {

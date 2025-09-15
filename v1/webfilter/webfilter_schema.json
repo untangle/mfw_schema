@@ -3,12 +3,12 @@
     "definitions": {
         "webfilter_settings": {
             "type": "object",
-            "description": "webfilter settings",
+            "description": "web filter settings",
             "additionalProperties": false,
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "True if webfilter is enabled, false otherwise"
+                    "description": "True if web filter is enabled, false otherwise"
                 },
                 "categories": {
                     "type": "array",
@@ -32,29 +32,29 @@
         },
         "webfilter_categories": {
             "type": "object",
-            "description": "webfilter categories",
+            "description": "web filter categories",
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "True if webfilter category is being filtered/blocked, false otherwise"
+                    "description": "True if web filter category is being filtered/blocked, false otherwise"
                 },
                 "flagged": {
                     "type": "boolean",
-                    "description": "True if webfilter category is being flagged, false otherwise"
+                    "description": "True if web filter category is being flagged, false otherwise"
                 },
                 "id": {
                     "type": "number",
-                    "description": "Unique identifier of the webfilter category"
+                    "description": "Unique identifier of the web filter category"
                 },
                 "logged": {
                     "type": "boolean",
-                    "description": "True if webfilter category is being reported, false otherwise"
+                    "description": "True if web filter category is being reported, false otherwise"
                 }
             }
         },
         "webfilter_list_item": {
             "type": "object",
-            "description": "webfilter list items for block/pass list entries",
+            "description": "web filter list items for block/pass list entries",
             "properties": {
                 "enabled": {
                     "type": "boolean",
