@@ -1,4 +1,4 @@
-from pydantic_models.v1_config import V1Config
+from pydantic_models.mfw_schema import MfwSchema
 
 # Sample data that conforms to the schema
 sample_data = {
@@ -24,18 +24,18 @@ sample_data = {
 
 def test_v1_config() -> None:
     """
-    Tests the V1Config model with sample data.
+    Tests the MfwSchema model with sample data.
     """
     try:
-        # Create an instance of the V1Config model
-        config = V1Config(**sample_data)
+        # Create an instance of the MfwSchema model
+        config = MfwSchema(**sample_data)
 
         # Print the model instance to verify its contents
-        print("Successfully created V1Config instance:")
+        print("Successfully created MfwSchema instance:")
         print(config.model_dump_json(indent=4))
 
     except Exception as e:
-        print(f"Error creating V1Config instance: {e}")
+        print(f"Error creating MfwSchema instance: {e}")
 
 
 if __name__ == "__main__":

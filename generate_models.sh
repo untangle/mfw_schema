@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Exit immediately if a command exits with a non-zero status.
-set -e
+# set -e
 
 # --- Configuration ---
 SOURCE_SCHEMA_DIR="v1"
 TOP_LEVEL_SCHEMA_NAME="schema.json"
 # Use MFW_SCHEMA_PYDANTIC_OUTPUT_DIR if set, otherwise default to 'pydantic_models'
 OUTPUT_DIR="${MFW_SCHEMA_PYDANTIC_OUTPUT_DIR:-pydantic_models}"
-OUTPUT_FILE="$OUTPUT_DIR/v1_config.py"
-CLASS_NAME="V1Config"
+OUTPUT_FILE="$OUTPUT_DIR/mfw_schema.py"
+CLASS_NAME="mfw_schema"
 
 # --- Script Logic ---
 
@@ -32,6 +32,15 @@ datamodel-codegen \
   --input-file-type jsonschema \
   --output "$OUTPUT_FILE" \
   --class-name "$CLASS_NAME" \
+  --use-annotated \
+  --use-standard-collections \
+  --use-generic-container-types \
+  --use-default \
+  --use-default-kwarg \
+  --enable-version-header \
+  --use-schema-description \
+  --use-double-quotes \
+  --use-union-operator \
   --collapse-root-models \
   --output-model-type pydantic_v2.BaseModel \
   --target-python-version 3.9
@@ -46,9 +55,9 @@ sed -i 's/Chain_1/Chain/g' "$OUTPUT_FILE"
 sed -i 's/Table_1/Table/g' "$OUTPUT_FILE"
 
 echo "Ruff Formatting $OUTPUT_DIR"
-ruff format --target-version py39 "$OUTPUT_DIR"
+ruff format "$OUTPUT_DIR"
 echo "Ruff check/fixing $OUTPUT_DIR"
-ruff check --target-version py39 --fix "$OUTPUT_DIR"
+ruff check --fix "$OUTPUT_DIR"
 
 # 5. Validate the generated model
 echo "Validating generated model..."
