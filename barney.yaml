@@ -4,3 +4,12 @@ images:
       - image: barney.ci/debian%network
       - image: barney.ci/debian%pkg/python3
 
+  test/validate_schema:
+    units:
+      - floor: .%build-floor
+        build: |
+          python3 --version
+        # quota:
+        #   memory: 500Mi
+        #   cpu: 1
+
