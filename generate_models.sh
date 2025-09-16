@@ -45,6 +45,15 @@ datamodel-codegen \
   --output-model-type pydantic_v2.BaseModel \
   --target-python-version 3.9
 
+# 4. Post-process: Remove incorrect relative imports and replace aliases
+echo "Fixing generated model..."
+sed -i '/from \. import Chain as Chain_1/d' "$OUTPUT_FILE"
+sed -i '/from \. import Rule as Rule_1/d' "$OUTPUT_FILE"
+sed -i '/from \. import Table as Table_1/d' "$OUTPUT_FILE"
+sed -i 's/Rule_1/Rule/g' "$OUTPUT_FILE"
+sed -i 's/Chain_1/Chain/g' "$OUTPUT_FILE"
+sed -i 's/Table_1/Table/g' "$OUTPUT_FILE"
+
 echo "Ruff Formatting $OUTPUT_DIR"
 ruff format "$OUTPUT_DIR"
 echo "Ruff check/fixing $OUTPUT_DIR"

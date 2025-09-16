@@ -45,7 +45,7 @@
                     "enum": ["TEXT","EVENTS","CATEGORIES","SERIES","CATEGORIES_SERIES"],
                     "description": "The type of report/chart"
                 },
-                "database_table": {
+                "table": {
                     "type": "string",
                     "description": "The table the report queries"
                 },
