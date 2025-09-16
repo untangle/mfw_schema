@@ -3,13 +3,24 @@ images:
     units:
       - image: barney.ci/debian%network
       - image: barney.ci/debian%pkg/python3
+      - image: barney.ci/debian%pkg/python3-venv
+
+  pydantic_models:
+    units:
+      - floor: .%build-floor
+        build: |
+          mkdir -p /dest
+          ./generate_models_venv.sh
+          mv pydantic_models /dest
+        # quota:
+        #   memory: 500Mi
+        #   cpu: 1
 
   test/validate_schema:
     units:
       - floor: .%build-floor
         build: |
-          python3 --version
-        # quota:
-        #   memory: 500Mi
-        #   cpu: 1
-
+          ./setup_and_run_validations.sh
+        quota:
+          memory: 500Mi
+          cpu: 1
