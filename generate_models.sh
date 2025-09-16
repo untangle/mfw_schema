@@ -28,6 +28,7 @@ echo -e "--- Validation Complete ---\n"
 # 3. Generate the Pydantic model from the schema
 echo "Generating Pydantic model from the schema..."
 datamodel-codegen \
+  --target-python-version 3.9 \
   --input "$SOURCE_SCHEMA_DIR/$TOP_LEVEL_SCHEMA_NAME" \
   --input-file-type jsonschema \
   --output "$OUTPUT_FILE" \
@@ -40,10 +41,8 @@ datamodel-codegen \
   --enable-version-header \
   --use-schema-description \
   --use-double-quotes \
-  --use-union-operator \
   --collapse-root-models \
-  --output-model-type pydantic_v2.BaseModel \
-  --target-python-version 3.9
+  --output-model-type pydantic_v2.BaseModel
 
 # 4. Post-process: Remove incorrect relative imports and replace aliases
 echo "Fixing generated model..."
