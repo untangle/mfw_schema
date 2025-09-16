@@ -1,0 +1,5 @@
+  build-floor:
+    units:
+      - image: barney.ci/debian%network
+      - image: barney.ci/debian%pkg/python3
+

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"repomap": {
+		"barney.ci/debian": {
+			"commit": "5d22942b5cf8172ed4dd1f795e7b96b32c3c9188"
+		}
+	}
+}

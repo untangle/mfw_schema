@@ -1,0 +1,84 @@
+reponame: code.arista.io/efw/mfw_schema
+description: |
+  TODO:
+users:
+  maintainers:
+    - abriles@arista.com
+    - al.parker@arista.com
+    - acooke@arista.com
+    - avinash.dige@arista.com
+    - crasmussen@arista.com
+    - cblaise@arista.com
+    - dhadarau@arista.com
+    - donal@arista.com
+    - iramasamy@arista.com
+    - jphillips@arista.com
+    - jsommerville@arista.com
+    - k.skrzypczyn@arista.com
+    - ksridhar@arista.com
+    - sdelafond@arista.com
+    - smitropoulos@arista.com
+    - sumedha.game@arista.com
+    - utkarsh.pratapsingh@arista.com
+    - vishal.mane-ext@arista.com
+    - vmishra@arista.com
+  watchers:
+    - bruce@arista.com
+    - cmercer@arista.com
+    - drush@arista.com
+    - jcoffin@arista.com
+    - manoj@arista.com
+    - prashant.karunakaran@arista.com
+    - sheck@arista.com
+    - tkovalev@arista.com
+x-bar:
+  version: production
+
+# x-github-bridge:
+#   reviews:
+#     - image: test/mfw_pkg/sync-settings-rpm
+#       events:
+#         - type: merge_group
+#           branch-re: ^master$
+#         - type: pull_request
+#           branch-re: ^master$
+#         - type: push
+#           branch-re: ^master$
+#
+#     - image: local/internal/tests
+#       events:
+#         - type: merge_group
+#           branch-re: ^master$
+#         - type: pull_request
+#           branch-re: ^master$
+#         - type: push
+#           branch-re: ^master$
+#
+#     - image: tests/formatter
+#       events:
+#         - type: merge_group
+#           branch-re: ^master$
+#         - type: pull_request
+#           branch-re: ^master$
+#         - type: push
+#           branch-re: ^master$
+#
+#     - image: tests/renovate-json5
+#       events:
+#         - type: pull_request
+#           branch-re: ^master$
+#         - type: merge_group
+#           branch-re: ^master$
+#         - type: push
+#           branch-re: ^master$
+#
+#     - image: test/qube-plugins
+#       events:
+#         - type: pull_request
+#           branch-re: ^master$
+#         - type: merge_group
+#           branch-re: ^master$
+#         - type: push
+#           branch-re: ^master$
+
+epoch: 1
