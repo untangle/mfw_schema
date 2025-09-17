@@ -1,184 +1,32 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Validate",
-            "type": "shell",
-            "command": "./validate.py ${input:directory} ${input:schema} ${input:json}",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test policy_manager",
-            "type": "shell",
-            "command": "./validate.py policy_manager v1/policy_manager/test_schema.json v1/policy_manager/test_settings.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test dynamic_lists",
-            "type": "shell",
-            "command": "./validate.py dynamic_lists v1/dynamic_lists/test_schema.json v1/dynamic_lists/dynamic_lists_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test captiveportal",
-            "type": "shell",
-            "command": "./validate.py captiveportal v1/captiveportal/test_schema.json v1/captiveportal/captiveportal_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test System Schema",
-            "type": "shell",
-            "command": "./validate.py system_schema v1/system/test_schema.json v1/system/test_system_schema.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-	    {
-            "label": "Test Quota Manager",
-            "type": "shell",
-            "command": "./validate.py quota_manager v1/quota_manager/test_schema.json v1/quota_manager/quota_manager_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test databases",
-            "type": "shell",
-            "command": "./validate.py databases_schema v1/databases/test_schema.json v1/databases/databases_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test denialofservice",
-            "type": "shell",
-            "command": "./validate.py denialofservice v1/denialofservice/test_schema.json v1/denialofservice/denialofservice_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test bypass",
-            "type": "shell",
-            "command": "./validate.py bypass v1/bypass/test_schema.json v1/bypass/bypass_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test DNS Filter",
-            "type": "shell",
-            "command": "./validate.py dns_filter v1/dns_filter/test_schema.json v1/dns_filter/dnsfilter_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test Alerts",
-            "type": "shell",
-            "command": "./validate.py alerts v1/alerts/test_schema.json v1/alerts/alerts_test.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Test Network",
-            "type": "shell",
-            "command": "./validate.py network_schema v1/network/test_schema.json v1/network/test_network.json",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            }
-        },
-    ],
-    "inputs": [
-        {
-            "id": "directory",
-            "type": "promptString",
-            "description": "Enter directory names whose schemas you want to test, separated by commas. Leave blank to run all tests",
-            "default": ""
-        },
-        {
-            "id": "schema",
-            "type": "pickString",
-            "description": "pick a schema or leave blank for default in directory",
-            "options": [
-                "",
-                "./v1/schema.json",
-                "./v1/accounts/accounts_schema.json",
-                "./v1/application_control/application_control_schema.json",
-                "./v1/dashboard/dashboard_schema.json",
-                "./v1/dhcp/dhcp_schema.json",
-                "./v1/discovery/discovery_schema.json",
-                "./v1/dns/dns_schema.json",
-                "./v1/dynamic_lists/dynamic_lists_schema.json",
-                "./v1/files/files_schema.json",
-                "./v1/firewall/access_table_schema.json",
-                "./v1/firewall/firewall_schema.json",
-                "./v1/firewall/filter_table_schema.json",
-                "./v1/firewall/nat_table_schema.json",
-                "./v1/firewall/port_forward_schema.json",
-                "./v1/firewall/shaping_table_schema.json",
-                "./v1/geoip/geoip_schema.json",
-                "./v1/ipsec_server/ipsec_server_schema.json",
-                "./v1/network/network_schema.json",
-                "./v1/policy_manager/policy_manager_schema.json",
-                "./v1/policy_manager/test_schema.json",
-                "./v1/reports/reports_schema.json",
-                "./v1/routes/routes_schema.json",
-                "./v1/stats/stats_schema.json",
-                "./v1/system/system_schema.json",
-                "./v1/threatprevention/threatprevention_schema.json",
-                "./v1/uris/uris_schema.json",
-                "./v1/wan/wan_schema.json",
-                "./v1/webfilter/webfilter_schema.json",
-                "./v1/captiveportal/captiveportal_schema.json",
-                "./v1/quota_manager/quota_manager_schema.json",
-                "./v1/databases/databases_schema.json",
-                "./v1/denialofservice/denialofservice_schema.json",
-                "./v1/bypass/bypass_schema.json",
-                "./v1/dns_filter/dnsfilter_schema.json",
-                "./v1/alerts/alerts_schema.json"
-
-            ],
-            "default": ""
-        },
-        {
-            "id": "json",
-            "type": "pickString",
-            "description": "pick a json to validate or leave blank for default in directory",
-            "options": [
-                "",
-                "./v1/dynamic_lists/dynamic_lists_test.json",
-                "./v1/policy_manager/test_settings.json",
-                "./v1/captiveportal/captiveportal_test.json",
-                "./v1/quota_manager/quota_manager_test.json",
-                "./v1/databases/databases_test.json",
-                "./v1/denialofservice/denialofservice_test.json",
-                "./v1/bypass/bypass_test.json",
-                "./v1/dns_filter/dnsfilter_test.json",
-                "./v1/alerts/alerts_test.json"
-            ],
-            "default": ""
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "(Local) Run All Validations",
+      "type": "shell",
+      "command": "./setup_and_run_validations.sh",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "(Local venv) Generate Pydantic Models",
+      "type": "shell",
+      "command": "./generate_models_venv.sh",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "(Docker) Generate Pydantic Models",
+      "type": "shell",
+      "command": "./generate_models_docker.sh",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    }
+  ]
 }

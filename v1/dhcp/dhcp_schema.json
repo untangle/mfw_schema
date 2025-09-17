@@ -12,14 +12,14 @@
                 },
                 "staticDhcpEntries": {
                     "type": "array",
-                    "description": "List of static DHCP assignements",
+                    "description": "List of static DHCP assignments",
                     "items": { "$ref": "#/definitions/static_dhcp_entry" }
                 }
             }
         },
         "static_dhcp_entry": {
             "type": "object",
-            "description": "An IP address to be statically assinged to a specific device",
+            "description": "An IP address to be statically assigned to a specific device",
             "required": ["address", "macAddress"],
             "properties": {
                 "address": {

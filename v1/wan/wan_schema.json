@@ -8,7 +8,7 @@
             "properties": {
                 "policy_chains": {
                     "type": "array",
-                    "items": { "$ref": "file:../firewall/firewall_schema.json#/definitions/chain" }
+                    "items": { "$ref": "../firewall/firewall_schema.json#/definitions/chain" }
                 },
                 "policies": {
                     "type": "array",
