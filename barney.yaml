@@ -12,9 +12,9 @@ images:
           mkdir -p /dest
           ./generate_models_venv.sh
           mv pydantic_models /dest
-        # quota:
-        #   memory: 500Mi
-        #   cpu: 1
+        quota:
+          memory: 500Mi
+          cpu: 1
 
   test/validate_schema:
     units:

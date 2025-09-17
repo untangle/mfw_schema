@@ -33,4 +33,16 @@ users:
     - tkovalev@arista.com
 x-bar:
   version: production
+
+x-github-bridge:
+  reviews:
+    - image: test/validate_schema
+      events:
+        - type: merge_group
+          branch-re: ^master$
+        - type: pull_request
+          branch-re: ^master$
+        - type: push
+          branch-re: ^master$
+
 epoch: 1
