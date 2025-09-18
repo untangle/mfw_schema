@@ -40,7 +40,7 @@ images:
     units:
       - floor: .%tests/internal/renovate-json5-floor
         sources:
-          - github.com/untangle/sync-settings # to get sources under stable path
+          - code.arista.io/efw/mfw_schema # to get sources under stable path
         quota:
           memory: 500Mi
           cpu: 1
