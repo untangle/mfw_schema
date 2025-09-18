@@ -45,4 +45,4 @@ images:
           memory: 500Mi
           cpu: 1
         build: |
-          json5 --validate /src/github.com/untangle/sync-settings/renovate.json5
+          json5 --validate /src/code.arista.io/efw/mfw_schema/renovate.json5
