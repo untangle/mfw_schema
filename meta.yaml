@@ -45,4 +45,13 @@ x-github-bridge:
         - type: push
           branch-re: ^master$
 
+    - image: tests/renovate-json5
+      events:
+        - type: merge_group
+          branch-re: ^master$
+        - type: pull_request
+          branch-re: ^master$
+        - type: push
+          branch-re: ^master$
+
 epoch: 1
