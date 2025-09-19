@@ -14,6 +14,11 @@
                     "type": "boolean",
                     "description": "Is IPS enabled"
                 },
+                "update_time": {
+                    "type": "string",
+                    "description": "Time the update script runs. Is randomly set when created.",
+                    "format": "HH:mm"
+                },
                 "rules": {
                     "type": "array",
                     "description": "List of IPS rules used to override the default rules",
