@@ -24,3 +24,25 @@ images:
         quota:
           memory: 500Mi
           cpu: 1
+
+  ################
+  #
+  # Validate non-code files
+  #
+  #########
+
+  tests/internal/renovate-json5-floor:
+    units:
+      - image: barney.ci/debian%network
+      - image: barney.ci/debian%pkg/node-json5
+
+  tests/renovate-json5:
+    units:
+      - floor: .%tests/internal/renovate-json5-floor
+        sources:
+          - code.arista.io/efw/mfw_schema # to get sources under stable path
+        quota:
+          memory: 500Mi
+          cpu: 1
+        build: |
+          json5 --validate /src/code.arista.io/efw/mfw_schema/renovate.json5
