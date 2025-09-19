@@ -12,7 +12,7 @@
                 },
                 "cacheTtlSeconds": {
                     "type": "integer",
-                    "description": "The cahe entries TTL"
+                    "description": "The cache entries TTL"
                 }
             }
         }

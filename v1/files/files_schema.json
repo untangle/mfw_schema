@@ -16,7 +16,7 @@
                     "type": "string"
                 },
                 "path": {
-                    "description": "The path of the file, not useds in some cases",
+                    "description": "The path of the file, not used in some cases",
                     "type": "string"
                 },
                 "operation": {

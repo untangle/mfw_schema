@@ -8,6 +8,15 @@
       "uniqueId": "7074edee-3087-4d67-bbd2-4ca7222fcd74",
       "conditions": [
         {
+          "uniqueId": "9074edee-3087-4d67-bbd2-4ca7222fcd74",
+          "name": "condition 1",
+          "category": "cat 1",
+          "description": "condition 1",
+          "displayOrder": 1,
+          "type": "TEXT",
+          "rendering": {
+            "type": "area"
+          },
           "column": "1",
           "operator": "EQ",
           "value": "test"
@@ -62,6 +71,15 @@
       "tables": ["test"],
       "userConditions": [
         {
+          "uniqueId": "8074edee-3087-4d67-bbd2-4ca7222fcd74",
+          "name": "user condition 1",
+          "category": "cat 1",
+          "description": "user condition 1",
+          "displayOrder": 1,
+          "type": "TEXT",
+          "rendering": {
+            "type": "area"
+          },
           "column": "1",
           "operator": "EQ",
           "value": "test"

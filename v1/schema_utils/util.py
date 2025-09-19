@@ -7,6 +7,34 @@ import jsonschema
 import referencing
 from urllib.parse import urlparse
 from pathlib import Path
+from jsonschema import validators
+
+
+def properties_greater_than(validator, properties, instance, schema):
+    if not isinstance(instance, dict):
+        return
+
+    greater_property = properties.get("greater")
+    lesser_property = properties.get("lesser")
+
+    if not greater_property or not lesser_property:
+        return
+
+    if greater_property in instance and lesser_property in instance:
+        if instance[greater_property] <= instance[lesser_property]:
+            yield jsonschema.ValidationError(
+                f"'{greater_property}' must be greater than '{lesser_property}'"
+            )
+
+
+def extend_with_custom_validation(validator_class):
+    validate_properties = validator_class.VALIDATORS.copy()
+    validate_properties["propertiesGreaterThan"] = properties_greater_than
+    return validators.extend(validator_class, validate_properties)
+
+
+CustomDraft6Validator = extend_with_custom_validation(jsonschema.Draft6Validator)
+
 
 class ReferenceRetriever:
     def __init__(self, root_path):
@@ -44,7 +72,7 @@ class SchemaValidator:
             for path in self.external_refs:
                 registry = self.__importExternalRef(registry, path, self.external_refs[path])
             
-            jsonschema.validate(instance=self.json_data, schema=resource.contents, registry=registry)
+            jsonschema.validate(instance=self.json_data, schema=resource.contents, registry=registry, cls=CustomDraft6Validator)
         except Exception as e:
             print(e)
             return False

@@ -56,6 +56,34 @@
           }
         ]
       }
+    ],
+    "bgp": [
+        {
+            "local_asn": 65000,
+            "router_id": "1.1.1.1",
+            "address_family": {
+                "ipv4": true,
+                "ipv6": false
+            },
+            "neighbor": {
+                "ip": "2.2.2.2",
+                "asn": 65001,
+                "keepalive": 30,
+                "hold": 90
+            }
+        },
+        {
+            "local_asn": 65000,
+            "router_id": "1.1.1.1",
+            "address_family": {
+                "ipv4": true,
+                "ipv6": false
+            },
+            "neighbor": {
+                "ip": "3.3.3.3",
+                "asn": 65002
+            }
+        }
     ]
-   }   
+   }
 }

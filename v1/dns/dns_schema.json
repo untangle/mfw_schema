@@ -13,7 +13,7 @@
                 },
                 "staticEntries": {
                     "type": "array",
-                    "description": "List of static DNS assignements",
+                    "description": "List of static DNS assignments",
                     "items": { "$ref": "#/definitions/static_dns_entry" }
                 }
             }

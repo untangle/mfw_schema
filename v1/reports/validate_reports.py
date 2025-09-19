@@ -11,28 +11,34 @@ class TestReportsSchema(unittest.TestCase):
     JSON_FILENAME_DEFAULT = "test_reports.json"
     SCHEMA_FILENAME_DEFAULT = "test_schema.json"
     json_data = {}
-    
+
     @classmethod
     def setUpClass(cls):
         """
-        setUpClass runs before all tests. Grabs file information, using some defaults if the environment variables 
-        fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors 
+        setUpClass runs before all tests. Grabs file information, using some defaults if the environment variables
+        fail for any reason. Then performs the regular jsonschema.validate, to check against the schema. This errors
         out, so any follow-up tests won't run
         """
-        current_directory = os.path.dirname(os.path.realpath(__file__))       
-        schema_validator = SchemaValidator(current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT)
-        
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        schema_validator = SchemaValidator(
+            current_directory, cls.JSON_FILENAME_DEFAULT, cls.SCHEMA_FILENAME_DEFAULT
+        )
+
         if schema_validator.isValid():
             cls.json_data = schema_validator.getJsonData()
         else:
-            raise unittest.SkipTest("ERROR: Validation of schema failed. Skipping all tests and printing.")
+            raise unittest.SkipTest(
+                "ERROR: Validation of schema failed. Skipping all tests and printing."
+            )
 
     def test_reports(self):
         """
         validates reports
         """
         entries = self.json_data["reports"]["entries"]
-        self.assertEqual(len(entries), 1,  "Invalid entries content")
+        self.assertEqual(len(entries), 1, "Invalid entries content")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
+

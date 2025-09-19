@@ -8,7 +8,7 @@
         },
         "static_route_item": {
             "type": "object",
-            "description": "Static route definition bject",
+            "description": "Static route definition object",
             "additionalProperties": false,
             "properties": {
                 "enabled": {

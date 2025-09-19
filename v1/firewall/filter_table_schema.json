@@ -3,24 +3,24 @@
     "definitions": {
         "filter_table": {
             "allOf": [
-                { "$ref": "file:firewall_schema.json#/definitions/table" },
+                { "$ref": "firewall_schema.json#/definitions/table" },
                 {
                     "properties": {
                     "chains": {
                         "type": "array",
                         "items": {
                             "allOf": [
-                                { "$ref": "file:firewall_schema.json#/definitions/chain" },
+                                { "$ref": "firewall_schema.json#/definitions/chain" },
                                 { "properties": {
                                     "rules": {
                                         "type": "array",
                                         "items": {
                                             "allOf": [
-                                                { "$ref": "file:firewall_schema.json#/definitions/rule" },
+                                                { "$ref": "firewall_schema.json#/definitions/rule" },
                                                 { "properties": {
                                                     "action": {
                                                         "allOf": [
-                                                            { "$ref": "file:firewall_schema.json#/definitions/rule_action" },
+                                                            { "$ref": "firewall_schema.json#/definitions/rule_action" },
                                                             { "properties": {
                                                                 "type": {
                                                                     "type": "string",

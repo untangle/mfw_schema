@@ -8,7 +8,7 @@
             "properties": {
                 "policy_chains": {
                     "type": "array",
-                    "items": { "$ref": "file:../firewall/firewall_schema.json#/definitions/chain" }
+                    "items": { "$ref": "../firewall/firewall_schema.json#/definitions/chain" }
                 },
                 "policies": {
                     "type": "array",
@@ -72,75 +72,79 @@
         "wan_interface": {
             "type": "object",
             "required": ["interfaceId"],
-            "interfaceId": {
-                "type": "integer",
-                "description": "The interfaceId of the interface"
-            },
-            "weight": {
-                "type": "integer",
-                "description": "The static balance weight for this interface",
-                "minimum": 1,
-                "maximum": 10000
-            }
+            "properties": {
+              "interfaceId": {
+                  "type": "integer",
+                  "description": "The interfaceId of the interface"
+              },
+              "weight": {
+                  "type": "integer",
+                  "description": "The static balance weight for this interface",
+                  "minimum": 1,
+                  "maximum": 10000
+              }
+          }
         },
         "wan_criterion": {
             "type": "object",
             "required": ["type"],
-            "type": {
-                "type": "string",
-                "description": "The policy type",
-                "enum": [ "ATTRIBUTE", "METRIC", "CONNECTIVITY" ]
-            },
-            "attribute": {
-                "type": "string",
-                "description": "An interface attribute",
-                "enum": [ "VPN", "NAME" ]
-            },
-            "name_contains": {
-                "type": "string",
-                "description": "The string to search for in interface names for the NAME attribute criterion"
-            },
-            "metric": {
-                "type": "string",
-                "description": "An interface metric",
-                "enum": [ "LATENCY", "AVAILABLE_BANDWIDTH", "JITTER", "PACKET_LOSS" ]
-            },
-            "metric_value": {
-                "type": "integer",
-                "description": "The value associated with the interface metric"
-            },
-            "metric_op": {
-                "type": "string",
-                "enum": ["<",">","<=",">="]
-            },
-            "connectivityTestType": {
-                "type": "string",
-                "description": "The type of connectivity test",
-                "enum": [ "PING", "ARP", "DNS", "HTTP" ]
-            },
-            "connectivityTestInterval": {
-                "type": "integer",
-                "description": "The connectivity test interval in seconds"
-            },
-            "connectivityTestTimeout": {
-                "type": "integer",
-                "description": "The connectivity test timeout in seconds"
-            },
-            "connectivityTestFailureThreshold": {
-                "type": "integer",
-                "description": "The number of test failures (out of 10) that represents an interface failure"
-            },
-            "connectivityTestTarget": {
-                "type": "string",
-                "description": "IP/host address to test"
-            },
-            "allOf": [
-                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["ATTRIBUTE"] } } } }, { "required": ["attribute"] } ] },
-                { "anyOf": [ { "not": { "properties": { "attribute": { "enum": ["NAME"] } } } }, { "required": ["name_contains"] } ] },
-                { "anyOf": [ { "not": { "properties": { "type": { "enum": ["METRIC"] } } } }, { "required": ["metric","metric_value","metric_op"] } ] },
-                { "anyOf": [ { "not": { "properties": { "connectivityTestType": { "enum": ["PING", "ARP", "DNS", "HTTP"] } } } }, { "required": ["connectivityTestTarget"] } ] },
-                {}
-            ]
+            "properties":{
+              "type": {
+                  "type": "string",
+                  "description": "The policy type",
+                  "enum": [ "ATTRIBUTE", "METRIC", "CONNECTIVITY" ]
+              },
+              "attribute": {
+                  "type": "string",
+                  "description": "An interface attribute",
+                  "enum": [ "VPN", "NAME" ]
+              },
+              "name_contains": {
+                  "type": "string",
+                  "description": "The string to search for in interface names for the NAME attribute criterion"
+              },
+              "metric": {
+                  "type": "string",
+                  "description": "An interface metric",
+                  "enum": [ "LATENCY", "AVAILABLE_BANDWIDTH", "JITTER", "PACKET_LOSS" ]
+              },
+              "metric_value": {
+                  "type": "integer",
+                  "description": "The value associated with the interface metric"
+              },
+              "metric_op": {
+                  "type": "string",
+                  "enum": ["<",">","<=",">="]
+              },
+              "connectivityTestType": {
+                  "type": "string",
+                  "description": "The type of connectivity test",
+                  "enum": [ "PING", "ARP", "DNS", "HTTP" ]
+              },
+              "connectivityTestInterval": {
+                  "type": "integer",
+                  "description": "The connectivity test interval in seconds"
+              },
+              "connectivityTestTimeout": {
+                  "type": "integer",
+                  "description": "The connectivity test timeout in seconds"
+              },
+              "connectivityTestFailureThreshold": {
+                  "type": "integer",
+                  "description": "The number of test failures (out of 10) that represents an interface failure"
+              },
+              "connectivityTestTarget": {
+                  "type": "string",
+                  "description": "IP/host address to test"
+              }
+          },
+          "allOf": [
+              { "anyOf": [ { "not": { "properties": { "type": { "enum": ["ATTRIBUTE"] } } } }, { "required": ["attribute"] } ] },
+              { "anyOf": [ { "not": { "properties": { "attribute": { "enum": ["NAME"] } } } }, { "required": ["name_contains"] } ] },
+              { "anyOf": [ { "not": { "properties": { "type": { "enum": ["METRIC"] } } } }, { "required": ["metric","metric_value","metric_op"] } ] },
+              { "anyOf": [ { "not": { "properties": { "connectivityTestType": { "enum": ["PING", "ARP", "DNS", "HTTP"] } } } }, { "required": ["connectivityTestTarget"] } ] },
+              {}
+          ]
         }
     }
 }

@@ -1,0 +1,48 @@
+images:
+  build-floor:
+    units:
+      - image: barney.ci/debian%network
+      - image: barney.ci/debian%pkg/python3
+      - image: barney.ci/debian%pkg/python3-venv
+
+  pydantic_models:
+    units:
+      - floor: .%build-floor
+        build: |
+          mkdir -p /dest
+          ./generate_models_venv.sh
+          mv pydantic_models /dest
+        quota:
+          memory: 500Mi
+          cpu: 1
+
+  test/validate_schema:
+    units:
+      - floor: .%build-floor
+        build: |
+          ./setup_and_run_validations.sh
+        quota:
+          memory: 500Mi
+          cpu: 1
+
+  ################
+  #
+  # Validate non-code files
+  #
+  #########
+
+  tests/internal/renovate-json5-floor:
+    units:
+      - image: barney.ci/debian%network
+      - image: barney.ci/debian%pkg/node-json5
+
+  tests/renovate-json5:
+    units:
+      - floor: .%tests/internal/renovate-json5-floor
+        sources:
+          - code.arista.io/efw/mfw_schema # to get sources under stable path
+        quota:
+          memory: 500Mi
+          cpu: 1
+        build: |
+          json5 --validate /src/code.arista.io/efw/mfw_schema/renovate.json5
