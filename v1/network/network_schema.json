@@ -23,7 +23,7 @@
                     "items": {
                         "type": "object",
                         "description": "BGP settings",
-                        "required": ["local_asn", "router_id", "address_family", "neighbor"],
+                        "required": ["local_asn", "router_id", "address_family", "neighbors"],
                         "properties": {
                             "vrf": {
                                 "type": "string",
@@ -68,44 +68,47 @@
                                     }
                                 }
                             },
-                            "neighbor": {
-                                "type": "object",
+                            "neighbors": {
+                                "type": "array",
                                 "description": "BGP neighbor configuration",
-                                "required": ["ip", "asn"],
-                                "properties": {
-                                    "ip": {
-                                        "type": "string",
-                                        "description": "The IP address of the neighbor"
+                                "items": {
+                                    "type": "object",
+                                    "required": ["ip", "asn"],
+                                    "properties": {
+                                        "ip": {
+                                            "type": "string",
+                                            "description": "The IP address of the neighbor"
+                                        },
+                                        "asn": {
+                                            "type": "integer",
+                                            "description": "The Autonomous System Number of the neighbor",
+                                            "minimum": 0,
+                                            "maximum": 4294967295
+                                        },
+                                        "update_source": {
+                                            "type": "string",
+                                            "description": "The source IP address for BGP updates"
+                                        },
+                                        "keepalive": {
+                                            "type": "integer",
+                                            "description": "The BGP keepalive timer in seconds",
+                                            "default": 60
+                                        },
+                                        "hold": {
+                                            "type": "integer",
+                                            "description": "The BGP hold timer in seconds",
+                                            "default": 180
+                                        }
                                     },
-                                    "asn": {
-                                        "type": "integer",
-                                        "description": "The Autonomous System Number of the neighbor",
-                                        "minimum": 0,
-                                        "maximum": 4294967295
+                                    "dependentRequired": {
+                                        "keepalive": ["hold"],
+                                        "hold": ["keepalive"]
                                     },
-                                    "update_source": {
-                                        "type": "string",
-                                        "description": "The source IP address for BGP updates"
-                                    },
-                                    "keepalive": {
-                                        "type": "integer",
-                                        "description": "The BGP keepalive timer in seconds",
-                                        "default": 60
-                                    },
-                                    "hold": {
-                                        "type": "integer",
-                                        "description": "The BGP hold timer in seconds",
-                                        "default": 180
+                                    "propertiesGreaterThan": {
+                                        "greater": "hold",
+                                        "lesser": "keepalive"
                                     }
-                                },
-                               "dependentRequired": {
-                                   "keepalive": ["hold"],
-                                   "hold": ["keepalive"]
-                               },
-                               "propertiesGreaterThan": {
-                                   "greater": "hold",
-                                   "lesser": "keepalive"
-                               }
+                                }
                             }
                         }
                     }
