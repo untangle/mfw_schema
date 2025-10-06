@@ -98,6 +98,10 @@
                                                     "description": "Enable IPv6 address family"
                                                 }
                                             }
+                                        },
+                                        "password": {
+                                            "type": "string",
+                                            "description": "Optional password between routers for BGP connection"
                                         }
                                     },
                                     "dependentRequired": {
