@@ -61,15 +61,15 @@
         {
             "local_asn": 65000,
             "router_id": "1.1.1.1",
-            "address_family": {
-                "ipv4": true,
-                "ipv6": false
-            },
             "neighbors": [{
                 "ip": "2.2.2.2",
                 "asn": 65001,
                 "keepalive": 30,
-                "hold": 90
+                "hold": 90,
+                "address_family": {
+                  "ipv4": true,
+                  "ipv6": false
+                }
             }]
         },
         {

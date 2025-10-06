@@ -53,21 +53,6 @@
                                     "type": "string"
                                 }
                             },
-                            "address_family": {
-                                "type": "object",
-                                "description": "BGP address family configuration",
-                                "required": ["ipv4", "ipv6"],
-                                "properties": {
-                                    "ipv4": {
-                                        "type": "boolean",
-                                        "description": "Enable IPv4 address family"
-                                    },
-                                    "ipv6": {
-                                        "type": "boolean",
-                                        "description": "Enable IPv6 address family"
-                                    }
-                                }
-                            },
                             "neighbors": {
                                 "type": "array",
                                 "description": "BGP neighbor configuration",
@@ -98,6 +83,25 @@
                                             "type": "integer",
                                             "description": "The BGP hold timer in seconds",
                                             "default": 180
+                                        },
+                                        "address_family": {
+                                            "type": "object",
+                                            "description": "BGP address family configuration",
+                                            "required": ["ipv4", "ipv6"],
+                                            "properties": {
+                                                "ipv4": {
+                                                    "type": "boolean",
+                                                    "description": "Enable IPv4 address family"
+                                                },
+                                                "ipv6": {
+                                                    "type": "boolean",
+                                                    "description": "Enable IPv6 address family"
+                                                }
+                                            }
+                                        },
+                                        "password": {
+                                            "type": "string",
+                                            "description": "Optional password between routers for BGP connection"
                                         }
                                     },
                                     "dependentRequired": {
