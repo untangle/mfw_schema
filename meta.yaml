@@ -54,4 +54,7 @@ x-github-bridge:
         - type: push
           branch-re: ^master$
 
+ObsoleteNames:
+  - github.com/untangle/mfw_schema
+
 epoch: 1
